@@ -2,7 +2,6 @@
   Global CSS file
 */
 *{
-	border: solid , red , 5px;
 	margin: 0;
 	padding: 0;
 	-webkit-box-sizing: border-box;
