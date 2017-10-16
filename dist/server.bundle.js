@@ -525,13 +525,13 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _PostListItem = {
-	  "single-post": "_2wFZUrnLLPIM2UvuNgnV1r",
-	  "post-title": "_1BU3HyU1b5fh1tsPA9MtRq",
-	  "author-name": "_2pYEGhQRMs0Mh9CsoJsCrq",
-	  "post-desc": "_2hG8tPFCGI0k7BZ5cz9nnH",
-	  "post-action": "_37qYFcYfJHxrTH_bV6-TQo",
-	  "divider": "_3H_6OlXO_Hx_93avyoPoZ2",
-	  "post-detail": "_16xorg78DM6DwmPTBglw02"
+	  "single-post": "_3B15Q62CNe0LaxJ8BUZr5W",
+	  "post-title": "_3mZF-WLrnBUxaWr9zFi6Q_",
+	  "author-name": "_1cSDPptMi8rvUEB2tAonlW",
+	  "post-desc": "_3D8Fgk2edKTkFyBDsUEZ2u",
+	  "post-action": "_3S84cKmlvGO49pK1biPlXr",
+	  "divider": "y2SIF3ydn02JYMgeklO7S",
+	  "post-detail": "_3W9vrxIdnQ93EmH-x2UgJR"
 	};
 	
 	var _PostListItem2 = _interopRequireDefault(_PostListItem);
@@ -1182,7 +1182,7 @@
 	var _reactRedux = __webpack_require__(2);
 	
 	var _App = {
-	  "container": "_15uqt7TaQcflNYjiD0-re1"
+	  "container": "_4uEyKcd5WHob5qPzotT7"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -1316,7 +1316,7 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _Footer = {
-	  "footer": "_1oiRVDtQ6fOWkhBVWcRyE_"
+	  "footer": "_3vPEi87A1wyh1iLR3bsBGf"
 	};
 	
 	var _Footer2 = _interopRequireDefault(_Footer);
@@ -1372,12 +1372,12 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _Header = {
-	  "header": "_3EGjKVGKCGTGQn_m_YASdF",
-	  "content": "_391cv5n_RFU0K9SBOjXDEt",
-	  "site-title": "_11V45Tl3_Hdy_ARI53CW9g",
-	  "add-post-button": "XrNjmGRHH_vMEgGeC3S75",
-	  "language-switcher": "X6vAu1vEuRDWiN2kDvA_z",
-	  "selected": "_3ecuVjN6tTUWkR7u3Co3s"
+	  "header": "_2sEZYfHlvDy9uXqVIXG1aM",
+	  "content": "_1eavAvnySzoZc5rld6Q4pa",
+	  "site-title": "UfFn6muOcOBjkVI5_yltp",
+	  "add-post-button": "CkTz6a2gQTJjwXIEAlTSk",
+	  "language-switcher": "_3bviQya5ZWCvWr6lGdfO9h",
+	  "selected": "_3IRlmCpgSZBcTGVIGHvgaI"
 	};
 	
 	var _Header2 = _interopRequireDefault(_Header);
@@ -1499,12 +1499,12 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _PostCreateWidget = {
-	  "form": "_1_WEV3z8MyISJ_IVeQGbfN",
-	  "form-content": "_3CPctdi6XIS37va2ubmlCG",
-	  "form-title": "_1CSMUfhA4ysKjSED0EfzhX",
-	  "form-field": "_2UV8G3K76UKXYl2G9ov3yn",
-	  "post-submit-button": "_1atG94QrpmrK4ei1Y4lDc3",
-	  "appear": "_38mS7lSZiNDV5iEXieRUC7"
+	  "form": "_1HNxVmVCIfsWU6Q22cRSd7",
+	  "form-content": "VlHIHfXe5nkoruuc0N8pJ",
+	  "form-title": "_32cczwmKrlcNdTsvCr-oBL",
+	  "form-field": "_1srubE9zVaJuCqkgKCA3lY",
+	  "post-submit-button": "_2m9Bzr_sJcQ7FK3o3X0PBL",
+	  "appear": "_30KT3DYyUvGj_5sBYnixvw"
 	};
 	
 	var _PostCreateWidget2 = _interopRequireDefault(_PostCreateWidget);
@@ -1642,13 +1642,13 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _PostListItem = {
-	  "single-post": "_2wFZUrnLLPIM2UvuNgnV1r",
-	  "post-title": "_1BU3HyU1b5fh1tsPA9MtRq",
-	  "author-name": "_2pYEGhQRMs0Mh9CsoJsCrq",
-	  "post-desc": "_2hG8tPFCGI0k7BZ5cz9nnH",
-	  "post-action": "_37qYFcYfJHxrTH_bV6-TQo",
-	  "divider": "_3H_6OlXO_Hx_93avyoPoZ2",
-	  "post-detail": "_16xorg78DM6DwmPTBglw02"
+	  "single-post": "_3B15Q62CNe0LaxJ8BUZr5W",
+	  "post-title": "_3mZF-WLrnBUxaWr9zFi6Q_",
+	  "author-name": "_1cSDPptMi8rvUEB2tAonlW",
+	  "post-desc": "_3D8Fgk2edKTkFyBDsUEZ2u",
+	  "post-action": "_3S84cKmlvGO49pK1biPlXr",
+	  "divider": "y2SIF3ydn02JYMgeklO7S",
+	  "post-detail": "_3W9vrxIdnQ93EmH-x2UgJR"
 	};
 	
 	var _PostListItem2 = _interopRequireDefault(_PostListItem);
