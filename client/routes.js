@@ -39,13 +39,5 @@ export default (
         });
       }}
     />
-    <Route
-      path="/recherche"
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Recherche/Recherche').default);
-        });
-      }}
-    />
   </Route>
 );
