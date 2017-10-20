@@ -15,4 +15,6 @@ const EventReducer = (state = initialState, action) => {
   }
 };
 
+export const getEvents = state => state.events.data;
+
 export default EventReducer;

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchEvents } from './EventActions';
 
+import { getEvents } from './EventReducer';
+
 // Import Style
 // import styles from './Event.css';
 
@@ -22,9 +24,11 @@ class Event extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {};
-};
+function mapStateToProps(state) {
+  return {
+    events: getEvents(state),
+  };
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {};
