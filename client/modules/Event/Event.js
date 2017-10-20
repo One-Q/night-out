@@ -13,6 +13,8 @@ class Event extends Component {
   componentDidMount() {
     const events = fetchEvents();
     console.log(events);
+    console.log(JSON.stringify(this.props));
+    console.log(JSON.stringify(this.state));
   }
 
   render() {
@@ -30,9 +32,9 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchEvents,
+}, dispatch);
 
 Event.propTypes = {
 };
