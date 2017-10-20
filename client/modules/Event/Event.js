@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 // Import Style
-import styles from './Event.css';
+// import styles from './Event.css';
 
 class Event extends Component {
   render() {
     return (
+      <div>
+        <h2>Test</h2>
+      </div>
     );
   }
 }
