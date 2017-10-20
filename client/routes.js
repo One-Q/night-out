@@ -40,10 +40,10 @@ export default (
       }}
     />
     <Route
-      path="/recherche"
+      path="/events"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/Recherche/Recherche').default);
+          cb(null, require('./modules/Event/Event').default);
         });
       }}
     />
