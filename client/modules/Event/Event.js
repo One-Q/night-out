@@ -6,7 +6,7 @@ import { fetchEvents } from './EventActions';
 import { getEvents } from './EventReducer';
 
 // Import Style
-// import styles from './Event.css';
+import styles from './Event.css';
 
 class Event extends Component {
 
@@ -15,9 +15,22 @@ class Event extends Component {
   }
 
   render() {
+    console.log(JSON.stringify(this.props.events));
+    console.log(JSON.stringify(this.state));
+    let events;
+    if (this.props.events !== undefined) {
+      events = this.props.events.map((event) => {
+        return (<div key={event._id} className={styles['event-div']}>
+          <h2>{event.name}</h2>
+          <p>{event.description}</p>
+          <p>{event.location.city}, {event.location.street}</p>
+        </div>);
+      });
+    }
     return (
       <div>
-        <h2>Test</h2>
+        <h1>Les événements</h1>
+        {events}
       </div>
     );
   }
@@ -29,11 +42,8 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
 Event.propTypes = {
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default connect(null,
-  mapDispatchToProps
-)(Event);
+export default connect(mapStateToProps)(Event);

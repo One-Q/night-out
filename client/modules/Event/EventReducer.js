@@ -7,6 +7,7 @@ const initialState = {};
 const EventReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_EVENTS :
+    console.log(action);
       return {
         data: action.events,
       };
