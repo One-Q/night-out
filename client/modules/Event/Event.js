@@ -11,10 +11,7 @@ import { getEvents } from './EventReducer';
 class Event extends Component {
 
   componentDidMount() {
-    const events = fetchEvents();
-    console.log(events);
-    console.log(JSON.stringify(this.props));
-    console.log(JSON.stringify(this.state));
+    this.props.dispatch(fetchEvents());
   }
 
   render() {
@@ -32,14 +29,11 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchEvents,
-}, dispatch);
+const mapDispatchToProps = (dispatch) => ({ dispatch });
 
 Event.propTypes = {
 };
 
-export default connect(
-  mapStateToProps,
+export default connect(null,
   mapDispatchToProps
 )(Event);
