@@ -6,13 +6,15 @@ const initialState = {};
 
 const EventReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_EVENT :
+      return {
+        data: [action.event, ...state.data],
+      };
     case ADD_EVENTS :
-    console.log(action);
       return {
         data: action.events,
       };
-    case RESEARCH_EVENTS : 
-      console.log(action);
+    case RESEARCH_EVENTS :
       return state;
     default:
       return state;
@@ -20,5 +22,7 @@ const EventReducer = (state = initialState, action) => {
 };
 
 export const getEvents = state => state.events.data;
+
+export const getEvent = (state, slug) => state.events.data.filter(event => event.slug === slug)[0];
 
 export default EventReducer;

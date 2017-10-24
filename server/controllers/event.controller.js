@@ -6,7 +6,7 @@ import Event from '../models/event';
  * @param res
  */
 export function getEvent(req, res) {
-  Event.findOne({ slug: req.params.name }).exec((err, event) => {
+  Event.findOne({ slug: req.params.slug }).exec((err, event) => {
     if (err) {
       res.status(500).send(err);
     }

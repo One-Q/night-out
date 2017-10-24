@@ -48,5 +48,13 @@ export default (
         });
       }}
     />
+    <Route
+      path="/events/:slug"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Event/EventDetails/EventDetails').default);
+        });
+      }}
+    />
   </Route>
 );
