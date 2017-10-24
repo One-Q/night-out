@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import {  } from '../EventActions';
+import { connect } from 'react-redux';
+import { fetchResearch } from '../EventActions';
 
 export class EventResearch extends Component {
 
@@ -25,7 +26,7 @@ export class EventResearch extends Component {
 
   handleClick(e) {
     e.preventDefault();
-    console.log(this.state.inputResearch);
+    this.props.dispatch(fetchResearch(this.state.inputResearch));
   }
 
   render() {
@@ -34,19 +35,24 @@ export class EventResearch extends Component {
         <form onSubmit={this.handleClick}>
           <p>
             <label htmlFor="">Recherche : </label>
-            <input type="text" name="inputResearch" value={this.state.inputResearch} onChange={this.handleChange}/>
+            <input type="text" name="inputResearch" value={this.state.inputResearch} onChange={this.handleChange} />
           </p>
           <p>
             <button>Envoyer</button>
           </p>
         </form>
       </div>
-    )
+    );
   }
 
+}
+
+function mapStateToProps(state) {
+  return {
+  };
 }
 
 EventResearch.propTypes = {
 };
 
-export default injectIntl(EventResearch);
+export default connect(mapStateToProps)(EventResearch);

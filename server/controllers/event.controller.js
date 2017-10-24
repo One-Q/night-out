@@ -28,3 +28,19 @@ export function getEvents(req, res) {
   });
 }
 
+/**
+ * Get multiple events
+ * @param req
+ * @param res
+ */
+export function getResearch(req, res) {
+  /*Event.find().exec((err, event) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({ event });
+  });
+  */
+  console.log(res.body);
+  res.end();
+}

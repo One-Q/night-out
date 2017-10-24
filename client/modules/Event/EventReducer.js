@@ -1,5 +1,5 @@
 // Import Actions
-import { ADD_EVENT, ADD_EVENTS, DELETE_EVENT } from './EventActions';
+import { ADD_EVENT, ADD_EVENTS, DELETE_EVENT, RESEARCH_EVENTS } from './EventActions';
 
 // Initial State
 const initialState = {};
@@ -11,6 +11,9 @@ const EventReducer = (state = initialState, action) => {
       return {
         data: action.events,
       };
+    case RESEARCH_EVENTS : 
+      console.log(action);
+      return state;
     default:
       return state;
   }
