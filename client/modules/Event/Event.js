@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchEvents } from './EventActions';
+import { EventResearch } from './EventResearch/EventResearch';
 
 import { getEvents } from './EventReducer';
 
@@ -15,8 +16,6 @@ class Event extends Component {
   }
 
   render() {
-    console.log(JSON.stringify(this.props.events));
-    console.log(JSON.stringify(this.state));
     let events;
     if (this.props.events !== undefined) {
       events = this.props.events.map((event) => {
@@ -29,6 +28,7 @@ class Event extends Component {
     }
     return (
       <div>
+        <EventResearch />
         <h1>Les événements</h1>
         {events}
       </div>

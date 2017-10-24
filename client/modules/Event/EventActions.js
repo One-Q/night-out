@@ -4,6 +4,7 @@ import callApi from '../../util/apiCaller';
 export const ADD_EVENT = 'ADD_EVENTS';
 export const ADD_EVENTS = 'ADD_EVENTS';
 export const DELETE_EVENT = 'DELETE_EVENT';
+export const RESEARCH_EVENTS = 'RESEARCH_EVENTS';
 
 // Export Actions
 export function addEvent(event) {
@@ -20,6 +21,13 @@ export function addEvents(events) {
   };
 }
 
+export function researchEvents(events) {
+  return {
+    type: RESEARCH_EVENTS,
+    events,
+  };
+}
+
 export function fetchEvents() {
   return (dispatch) => {
     return callApi('events').then(res => {
@@ -31,5 +39,11 @@ export function fetchEvents() {
 export function fetchEvent(slug) {
   return (dispatch) => {
     return callApi(`events/${slug}`).then(res => dispatch(addEvent(res.event)));
+  };
+}
+
+export function fetchResearch(event) {
+  return (dispatch) => {
+    return callApi('events', 'get', { event }).then(res => dispatch(researchEvents(res.events)));
   };
 }
