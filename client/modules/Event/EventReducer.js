@@ -16,8 +16,7 @@ const EventReducer = (state = initialState, action) => {
       return {
         data: action.events,
       };
-    case RESEARCH_EVENTS :
-      return state;
+
     default:
       return state;
   }

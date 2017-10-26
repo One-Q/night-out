@@ -2,7 +2,7 @@ import Event from '../models/event';
 import elasticsearch from 'elasticsearch';
 
 let client = new elasticsearch.Client({
-  host: "localhost:9200",
+  host: "localhost:9200", //https://pine-4525505.eu-west-1.bonsaisearch.net
 });
 
 
@@ -42,18 +42,21 @@ export function getEvents(req, res) {
 export function getResearch(req, res) {
   let search_query = req.params.event;
   let elastic_response;
-  /*client
+  client
   .search({
+    index: 'events',
+    type:'event',
     q: search_query
   })
   .then(
     function(body) {
-      console.log(body.hits.hits);
-      elastic_response = body.hits.hits;
+      elastic_response = body.hits.hits
+      return res.json({elastic_response});
     },
     function(error) {
       return res.status(500).send(error);
     }
-  );*/
-return res.json({elastic_response});
+  );
+
+return res.status(200);
 }
