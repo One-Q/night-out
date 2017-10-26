@@ -23,7 +23,7 @@ export function addEvents(events) {
 
 export function researchEvents(events) {
   return {
-    type: RESEARCH_EVENTS,
+    type: ADD_EVENTS,
     events,
   };
 }
@@ -44,6 +44,6 @@ export function fetchEvent(slug) {
 
 export function fetchResearch(event) {
   return (dispatch) => {
-    return callApi('events/research', 'get', { event }).then(res => dispatch(researchEvents(res.events)));
+    return callApi(`research/${event}`).then(res => dispatch(researchEvents(res.elastic_response)));
   };
 }

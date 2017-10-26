@@ -1,4 +1,10 @@
 import Event from '../models/event';
+import elasticsearch from 'elasticsearch';
+
+let client = new elasticsearch.Client({
+  host: "localhost:9200",
+});
+
 
 /**
  * Get a single event
@@ -29,18 +35,25 @@ export function getEvents(req, res) {
 }
 
 /**
- * Get multiple events
+ * Get researched events
  * @param req
  * @param res
  */
 export function getResearch(req, res) {
-  /*Event.find().exec((err, event) => {
-    if (err) {
-      res.status(500).send(err);
+  let search_query = req.params.event;
+  let elastic_response;
+  /*client
+  .search({
+    q: search_query
+  })
+  .then(
+    function(body) {
+      console.log(body.hits.hits);
+      elastic_response = body.hits.hits;
+    },
+    function(error) {
+      return res.status(500).send(error);
     }
-    res.json({ event });
-  });
-  */
-  console.log(res.body);
-  res.end();
+  );*/
+return res.json({elastic_response});
 }

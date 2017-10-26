@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { fetchResearch } from '../EventActions';
+
+import { getEvents } from '../EventReducer';
 
 export class EventResearch extends Component {
 
@@ -10,8 +13,8 @@ export class EventResearch extends Component {
     this.state = {
       inputResearch: '',
     };
-    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.ClickClack = this.ClickClack.bind(this);
   }
 
   handleChange(event) {
@@ -24,21 +27,23 @@ export class EventResearch extends Component {
     });
   }
 
-  handleClick(e) {
+  ClickClack = (e) => {
     e.preventDefault();
-    this.props.dispatch(fetchResearch(this.state.inputResearch));
+    const input = this.refs.research;
+    this.props.research(input.value);
+
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={this.handleClick}>
+        <form >
           <p>
             <label htmlFor="">Recherche : </label>
-            <input type="text" name="inputResearch" value={this.state.inputResearch} onChange={this.handleChange} />
+            <input type="text" name="inputResearch" ref="research" />
           </p>
           <p>
-            <button>Envoyer</button>
+            <button onClick={this.ClickClack} value="test">Envoyer</button>
           </p>
         </form>
       </div>
@@ -49,6 +54,7 @@ export class EventResearch extends Component {
 
 function mapStateToProps(state) {
   return {
+    events : getEvents(state)
   };
 }
 

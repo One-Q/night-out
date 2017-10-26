@@ -9,6 +9,6 @@ router.route('/events').get(EventController.getEvents);
 // Get on event by name
 router.route('/events/:slug').get(EventController.getEvent);
 
-router.route('/events/research').get(EventController.getResearch);
+router.route('/research/:event').get(EventController.getResearch);
 
 export default router;

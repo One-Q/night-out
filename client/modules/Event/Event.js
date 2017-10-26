@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchEvents } from './EventActions';
+import { fetchEvents , fetchResearch} from './EventActions';
 import { EventResearch } from './EventResearch/EventResearch';
-
 import { getEvents } from './EventReducer';
 
 // Import Style
@@ -13,6 +12,12 @@ class Event extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchEvents());
+    this.handleClickClack = this.handleClickClack.bind(this);
+  }
+
+  handleClickClack = (value) => {
+    if(value)
+      this.props.dispatch(fetchResearch(value));
   }
 
   render() {
@@ -28,13 +33,15 @@ class Event extends Component {
     }
     return (
       <div>
-        <EventResearch />
+        <EventResearch research={this.handleClickClack}/>
         <h1>Les événements</h1>
         {events}
       </div>
     );
   }
 }
+
+
 
 function mapStateToProps(state) {
   return {
