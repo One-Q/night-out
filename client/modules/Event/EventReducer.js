@@ -6,10 +6,12 @@ const initialState = {};
 
 const EventReducer = (state = initialState, action) => {
   switch (action.type) {
+    /*
     case ADD_EVENT :
       return {
         data: [action.event, ...state.data],
       };
+    */
     case ADD_EVENTS :
       return {
         data: action.events,
