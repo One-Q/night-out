@@ -29,6 +29,7 @@ class Event extends Component {
   }
 
   render() {
+    console.log('Props Event : ' + JSON.stringify(this.props));
     let events;
     if (this.props.events !== undefined && this.dispatchAll) {
       events = this.props.events.map((event) => {

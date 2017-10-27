@@ -1,10 +1,10 @@
 import Event from '../models/event';
-import elasticsearch from 'elasticsearch';
-
+// import elasticsearch from 'elasticsearch';
+/*
 let client = new elasticsearch.Client({
   host: "localhost:9200", //https://pine-4525505.eu-west-1.bonsaisearch.net
 });
-
+*/
 
 /**
  * Get a single event

@@ -41,7 +41,7 @@ export default (
       }}
     />
     <Route
-      exact path="/events"
+      path="/events"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Event/Event').default);
@@ -49,7 +49,7 @@ export default (
       }}
     />
     <Route
-      exact path="/events/:slug"
+      path="/events/:slug"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Event/EventDetails/EventDetails').default);

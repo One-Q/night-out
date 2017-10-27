@@ -6,11 +6,19 @@ import { FormattedMessage } from 'react-intl';
 // Import Actions
 import { fetchEvent } from '../EventActions';
 import { getEvent } from '../EventReducer';
+import { Redirect } from 'react-router';
 
 // Import CSS
 import styles from '../Event.css';
 
 export function EventDetails(props) {
+  if (props.event == '') {
+    return (
+      <div>
+        <h3 className={styles['event-title']}>Pas d'événement correspondant</h3>
+      </div>
+    );
+  }
   return (
     <div>
       <Helmet title={props.event.name} />
