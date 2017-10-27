@@ -2,16 +2,14 @@
 import { ADD_EVENT, ADD_EVENTS, DELETE_EVENT, RESEARCH_EVENTS } from './EventActions';
 
 // Initial State
-const initialState = {};
+const initialState = { data: [] };
 
 const EventReducer = (state = initialState, action) => {
   switch (action.type) {
-    /*
     case ADD_EVENT :
       return {
         data: [action.event, ...state.data],
       };
-    */
     case ADD_EVENTS :
       return {
         data: action.events,
