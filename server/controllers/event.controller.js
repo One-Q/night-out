@@ -2,7 +2,7 @@ import Event from '../models/event';
 import elasticsearch from 'elasticsearch';
 
 let client = new elasticsearch.Client({
-  host: "https://pine-4525505.eu-west-1.bonsaisearch.net", //localhost:9200
+  host: "https://5868zphh:jo1w1vez3tcop8u@pine-4525505.eu-west-1.bonsaisearch.net", //localhost:9200
   log: "trace"
 });
 

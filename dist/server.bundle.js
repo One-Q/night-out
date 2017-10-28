@@ -2304,7 +2304,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var client = new _elasticsearch2.default.Client({
-	  host: "localhost:9200", //https://pine-4525505.eu-west-1.bonsaisearch.net
+	  host: "https://5868zphh:jo1w1vez3tcop8u@pine-4525505.eu-west-1.bonsaisearch.net", //localhost:9200
 	  log: "trace"
 	});
 	
