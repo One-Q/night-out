@@ -1,11 +1,11 @@
 import Event from '../models/event';
-// import elasticsearch from 'elasticsearch';
-/*
+import elasticsearch from 'elasticsearch';
+
 let client = new elasticsearch.Client({
   host: "localhost:9200", //https://pine-4525505.eu-west-1.bonsaisearch.net
   log: "trace"
 });
-*/
+
 
 /**
  * Get a single event
@@ -56,8 +56,6 @@ export function getResearch(req, res) {
       elastic_response = body.hits.hits;
       
       retrieveId(elastic_response).then(table_id => getEventsByidFromMongo(table_id)).then(elastic_mongo_response => {return res.json({elastic_mongo_response})});
-      //getEventByidFromMongo(elastic_response).then(res => console.log("Promise ?" , res));
-      //return res.json({'mongo_response ': getEventsByidFromMongo(elastic_response)});
       },
     function(error) {
       return res.status(500).send(error);

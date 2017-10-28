@@ -23,7 +23,7 @@ export function addEvents(events) {
 
 export function researchEvents(events) {
   return {
-    type: ADD_EVENT,
+    type: ADD_EVENTS,
     events,
   };
 }
