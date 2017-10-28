@@ -44,6 +44,6 @@ export function fetchEvent(slug) {
 
 export function fetchResearch(event) {
   return (dispatch) => {
-    return callApi(`research/${event}`).then(res => dispatch(researchEvents(res.elastic_response)));
+    return callApi(`research/${event}`).then(res =>dispatch(researchEvents(res.elastic_mongo_response)));
   };
 }
