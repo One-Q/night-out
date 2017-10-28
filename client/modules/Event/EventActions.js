@@ -1,7 +1,7 @@
 import callApi from '../../util/apiCaller';
 
 // Export Constants
-export const ADD_EVENT = 'ADD_EVENTS';
+export const ADD_EVENT = 'ADD_EVENT';
 export const ADD_EVENTS = 'ADD_EVENTS';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const RESEARCH_EVENTS = 'RESEARCH_EVENTS';

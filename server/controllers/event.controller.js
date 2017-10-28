@@ -1,11 +1,11 @@
 import Event from '../models/event';
-import elasticsearch from 'elasticsearch';
-
+// import elasticsearch from 'elasticsearch';
+/*
 let client = new elasticsearch.Client({
   host: "localhost:9200", //https://pine-4525505.eu-west-1.bonsaisearch.net
   log: "trace"
 });
-
+*/
 
 /**
  * Get a single event
@@ -13,6 +13,7 @@ let client = new elasticsearch.Client({
  * @param res
  */
 export function getEvent(req, res) {
+  console.log(req.params.slug);
   Event.findOne({ slug: req.params.slug }).exec((err, event) => {
     if (err) {
       res.status(500).send(err);
