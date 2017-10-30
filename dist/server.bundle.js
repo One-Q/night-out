@@ -2349,6 +2349,7 @@
 	  client.search({
 	    index: 'events',
 	    type: 'event',
+	    size: 1000,
 	    q: search_query
 	  }).then(function (body) {
 	    elastic_response = body.hits.hits;
