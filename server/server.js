@@ -34,6 +34,7 @@ import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
 import posts from './routes/post.routes';
 import events from './routes/event.routes';
+import authentification from './routes/authentification.routes';
 import dummyData from './dummyData';
 import dummyDataEvent from './dummyDataEvent';
 import serverConfig from './config';
@@ -61,6 +62,7 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', posts);
 app.use('/api', events);
+app.use('/api',authentification);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
