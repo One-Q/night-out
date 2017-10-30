@@ -49,6 +49,7 @@ export function getResearch(req, res) {
   .search({
     index: 'events',
     type:'event',
+    size: 1000,
     q: search_query
   })
   .then(
