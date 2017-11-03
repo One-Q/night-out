@@ -2,6 +2,8 @@ import Express from 'express';
 import compression from 'compression';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import path from 'path';
 import IntlWrapper from '../client/modules/Intl/IntlWrapper';
 
@@ -13,6 +15,14 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 // Initialize the Express App
 const app = new Express();
+
+app.use(cookieParser());
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { httpOnly: true }
+}));
 
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
@@ -38,6 +48,7 @@ import authentification from './routes/authentification.routes';
 import dummyData from './dummyData';
 import dummyDataEvent from './dummyDataEvent';
 import serverConfig from './config';
+import passport from './passport';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
@@ -62,7 +73,7 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', posts);
 app.use('/api', events);
-app.use('/api',authentification);
+app.use('/api', authentification);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
@@ -91,7 +102,7 @@ const renderFullPage = (html, initialState) => {
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
           ${process.env.NODE_ENV === 'production' ?
-          `//<![CDATA[
+      `//<![CDATA[
           window.webpackManifest = ${JSON.stringify(chunkManifest)};
           //]]>` : ''}
         </script>
@@ -149,7 +160,7 @@ app.use((req, res, next) => {
 // start app
 app.listen(serverConfig.port, (error) => {
   if (!error) {
-    console.log(`MERN is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
+    console.log(`MERN is running on port: ${serverConfig.port}!`); // eslint-disable-line
   }
 });
 

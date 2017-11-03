@@ -3,16 +3,22 @@ import User from './models/user';
 
 const jsonEvents = require('./events.json');
 export default function () {
-	User.count().exec((err, count) => {
+	/*User.count().exec((err, count) => {
 		if (count > 0) {
 			return;
 		}
-		User.create([new User({ username: "Test", password: "test", slug: 'test-user', cuid: 'cikqgkv4p31ck7453ualdn3hd' })], (error) => {
+		const newUser = new User({ username: "Test", slug: 'test-user', cuid: 'cikqgkv4p31ck7453ualdn3hd' });
+		newUser.password = newUser.hashPassword('test');
+
+		User.create([newUser], (error) => {
 			if (!error) {
 				//console.log('ready to go....');
 			}
+			else{
+				console.log(error);
+			}
 		});
-	});
+	});*/
 
 	Event.count().exec((err, count) => {
 		if (count > 0) {
