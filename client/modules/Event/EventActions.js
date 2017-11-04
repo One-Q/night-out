@@ -47,3 +47,15 @@ export function fetchResearch(event) {
     return callApi(`research/${event}`).then(res =>dispatch(researchEvents(res.elastic_mongo_response)));
   };
 }
+
+export function fetchEventsFromFacebook(value,distance,long,lat,category){
+  return (dispatch) => {
+    return callApi(`eventsFromFacebook/${value}&${distance*1000}&${long}&${lat}&${category}`).then(res =>dispatch(researchEvents(res.eventsFacebook)));
+  };
+}
+
+export function fetchEventsFromFacebookWithoutValue(long,lat){
+  return (dispatch) => {
+    return callApi(`eventsFromFacebook/${long}&${lat}`).then(res =>dispatch(researchEvents(res.eventsFacebook)));
+  };
+}
