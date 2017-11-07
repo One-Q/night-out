@@ -180,7 +180,8 @@
     "webpack-manifest-plugin": "^1.0.1"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=4",
+    "npm":">5.5.1"
   },
   "ava": {
     "files": [
