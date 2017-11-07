@@ -1,7 +1,7 @@
 exports.ids = [1];
 exports.modules = {
 
-/***/ 74:
+/***/ 86:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27,11 +27,15 @@ exports.modules = {
 	
 	var _reactRedux = __webpack_require__(2);
 	
-	var _reactHelmet = __webpack_require__(4);
+	var _reactHelmet = __webpack_require__(6);
 	
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 	
 	var _reactIntl = __webpack_require__(1);
+	
+	var _EventMap = __webpack_require__(87);
+	
+	var _EventMap2 = _interopRequireDefault(_EventMap);
 	
 	var _EventActions = __webpack_require__(8);
 	
@@ -58,6 +62,7 @@ exports.modules = {
 	});
 	
 	function EventDetails(props) {
+	  console.log(props);
 	  if (props.event == '') {
 	    return _jsx('div', {}, void 0, _jsx('h3', {
 	      className: _Event2.default['event-title']
@@ -73,7 +78,22 @@ exports.modules = {
 	    className: _Event2.default['location']
 	  }, void 0, _ref, ' : ', props.event.location.city, ', ', props.event.location.street), _jsx('p', {
 	    className: _Event2.default['event-desc']
-	  }, void 0, props.event.description)));
+	  }, void 0, props.event.description)), _jsx('div', {
+	    style: { width: 600, height: 600 }
+	  }, void 0, _jsx(_EventMap2.default, {
+	    location: { lat: props.event.location.latitude, lng: props.event.location.longitude },
+	    isMarkerShown: true,
+	    googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places',
+	    loadingElement: _jsx('div', {
+	      style: { height: '100%' }
+	    }),
+	    containerElement: _jsx('div', {
+	      style: { height: '400px' }
+	    }),
+	    mapElement: _jsx('div', {
+	      style: { height: '100%' }
+	    })
+	  })));
 	}
 	
 	// Actions required to provide data for this component to render in sever side.
@@ -89,6 +109,39 @@ exports.modules = {
 	}
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(EventDetails);
+
+/***/ },
+
+/***/ 87:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
+	
+	var _react = __webpack_require__(0);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGoogleMaps = __webpack_require__(88);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var EventMap = (0, _reactGoogleMaps.withScriptjs)((0, _reactGoogleMaps.withGoogleMap)(function (props) {
+	  return _jsx(_reactGoogleMaps.GoogleMap, {
+	    defaultZoom: 10,
+	    defaultCenter: props.location
+	  }, void 0, _jsx(_reactGoogleMaps.Marker, {
+	    position: props.location
+	  }, void 0));
+	}));
+	
+	exports.default = EventMap;
 
 /***/ }
 
