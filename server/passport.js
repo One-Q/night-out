@@ -6,8 +6,7 @@ import User from './models/user';
 
 const localOptions = {
     usernameField: 'username',
-    passwordField: 'password',
-    passwordReqToCallback: true
+    passwordField: 'password'
 };
 
 const jwtOptions = {
@@ -26,14 +25,20 @@ const jwtSessionOptions = {
     secretOrKey: 'secret'
 }
 
-const localCallback = (req, username, pass, done) => {
+const localCallback = (username, pass, done) => {
+    console.log('Username : '+username);
+    console.log('Pass : '+pass);
     User.findOne({ username })
         .then((user) => {
+            console.log('user : '+user);
             if (!user) {
+                console.log('pas d\'user');
                 done(null, false);
-            } else if (!user.checkPassword(pass)) {
+            } else if (!user.validatePassword(pass)) {
+                console.log('mdp incorrect');
                 done(null, false);
             } else {
+                console.log('bon');
                 done(null, user);
             }
         })

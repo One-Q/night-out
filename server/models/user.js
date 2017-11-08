@@ -11,11 +11,9 @@ const userSchema = new Schema({
   registrationDate: { type: 'Date', default: Date.now, required: true },
 });
 
-userSchema.methods.hashPassword = (password) => {
-  bcrypt.hashSync(password, bcrypt.genSalt(8), null);
-}
+userSchema.methods.generateHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 
-userSchema.methods.checkPassword = (password) => {
+userSchema.methods.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 }
 
