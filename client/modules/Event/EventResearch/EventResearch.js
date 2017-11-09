@@ -3,6 +3,11 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchResearch } from '../EventActions';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormLabel, FormControl, FormControlLabel, FormHelperText } from 'material-ui/Form';
+import Radio, { RadioGroup } from 'material-ui/Radio';
+import Select from 'material-ui/Select';
+import Button from 'material-ui/Button';
 
 import { getEvents } from '../EventReducer';
 
@@ -24,6 +29,7 @@ export class EventResearch extends Component {
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.ClickClack = this.ClickClack.bind(this);
     this.handleTrackBar = this.handleTrackBar.bind(this);
+    this.handleInputChange= this.handleInputChange.bind(this);
   }
 
   handleOptionChange(radio) {
@@ -35,16 +41,25 @@ export class EventResearch extends Component {
     });
   }
 
+  handleInputChange(e) {
+    const value = e.target.value;
+    console.log(value);
+    this.setState({
+      inputResearch: value,
+    });
+  }
+
   ClickClack = (e) => {
     e.preventDefault();
-    const input = this.refs.research;
+    console.log(JSON.stringify(this.state));
+    const input = this.state.inputResearch;
     const distance = this.state.distance;
     if(this.state.selectedOption == "ourDB"){
       console.log("Tu as choisi notre DB");
-      this.props.research(input.value);      
+      this.props.research(input);      
     }else if(this.state.selectedOption == "facebookDB"){
       console.log("Test vers Facebook");
-      this.props.researchViaFacebook(input.value,distance,longitude,latitude);
+      this.props.researchViaFacebook(input,distance,longitude,latitude);
     }else{
       console.log("C'est une putain d'erreur pour arriver la!");
     }
@@ -62,23 +77,32 @@ export class EventResearch extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginBottom: '20px'}}>
         <form >
-          <p>
-            <label htmlFor="">Recherche : </label>
-            <input type="text" name="inputResearch" ref="research" />
-            <button onClick={this.ClickClack} value="test">Envoyer</button>
-            
-            <input type="radio" id="researchChoice1" name="choice" value="ourDB" onChange={this.handleOptionChange} checked={this.state.selectedOption === 'ourDB'} />
-            <label for="researchChoice1">Night-Out</label>
-
-            <input type="radio" id="researchChoice2" name="choice" value="facebookDB" onChange={this.handleOptionChange} checked={this.state.selectedOption === 'facebookDB'} />
-            <label for="researchChoice2">Facebook</label>
-
+          <FormControl>
+            <InputLabel htmlFor="research">Recherche : </InputLabel>
+            <Input type="text" name="inputResearch" id="research" ref="research" onChange={this.handleInputChange}/>
+          </FormControl>
+          <FormControl>
+            <RadioGroup
+              aria-label="gender"
+              name="gender2"
+              value={this.state.selectedOption}
+              onChange={this.handleOptionChange}
+            >
+              <FormControlLabel value="ourDB" control={<Radio />} label="Night Out" />
+              <FormControlLabel value="facebookDB" control={<Radio />} label="Facebook" />
+            </RadioGroup>
+          </FormControl>
+          <FormControl>
             <input type="range" id="distanceKM" min="1" max="100" onChange={this.handleTrackBar}/>
-            <span for="distanceKM" id="range">{this.state.distance} KM</span>
-          
-          </p>
+            <span htmlFor="distanceKM" id="range">{this.state.distance} KM</span>
+          </FormControl>
+          <FormControl>
+            <Button raised color="primary" onClick={this.ClickClack}>
+              Envoyer
+            </Button>
+          </FormControl>
         </form>
       </div>
     );

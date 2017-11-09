@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 
 // Import Style
 import styles from './Header.css';
@@ -11,23 +15,21 @@ export function Header(props, context) {
   );
 
   return (
-    <div className={styles.header}>
-      <div className={styles['language-switcher']}>
-        <ul>
-          <li><FormattedMessage id="switchLanguage" /></li>
-          {languageNodes}
-        </ul>
-      </div>
-      <div className={styles.content}>
-        <h1 className={styles['site-title']}>
-          <Link to="/" ><FormattedMessage id="siteTitle" /></Link>
-        </h1>
-        {
-          context.router.isActive('/', true)
-            ? <a className={styles['add-post-button']} href="#" onClick={props.toggleAddPost}><FormattedMessage id="addPost" /></a>
-            : null
-        }
-      </div>
+    <div>
+      <AppBar position="static" color="primary" style={{ background: 'rgba(52, 73, 94,1.0)' }}>
+        <Toolbar>
+          <Typography type="title" color="inherit" style={{ flex: 1 }}>
+            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+              Night Out
+            </Link>
+          </Typography>
+          <Link to="/events" style={{ textDecoration: 'none' }}>
+            <Button color="contrast">Recherche</Button>
+          </Link>
+          <Button color="contrast">Login</Button>
+          <Button color="contrast">Sign In</Button>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }
