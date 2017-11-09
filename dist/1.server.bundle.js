@@ -1,7 +1,7 @@
 exports.ids = [1];
 exports.modules = {
 
-/***/ 86:
+/***/ 95:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -33,24 +33,24 @@ exports.modules = {
 	
 	var _reactIntl = __webpack_require__(1);
 	
-	var _EventMap = __webpack_require__(87);
+	var _EventMap = __webpack_require__(96);
 	
 	var _EventMap2 = _interopRequireDefault(_EventMap);
 	
-	var _EventActions = __webpack_require__(8);
+	var _EventActions = __webpack_require__(9);
 	
-	var _EventReducer = __webpack_require__(9);
+	var _EventReducer = __webpack_require__(10);
 	
 	var _reactRouter = __webpack_require__(3);
 	
 	var _Event = {
-	  "event-div": "_1bsciJyhVFuLam1kjvDFnO",
-	  "single-event": "_3JBZgC0ed2h9y2WFzKlGM0",
-	  "event-title": "_65jErK1rcXdpCOGzYVGKK",
-	  "location": "_3jSMkUOX_4JFP9zMRZjoic",
-	  "event-desc": "_1e2qla6Si7eA8kaWJXIIsD",
-	  "eevnt-detail": "_3-8RyBjXKvuyqqn1i2DkTO",
-	  "event-detail": "_3MhQ_-bBzfu4nygtz_iNQ7"
+	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
+	  "single-event": "_2Ucm-nXTucrLpyqmK0mwTG",
+	  "event-title": "_30rZWoSelktXziNHZ4AzL2",
+	  "location": "_1HqoozAZAb5aV33rF3QoLs",
+	  "event-desc": "gwBvdLZTvuaxj0oPJULOD",
+	  "eevnt-detail": "_3rhf2hynhbItVf-i1861_E",
+	  "event-detail": "XPAFlXEDc4knjbIR_hMeQ"
 	};
 	
 	var _Event2 = _interopRequireDefault(_Event);
@@ -112,7 +112,7 @@ exports.modules = {
 
 /***/ },
 
-/***/ 87:
+/***/ 96:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -128,7 +128,7 @@ exports.modules = {
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGoogleMaps = __webpack_require__(88);
+	var _reactGoogleMaps = __webpack_require__(97);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
