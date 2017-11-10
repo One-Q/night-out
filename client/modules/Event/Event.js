@@ -10,12 +10,15 @@ import { Link } from 'react-router';
 import styles from './Event.css';
 
 let facebook = false;
+let isLocated = false;
 var long;
 var lat;
+
 
 function errorPositionFunction(){
   //TODO: Afficher une autre erreur
   alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');  
+  isLocated=false;
 }
 
 class Event extends Component {
@@ -28,11 +31,10 @@ class Event extends Component {
     this.handleClickClackFacebook = this.handleClickClackFacebook.bind(this);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) =>{
+        isLocated=true;
         this.lat = position.coords.latitude;
         this.long = position.coords.longitude;
       }, errorPositionFunction);
-    } else {
-      alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
     }
   }
 
@@ -45,24 +47,24 @@ class Event extends Component {
      }
   }
   handleClickClackFacebook = (value,distance) => {
-    console.log("handleClickClackFacebook");
     console.log(this.long);
     console.log(this.lat);
     facebook=true;
-    if(value){
-      this.props.dispatch(fetchEventsFromFacebook(value,distance,this.long,this.lat,null));
-    }else{
-      this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.long,this.lat,distance));
+    console.log(isLocated);
+    if(isLocated){
+      if(value){
+        this.props.dispatch(fetchEventsFromFacebook(value,distance,this.long,this.lat,null));
+      }else{
+        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.long,this.lat,distance));
+      }
     }
-    
   }
 
   render() {
-    //console.log('Props Event : ' + JSON.stringify(this.props));
     let events;
     if (this.props.events !== undefined) {
      events = this.props.events.map((event) => {
-      return (<div key={facebook ? event.id : event._id} className={styles['event-div']}>
+      return (<div key={facebook ? console.log(event.id) : event._id} className={styles['event-div']}>
           <h2 className={styles['event-title']}>
             <Link to={`/events/${event.slug}`}>
               {event.name}

@@ -12,6 +12,9 @@ const accessToken ="https://graph.facebook.com/endpoint?key=value&access_token=1
 
 // Instantiate EventSearch
 let es = new EventSearch();
+
+// Instantiate value for facebook research
+let value = "";
   
 
 /**
@@ -73,6 +76,10 @@ export function getResearch(req, res) {
 return res.status(200);
 }
 
+/**
+ * Get events by id from mongo db
+ * @param events
+ */
 function getEventsByidFromMongo(e){
   return new Promise((res, rej) => {
       Event.find({'_id' : {$in : e}}).exec((err, event) => {
@@ -81,6 +88,10 @@ function getEventsByidFromMongo(e){
   }
   )}
 
+/**
+ * retrieve Id from a events from elasticsearch
+ * @param events
+ */
 function retrieveId(events){
  let table_id = [];
  var i=0;
@@ -93,31 +104,53 @@ function retrieveId(events){
   });
 }
 
+/**
+ * Get events from Facebook by value , long , lat , distance
+ * @param req
+ * @param res
+ */
+
 export function getEventsFromFacebook(req, res) {
-  console.log(req.params.value);
-  fetchEventsFacebook(req.params.long,req.params.lat,req.params.distance,req.params.value)
+  value = req.params.value;
+  fetchEventsFacebook(req.params.long,req.params.lat,req.params.distance)
+  .then(events => mapFacebookEvents(events,req.params.value))
   .then(events => distinctFacebookEvents(events))
   .then(eventsFacebook => {return res.json({eventsFacebook})});
-  //TODO check with value
 
 }
 
+/**
+ * Get events from Facebook without value , only long and lat 
+ * @param req
+ * @param res
+ */
 export function getEventsFromFacebookWithoutValue(req, res) {
   fetchEventsFacebook(req.params.long,req.params.lat,req.params.distance)
   .then(events =>distinctFacebookEvents(events))
   .then(eventsFacebook => {return res.json({eventsFacebook})});
-
-
 }
 
-function fetchEventsFacebook(lng,lat,distance=0,value=""){
+
+/**
+ * Map events by the value
+ * @param events
+ */
+
+function mapFacebookEvents(events){
+  return new Promise((res,rej) => {
+    res(events.filter((e) =>  includeStr(e)));
+})
+
+}
+function includeStr(event){
+  return event.name!==undefined ? event.name.includes(value) : false || event.description!==undefined ?event.description.includes(value) : false ;
+}
+
+function fetchEventsFacebook(lng,lat,distance=0){
   let options = {};
-  console.log(lng);
-  console.log(lat);
   options.lng =lng;
   options.lat =lat;
   options.distance = distance;
-  options.query=value;
   options.accessToken = accessToken;
   options.sort="distance";
   return new Promise((res,rej) =>{
