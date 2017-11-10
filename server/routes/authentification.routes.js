@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as AuthentificationController from '../controllers/authentification.controller';
-import passport from '../passport';
+import auth from '../auth';
 
 const router = new Router();
 
@@ -8,6 +8,6 @@ const router = new Router();
 router.route('/login').post(AuthentificationController.login);
 
 // Check if a user is logged
-router.route('/amilogged').get(passport.authenticate('jwt', {session: false}),AuthentificationController.amILogged);
+router.route('/amilogged').get(auth.authenticate(), AuthentificationController.amILogged);
 
 export default router;

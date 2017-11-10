@@ -8,12 +8,13 @@ const userSchema = new Schema({
   password: { type: 'String', required: true },
   slug: { type: 'String', required: true },
   cuid: { type: 'String', required: true },
+  email: { type: 'String', required: true },
   registrationDate: { type: 'Date', default: Date.now, required: true },
 });
 
 userSchema.methods.generateHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 
-userSchema.methods.validatePassword = function(password) {
+userSchema.methods.validatePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 }
 
