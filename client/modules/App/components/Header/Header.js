@@ -16,7 +16,7 @@ export function Header(props, context) {
 
   return (
     <div>
-      <AppBar position="static" color="primary" style={{ background: 'rgba(52, 73, 94,1.0)' }}>
+      <AppBar position="static" color="primary" style={{ background: 'rgba(52, 73, 94, 1.0)' }}>
         <Toolbar>
           <Typography type="title" color="inherit" style={{ flex: 1 }}>
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
