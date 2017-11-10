@@ -8,6 +8,7 @@ import Button from 'material-ui/Button';
 
 // Import Style
 import styles from './Header.css';
+import appStyles from '../../App.css';
 
 export function Header(props, context) {
   const languageNodes = props.intl.enabledLanguages.map(
@@ -17,18 +18,20 @@ export function Header(props, context) {
   return (
     <div>
       <AppBar position="static" color="primary" style={{ background: 'rgba(52, 73, 94, 1.0)' }}>
-        <Toolbar>
-          <Typography type="title" color="inherit" style={{ flex: 1 }}>
-            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
-              Night Out
+        <div className={appStyles.container}>
+          <Toolbar>
+            <Typography type="title" color="inherit" style={{ flex: 1 }}>
+              <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+                Night Out
+              </Link>
+            </Typography>
+            <Link to="/events" style={{ textDecoration: 'none' }}>
+              <Button color="contrast">Recherche</Button>
             </Link>
-          </Typography>
-          <Link to="/events" style={{ textDecoration: 'none' }}>
-            <Button color="contrast">Recherche</Button>
-          </Link>
-          <Button color="contrast">Login</Button>
-          <Button color="contrast">Sign In</Button>
-        </Toolbar>
+            <Button color="contrast">Login</Button>
+            <Button color="contrast">Sign In</Button>
+          </Toolbar>
+        </div>
       </AppBar>
     </div>
   );
