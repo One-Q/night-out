@@ -1,31 +1,34 @@
-import jwt from 'jsonwebtoken';
-import passport from '../passport';
+import jwt from 'jwt-simple';
+import auth from '../auth';
+import User from '../models/user';
 
-export function login(req, res, next) {
-    passport.authenticate('local', { session: false }, (err, user, info) => {
-        if (err) return next(err);
-        if (!user) {
-            return res.status(401).json({
-                user: { ok: false },
-                message: 'Faliure to login',
-            });
-        } else {
-            const payload = { username: user.username };
-            const options = { subject: user.cuid };
-            const token = jwt.sign(payload, 'secret', options);
 
-            req.session.token = token;
-
-            return res.json({
-                message: '',
-                user: { ok: true, token }
-            });
-        }
-    })(req, res, next);
+export function login(req, res) {
+    if (req.body.username && req.body.password) {
+        let username = req.body.username;
+        let password = req.body.password;
+        User.findOne({ username }).then((user) => {
+            if (user) {
+                if (user.validatePassword(password)) {
+                    let payload = { id: user.cuid };
+                    let token = jwt.encode(payload, 'secret');
+                    res.json({ token: token });
+                }
+                else {
+                    res.sendStatus(403);
+                }
+            }
+            else
+                res.sendStatus(402);
+        });
+    }
+    else {
+        res.sendStatus(401);
+    }
 }
 
 export function amILogged(req, res) {
     return res.json({
-        user:{ ok: true }
+        user: { ok: true }
     });
 }
