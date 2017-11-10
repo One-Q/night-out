@@ -44,13 +44,13 @@ exports.modules = {
 	var _reactRouter = __webpack_require__(3);
 	
 	var _Event = {
-	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
-	  "single-event": "_2Ucm-nXTucrLpyqmK0mwTG",
-	  "event-title": "_30rZWoSelktXziNHZ4AzL2",
-	  "location": "_1HqoozAZAb5aV33rF3QoLs",
-	  "event-desc": "gwBvdLZTvuaxj0oPJULOD",
-	  "eevnt-detail": "_3rhf2hynhbItVf-i1861_E",
-	  "event-detail": "XPAFlXEDc4knjbIR_hMeQ"
+	  "event-div": "_1bsciJyhVFuLam1kjvDFnO",
+	  "single-event": "_3JBZgC0ed2h9y2WFzKlGM0",
+	  "event-title": "_65jErK1rcXdpCOGzYVGKK",
+	  "location": "_3jSMkUOX_4JFP9zMRZjoic",
+	  "event-desc": "_1e2qla6Si7eA8kaWJXIIsD",
+	  "eevnt-detail": "_3-8RyBjXKvuyqqn1i2DkTO",
+	  "event-detail": "_3MhQ_-bBzfu4nygtz_iNQ7"
 	};
 	
 	var _Event2 = _interopRequireDefault(_Event);

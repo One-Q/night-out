@@ -296,9 +296,9 @@
 	  };
 	}
 	
-	function fetchEventsFromFacebookWithoutValue(long, lat) {
+	function fetchEventsFromFacebookWithoutValue(long, lat, distance) {
 	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('eventsFromFacebook/' + long + '&' + lat).then(function (res) {
+	    return (0, _apiCaller2.default)('eventsFromFacebook/' + long + '&' + lat + '&' + distance * 1000).then(function (res) {
 	      return dispatch(researchEvents(res.eventsFacebook));
 	    });
 	  };
@@ -770,13 +770,13 @@
 	var _reactRouter = __webpack_require__(3);
 	
 	var _Event = {
-	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
-	  "single-event": "_2Ucm-nXTucrLpyqmK0mwTG",
-	  "event-title": "_30rZWoSelktXziNHZ4AzL2",
-	  "location": "_1HqoozAZAb5aV33rF3QoLs",
-	  "event-desc": "gwBvdLZTvuaxj0oPJULOD",
-	  "eevnt-detail": "_3rhf2hynhbItVf-i1861_E",
-	  "event-detail": "XPAFlXEDc4knjbIR_hMeQ"
+	  "event-div": "_1bsciJyhVFuLam1kjvDFnO",
+	  "single-event": "_3JBZgC0ed2h9y2WFzKlGM0",
+	  "event-title": "_65jErK1rcXdpCOGzYVGKK",
+	  "location": "_3jSMkUOX_4JFP9zMRZjoic",
+	  "event-desc": "_1e2qla6Si7eA8kaWJXIIsD",
+	  "eevnt-detail": "_3-8RyBjXKvuyqqn1i2DkTO",
+	  "event-detail": "_3MhQ_-bBzfu4nygtz_iNQ7"
 	};
 	
 	var _Event2 = _interopRequireDefault(_Event);
@@ -793,6 +793,15 @@
 	
 	
 	var facebook = false;
+	var isLocated = false;
+	var long;
+	var lat;
+	
+	function errorPositionFunction() {
+	  //TODO: Afficher une autre erreur
+	  alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
+	  isLocated = false;
+	}
 	
 	var _ref2 = _jsx('h1', {}, void 0, 'Les \xE9v\xE9nements');
 	
@@ -817,13 +826,17 @@
 	      } else {
 	        _this.props.dispatch((0, _EventActions.fetchEvents)());
 	      }
-	    }, _this.handleClickClackFacebook = function (value, distance, longitude, latitude) {
-	      console.log("handleClickClackFacebook");
+	    }, _this.handleClickClackFacebook = function (value, distance) {
+	      console.log(_this.long);
+	      console.log(_this.lat);
 	      facebook = true;
-	      if (value) {
-	        _this.props.dispatch((0, _EventActions.fetchEventsFromFacebook)(value, distance, longitude, latitude, null));
-	      } else {
-	        _this.props.dispatch((0, _EventActions.fetchEventsFromFacebookWithoutValue)(longitude, latitude));
+	      console.log(isLocated);
+	      if (isLocated) {
+	        if (value) {
+	          _this.props.dispatch((0, _EventActions.fetchEventsFromFacebook)(value, distance, _this.long, _this.lat, null));
+	        } else {
+	          _this.props.dispatch((0, _EventActions.fetchEventsFromFacebookWithoutValue)(_this.long, _this.lat, distance));
+	        }
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -831,24 +844,32 @@
 	  _createClass(Event, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+	
 	      this.props.dispatch((0, _EventActions.fetchEvents)());
 	      this.handleClickClack = this.handleClickClack.bind(this);
 	      this.handleClickClackFacebook = this.handleClickClackFacebook.bind(this);
+	      if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(function (position) {
+	          isLocated = true;
+	          _this2.lat = position.coords.latitude;
+	          _this2.long = position.coords.longitude;
+	        }, errorPositionFunction);
+	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      //console.log('Props Event : ' + JSON.stringify(this.props));
 	      var events = void 0;
 	      if (this.props.events !== undefined) {
 	        events = this.props.events.map(function (event) {
 	          return _jsx('div', {
 	            className: _Event2.default['event-div']
-	          }, facebook ? event.id : event._id, _jsx('h2', {
+	          }, facebook ? console.log(event.id) : event._id, _jsx('h2', {
 	            className: _Event2.default['event-title']
 	          }, void 0, _jsx(_reactRouter.Link, {
 	            to: '/events/' + event.slug
-	          }, void 0, event.name)), _jsx('p', {}, void 0, event.description), _jsx('p', {}, void 0, facebook ? event.place.location.city : event.location.city, ' , ', facebook ? event.place.location.street : event.location.street, ' '));
+	          }, void 0, event.name)), _jsx('p', {}, void 0, event.description), _jsx('p', {}, void 0, facebook ? event.venue.location.city : event.location.city, ' , ', facebook ? event.venue.location.street : event.location.street, ' '));
 	        });
 	      }
 	
@@ -934,13 +955,13 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _PostListItem = {
-	  "single-post": "_3B15Q62CNe0LaxJ8BUZr5W",
-	  "post-title": "_3mZF-WLrnBUxaWr9zFi6Q_",
-	  "author-name": "_1cSDPptMi8rvUEB2tAonlW",
-	  "post-desc": "_3D8Fgk2edKTkFyBDsUEZ2u",
-	  "post-action": "_3S84cKmlvGO49pK1biPlXr",
-	  "divider": "y2SIF3ydn02JYMgeklO7S",
-	  "post-detail": "_3W9vrxIdnQ93EmH-x2UgJR"
+	  "single-post": "_2wFZUrnLLPIM2UvuNgnV1r",
+	  "post-title": "_1BU3HyU1b5fh1tsPA9MtRq",
+	  "author-name": "_2pYEGhQRMs0Mh9CsoJsCrq",
+	  "post-desc": "_2hG8tPFCGI0k7BZ5cz9nnH",
+	  "post-action": "_37qYFcYfJHxrTH_bV6-TQo",
+	  "divider": "_3H_6OlXO_Hx_93avyoPoZ2",
+	  "post-detail": "_16xorg78DM6DwmPTBglw02"
 	};
 	
 	var _PostListItem2 = _interopRequireDefault(_PostListItem);
@@ -1605,7 +1626,7 @@
 	router.route('/eventsFromFacebook/:value&:distance&:long&:lat&:category').get(EventController.getEventsFromFacebook);
 	
 	// Get events from Facebook without input value
-	router.route('/eventsFromFacebook/:long&:lat').get(EventController.getEventsFromFacebookWithoutValue);
+	router.route('/eventsFromFacebook/:long&:lat&:distance').get(EventController.getEventsFromFacebookWithoutValue);
 	exports.default = router;
 
 /***/ },
@@ -1875,7 +1896,9 @@
 	var _reactRedux = __webpack_require__(2);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -2010,10 +2033,18 @@
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
 	var _Footer = {
-	  "footer": "_3vPEi87A1wyh1iLR3bsBGf"
+	  "footer": "_1oiRVDtQ6fOWkhBVWcRyE_"
 	};
 	
 	var _Footer2 = _interopRequireDefault(_Footer);
+	
+	var _App = {
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
+	};
+	
+	var _App2 = _interopRequireDefault(_App);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2034,12 +2065,14 @@
 	
 	function Footer() {
 	  return _jsx('div', {
-	    style: { background: 'rgba(52, 73, 94,1.0)', flexGrow: 1 }
+	    style: { background: 'rgba(52, 73, 94,1.0)' }
+	  }, void 0, _jsx('div', {
+	    className: _App2.default.container
 	  }, void 0, _jsx(_Grid2.default, {
 	    container: true,
 	    spacing: 24,
-	    style: { width: '100%', paddingLeft: '24px', paddingRight: '24px' }
-	  }, void 0, _ref, _ref2, _ref3));
+	    style: { width: '100%' }
+	  }, void 0, _ref, _ref2, _ref3)));
 	}
 	
 	exports.default = Footer;
@@ -2087,12 +2120,12 @@
 	var _Button2 = _interopRequireDefault(_Button);
 	
 	var _Header = {
-	  "header": "_2sEZYfHlvDy9uXqVIXG1aM",
-	  "content": "_1eavAvnySzoZc5rld6Q4pa",
-	  "site-title": "UfFn6muOcOBjkVI5_yltp",
-	  "add-post-button": "CkTz6a2gQTJjwXIEAlTSk",
-	  "language-switcher": "_3bviQya5ZWCvWr6lGdfO9h",
-	  "selected": "_3IRlmCpgSZBcTGVIGHvgaI"
+	  "header": "_3EGjKVGKCGTGQn_m_YASdF",
+	  "content": "_391cv5n_RFU0K9SBOjXDEt",
+	  "site-title": "_11V45Tl3_Hdy_ARI53CW9g",
+	  "add-post-button": "XrNjmGRHH_vMEgGeC3S75",
+	  "language-switcher": "X6vAu1vEuRDWiN2kDvA_z",
+	  "selected": "_3ecuVjN6tTUWkR7u3Co3s"
 	};
 	
 	var _Header2 = _interopRequireDefault(_Header);
@@ -2124,7 +2157,7 @@
 	  return _jsx('div', {}, void 0, _jsx(_AppBar2.default, {
 	    position: 'static',
 	    color: 'primary',
-	    style: { background: 'rgba(52, 73, 94,1.0)' }
+	    style: { background: 'rgba(52, 73, 94, 1.0)' }
 	  }, void 0, _jsx(_Toolbar2.default, {}, void 0, _jsx(_Typography2.default, {
 	    type: 'title',
 	    color: 'inherit',
@@ -2200,11 +2233,6 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	//Default input ourDB is true
-	
-	var longitude = 4.3189401;
-	var latitude = 50.813537499999995;
-	
 	var _ref = _jsx(_Input.InputLabel, {
 	  htmlFor: 'research'
 	}, void 0, 'Recherche : ');
@@ -2239,7 +2267,7 @@
 	        _this.props.research(input);
 	      } else if (_this.state.selectedOption == "facebookDB") {
 	        console.log("Test vers Facebook");
-	        _this.props.researchViaFacebook(input, distance, longitude, latitude);
+	        _this.props.researchViaFacebook(input, distance);
 	      } else {
 	        console.log("C'est une putain d'erreur pour arriver la!");
 	      }
@@ -2248,7 +2276,7 @@
 	    _this.state = {
 	      inputResearch: '',
 	      selectedOption: 'ourDB',
-	      distance: 50
+	      distance: 10
 	    };
 	    _this.handleOptionChange = _this.handleOptionChange.bind(_this);
 	    _this.ClickClack = _this.ClickClack.bind(_this);
@@ -2300,8 +2328,9 @@
 	      }, void 0, _ref2, _ref3)), _jsx(_Form.FormControl, {}, void 0, _jsx('input', {
 	        type: 'range',
 	        id: 'distanceKM',
-	        min: '1',
-	        max: '100',
+	        min: '0',
+	        step: '5',
+	        max: '10',
 	        onChange: this.handleTrackBar
 	      }), _jsx('span', {
 	        htmlFor: 'distanceKM',
@@ -2395,12 +2424,12 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _PostCreateWidget = {
-	  "form": "_1HNxVmVCIfsWU6Q22cRSd7",
-	  "form-content": "VlHIHfXe5nkoruuc0N8pJ",
-	  "form-title": "_32cczwmKrlcNdTsvCr-oBL",
-	  "form-field": "_1srubE9zVaJuCqkgKCA3lY",
-	  "post-submit-button": "_2m9Bzr_sJcQ7FK3o3X0PBL",
-	  "appear": "_30KT3DYyUvGj_5sBYnixvw"
+	  "form": "_1_WEV3z8MyISJ_IVeQGbfN",
+	  "form-content": "_3CPctdi6XIS37va2ubmlCG",
+	  "form-title": "_1CSMUfhA4ysKjSED0EfzhX",
+	  "form-field": "_2UV8G3K76UKXYl2G9ov3yn",
+	  "post-submit-button": "_1atG94QrpmrK4ei1Y4lDc3",
+	  "appear": "_38mS7lSZiNDV5iEXieRUC7"
 	};
 	
 	var _PostCreateWidget2 = _interopRequireDefault(_PostCreateWidget);
@@ -2538,13 +2567,13 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _PostListItem = {
-	  "single-post": "_3B15Q62CNe0LaxJ8BUZr5W",
-	  "post-title": "_3mZF-WLrnBUxaWr9zFi6Q_",
-	  "author-name": "_1cSDPptMi8rvUEB2tAonlW",
-	  "post-desc": "_3D8Fgk2edKTkFyBDsUEZ2u",
-	  "post-action": "_3S84cKmlvGO49pK1biPlXr",
-	  "divider": "y2SIF3ydn02JYMgeklO7S",
-	  "post-detail": "_3W9vrxIdnQ93EmH-x2UgJR"
+	  "single-post": "_2wFZUrnLLPIM2UvuNgnV1r",
+	  "post-title": "_1BU3HyU1b5fh1tsPA9MtRq",
+	  "author-name": "_2pYEGhQRMs0Mh9CsoJsCrq",
+	  "post-desc": "_2hG8tPFCGI0k7BZ5cz9nnH",
+	  "post-action": "_37qYFcYfJHxrTH_bV6-TQo",
+	  "divider": "_3H_6OlXO_Hx_93avyoPoZ2",
+	  "post-detail": "_16xorg78DM6DwmPTBglw02"
 	};
 	
 	var _PostListItem2 = _interopRequireDefault(_PostListItem);
@@ -2718,6 +2747,9 @@
 	// Instantiate EventSearch
 	var es = new _facebookEventsByLocationCore2.default();
 	
+	// Instantiate value for facebook research
+	var value = "";
+	
 	/**
 	 * Get a single event
 	 * @param req containing the name of the event
@@ -2776,6 +2808,10 @@
 	  return res.status(200);
 	}
 	
+	/**
+	 * Get events by id from mongo db
+	 * @param events
+	 */
 	function getEventsByidFromMongo(e) {
 	  return new Promise(function (res, rej) {
 	    _event2.default.find({ '_id': { $in: e } }).exec(function (err, event) {
@@ -2784,6 +2820,10 @@
 	  });
 	}
 	
+	/**
+	 * retrieve Id from a events from elasticsearch
+	 * @param events
+	 */
 	function retrieveId(events) {
 	  var table_id = [];
 	  var i = 0;
@@ -2796,34 +2836,61 @@
 	  });
 	}
 	
+	/**
+	 * Get events from Facebook by value , long , lat , distance
+	 * @param req
+	 * @param res
+	 */
+	
 	function getEventsFromFacebook(req, res) {
-	  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance, req.params.categorie).then(function (events) {
+	  value = req.params.value;
+	  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance).then(function (events) {
+	    return mapFacebookEvents(events, req.params.value);
+	  }).then(function (events) {
 	    return distinctFacebookEvents(events);
 	  }).then(function (eventsFacebook) {
 	    return res.json({ eventsFacebook: eventsFacebook });
 	  });
-	  //TODO check with value
 	}
 	
+	/**
+	 * Get events from Facebook without value , only long and lat 
+	 * @param req
+	 * @param res
+	 */
 	function getEventsFromFacebookWithoutValue(req, res) {
-	  fetchEventsFacebook(req.params.long, req.params.lat).then(function (events) {
+	  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance).then(function (events) {
 	    return distinctFacebookEvents(events);
 	  }).then(function (eventsFacebook) {
 	    return res.json({ eventsFacebook: eventsFacebook });
 	  });
+	}
+	
+	/**
+	 * Map events by the value
+	 * @param events
+	 */
+	
+	function mapFacebookEvents(events) {
+	  return new Promise(function (res, rej) {
+	    res(events.filter(function (e) {
+	      return includeStr(e);
+	    }));
+	  });
+	}
+	function includeStr(event) {
+	  return event.name !== undefined ? event.name.includes(value) : false || event.description !== undefined ? event.description.includes(value) : false;
 	}
 	
 	function fetchEventsFacebook(lng, lat) {
 	  var distance = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-	  var category = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 	
 	  var options = {};
 	  options.lng = lng;
 	  options.lat = lat;
-	  options.distance = 0;
-	  options.category = category != null ? category : undefined;
+	  options.distance = distance;
 	  options.accessToken = accessToken;
-	  options.sort = "time";
+	  options.sort = "distance";
 	  return new Promise(function (res, rej) {
 	    es.search(options).then(function (eventsFacebook) {
 	      res(eventsFacebook.events);
