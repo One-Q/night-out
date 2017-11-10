@@ -9,7 +9,7 @@ import styles from './Footer.css';
 export function Footer() {
   return (
     <div style={{ background: 'rgba(52, 73, 94,1.0)', flexGrow: 1 }}>
-      <Grid container spacing={24} style={{ width: '100%', paddingLeft: '24px', paddingRight: '24px' }}>
+      <Grid container spacing={24} className="container-grid">
         <Grid item sm={4}>
         t
         </Grid>
