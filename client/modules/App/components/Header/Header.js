@@ -18,9 +18,9 @@ export function Header(props, context) {
 
   return (
     <div>
-      <AppBar position="static" color="primary" style={{ background: 'rgba(52, 73, 94, 1.0)' }}>
-        <div className={appStyles.container} style={{ padding: 0 }}>
-          <Toolbar>
+      <AppBar position="static" color="primary" style={{ background: 'rgba(52, 73, 94, 1.0)'}}>
+        <div className={appStyles.container} style={{ paddingTop: 0, paddingBottom: 0 }}>
+          <Toolbar style={{ padding: 0 }}>
             <Typography type="title" color="inherit" style={{ flex: 1 }}>
               <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
                 Night Out

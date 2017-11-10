@@ -11,6 +11,8 @@ import Button from 'material-ui/Button';
 
 import { getEvents } from '../EventReducer';
 
+import appStyles from '../../App/App.css';
+
 
 export class EventResearch extends Component {
 
@@ -73,7 +75,7 @@ export class EventResearch extends Component {
 
   render() {
     return (
-      <div style={{marginBottom: '20px'}}>
+      <div className={appStyles.container}>
         <form >
           <FormControl>
             <InputLabel htmlFor="research">Recherche : </InputLabel>

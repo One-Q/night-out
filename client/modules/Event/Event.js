@@ -5,9 +5,11 @@ import { fetchEvents , fetchResearch , fetchEventsFromFacebook , fetchEventsFrom
 import { EventResearch } from './EventResearch/EventResearch';
 import { getEvents } from './EventReducer';
 import { Link } from 'react-router';
+import Grid from 'material-ui/Grid';
 
 // Import Style
 import styles from './Event.css';
+import appStyles from '../App/App.css';
 
 let facebook = false;
 let isLocated = false;
@@ -64,23 +66,34 @@ class Event extends Component {
     let events;
     if (this.props.events !== undefined) {
      events = this.props.events.map((event) => {
-      return (<div key={facebook ? console.log(event.id) : event._id} className={styles['event-div']}>
-          <h2 className={styles['event-title']}>
-            <Link to={`/events/${event.slug}`}>
-              {event.name}
-            </Link>
-          </h2>
-          <p>{event.description}</p>
-          <p>{facebook ? event.venue.location.city: event.location.city} , {facebook ? event.venue.location.street: event.location.street} </p>
-        </div>);
+      return (
+          <div key={facebook ? console.log(event.id) : event._id} className={styles['event-div']}>
+            <h2 className={styles['event-title']}>
+              <Link to={`/events/${event.slug}`}>
+                {event.name}
+              </Link>
+            </h2>
+            <p>{event.description}</p>
+            <p>{facebook ? event.venue.location.city: event.location.city} , {facebook ? event.venue.location.street: event.location.street} </p>
+          </div>
+        );
       });
     }
 
     return (
       <div>
         <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook}/>
-        <h1>Les événements</h1>
-        {events}
+        <div className={appStyles.container}>
+          <h1>Les événements</h1>
+          <Grid container spacing={24} style={{ width: '100%' }}>
+            <Grid item md={6}>
+              {events}
+            </Grid>
+            <Grid item md={6}>
+              Map
+            </Grid>
+          </Grid>
+        </div>
       </div>
     );
   }

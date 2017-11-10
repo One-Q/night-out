@@ -53,7 +53,7 @@ export class App extends Component {
             intl={this.props.intl}
             toggleAddPost={this.toggleAddPostSection}
           />
-          <div className={styles.container}>
+          <div>
             {this.props.children}
           </div>
           <Footer />
