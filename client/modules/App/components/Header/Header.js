@@ -5,6 +5,7 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import Search from 'material-ui-icons/Search';
 
 // Import Style
 import styles from './Header.css';
@@ -18,7 +19,7 @@ export function Header(props, context) {
   return (
     <div>
       <AppBar position="static" color="primary" style={{ background: 'rgba(52, 73, 94, 1.0)' }}>
-        <div className={appStyles.container}>
+        <div className={appStyles.container} style={{ padding: 0 }}>
           <Toolbar>
             <Typography type="title" color="inherit" style={{ flex: 1 }}>
               <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
@@ -26,7 +27,9 @@ export function Header(props, context) {
               </Link>
             </Typography>
             <Link to="/events" style={{ textDecoration: 'none' }}>
-              <Button color="contrast">Recherche</Button>
+              <Button color="contrast" style={{ padding: 0 }}>
+                <Search />
+              </Button>
             </Link>
             <Button color="contrast">Login</Button>
             <Button color="contrast">Sign In</Button>
