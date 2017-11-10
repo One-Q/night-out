@@ -11,10 +11,6 @@ import Button from 'material-ui/Button';
 
 import { getEvents } from '../EventReducer';
 
-//Default input ourDB is true
-
-const longitude = 4.3189401;
-const latitude = 50.813537499999995;
 
 export class EventResearch extends Component {
 
@@ -24,7 +20,7 @@ export class EventResearch extends Component {
     this.state = {
       inputResearch: '',
       selectedOption:'ourDB',
-      distance:50,
+      distance:10,
     };
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.ClickClack = this.ClickClack.bind(this);
@@ -59,7 +55,7 @@ export class EventResearch extends Component {
       this.props.research(input);      
     }else if(this.state.selectedOption == "facebookDB"){
       console.log("Test vers Facebook");
-      this.props.researchViaFacebook(input,distance,longitude,latitude);
+      this.props.researchViaFacebook(input,distance);
     }else{
       console.log("C'est une putain d'erreur pour arriver la!");
     }
@@ -95,7 +91,7 @@ export class EventResearch extends Component {
             </RadioGroup>
           </FormControl>
           <FormControl>
-            <input type="range" id="distanceKM" min="1" max="100" onChange={this.handleTrackBar}/>
+            <input type="range" id="distanceKM" min="0" step="5" max="10" onChange={this.handleTrackBar}/>
             <span htmlFor="distanceKM" id="range">{this.state.distance} KM</span>
           </FormControl>
           <FormControl>

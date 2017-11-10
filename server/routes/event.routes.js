@@ -17,5 +17,5 @@ router.route('/research/:event').get(EventController.getResearch);
 router.route('/eventsFromFacebook/:value&:distance&:long&:lat&:category').get(EventController.getEventsFromFacebook);
 
 // Get events from Facebook without input value
-router.route('/eventsFromFacebook/:long&:lat').get(EventController.getEventsFromFacebookWithoutValue);
+router.route('/eventsFromFacebook/:long&:lat&:distance').get(EventController.getEventsFromFacebookWithoutValue);
 export default router;

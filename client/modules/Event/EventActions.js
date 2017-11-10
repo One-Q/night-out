@@ -54,8 +54,8 @@ export function fetchEventsFromFacebook(value,distance,long,lat,category){
   };
 }
 
-export function fetchEventsFromFacebookWithoutValue(long,lat){
+export function fetchEventsFromFacebookWithoutValue(long,lat,distance){
   return (dispatch) => {
-    return callApi(`eventsFromFacebook/${long}&${lat}`).then(res =>dispatch(researchEvents(res.eventsFacebook)));
+    return callApi(`eventsFromFacebook/${long}&${lat}&${distance*1000}`).then(res =>dispatch(researchEvents(res.eventsFacebook)));
   };
 }

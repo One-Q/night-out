@@ -10,13 +10,30 @@ import { Link } from 'react-router';
 import styles from './Event.css';
 
 let facebook = false;
+var long;
+var lat;
+
+function errorPositionFunction(){
+  //TODO: Afficher une autre erreur
+  alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');  
+}
 
 class Event extends Component {
+
+  
 
   componentDidMount() {
     this.props.dispatch(fetchEvents());
     this.handleClickClack = this.handleClickClack.bind(this);
     this.handleClickClackFacebook = this.handleClickClackFacebook.bind(this);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) =>{
+        this.lat = position.coords.latitude;
+        this.long = position.coords.longitude;
+      }, errorPositionFunction);
+    } else {
+      alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
+    }
   }
 
   handleClickClack = (value) => {
@@ -27,13 +44,15 @@ class Event extends Component {
        this.props.dispatch(fetchEvents());
      }
   }
-  handleClickClackFacebook = (value,distance,longitude,latitude) => {
+  handleClickClackFacebook = (value,distance) => {
     console.log("handleClickClackFacebook");
+    console.log(this.long);
+    console.log(this.lat);
     facebook=true;
     if(value){
-      this.props.dispatch(fetchEventsFromFacebook(value,distance,longitude,latitude,null));
+      this.props.dispatch(fetchEventsFromFacebook(value,distance,this.long,this.lat,null));
     }else{
-      this.props.dispatch(fetchEventsFromFacebookWithoutValue(longitude,latitude));
+      this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.long,this.lat,distance));
     }
     
   }
@@ -50,7 +69,7 @@ class Event extends Component {
             </Link>
           </h2>
           <p>{event.description}</p>
-          <p>{facebook ? event.place.location.city: event.location.city} , {facebook ? event.place.location.street: event.location.street} </p>
+          <p>{facebook ? event.venue.location.city: event.location.city} , {facebook ? event.venue.location.street: event.location.street} </p>
         </div>);
       });
     }

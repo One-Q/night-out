@@ -94,7 +94,8 @@ function retrieveId(events){
 }
 
 export function getEventsFromFacebook(req, res) {
-  fetchEventsFacebook(req.params.long,req.params.lat,req.params.distance,req.params.categorie)
+  console.log(req.params.value);
+  fetchEventsFacebook(req.params.long,req.params.lat,req.params.distance,req.params.value)
   .then(events => distinctFacebookEvents(events))
   .then(eventsFacebook => {return res.json({eventsFacebook})});
   //TODO check with value
@@ -102,21 +103,23 @@ export function getEventsFromFacebook(req, res) {
 }
 
 export function getEventsFromFacebookWithoutValue(req, res) {
-  fetchEventsFacebook(req.params.long,req.params.lat)
-  .then(events => distinctFacebookEvents(events))
+  fetchEventsFacebook(req.params.long,req.params.lat,req.params.distance)
+  .then(events =>distinctFacebookEvents(events))
   .then(eventsFacebook => {return res.json({eventsFacebook})});
 
 
 }
 
-function fetchEventsFacebook(lng,lat,distance=0,category=null){
+function fetchEventsFacebook(lng,lat,distance=0,value=""){
   let options = {};
+  console.log(lng);
+  console.log(lat);
   options.lng =lng;
   options.lat =lat;
-  options.distance = 0;
-  options.category = category!=null ? category : undefined;
+  options.distance = distance;
+  options.query=value;
   options.accessToken = accessToken;
-  options.sort="time";
+  options.sort="distance";
   return new Promise((res,rej) =>{
     es.search(options).then(function (eventsFacebook) {
       res(eventsFacebook.events);
