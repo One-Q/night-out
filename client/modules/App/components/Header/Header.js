@@ -18,7 +18,14 @@ export function Header(props, context) {
 
   return (
     <div>
-      <AppBar position="static" color="primary" style={{ background: 'rgba(52, 73, 94, 1.0)'}}>
+      <AppBar
+        position="static"
+        color="primary"
+        style={{
+          backgroundColor: '#2B86C5',
+          backgroundImage: 'linear-gradient(225deg, #784BA0 0%, #2B86C5 100%)',
+        }}
+      >
         <div className={appStyles.container} style={{ paddingTop: 0, paddingBottom: 0 }}>
           <Toolbar style={{ padding: 0 }}>
             <Typography type="title" color="inherit" style={{ flex: 1 }}>

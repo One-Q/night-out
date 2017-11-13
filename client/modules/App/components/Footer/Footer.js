@@ -9,7 +9,11 @@ import appStyles from '../../App.css';
 
 export function Footer() {
   return (
-    <div style={{ background: 'rgba(52, 73, 94,1.0)' }}>
+    <div
+      style={{
+        backgroundColor: '#2B86C5',
+      }}
+    >
       <div className={appStyles.container}>
         <Grid container spacing={24} style={{ width: '100%' }}>
           <Grid item sm={4}>
