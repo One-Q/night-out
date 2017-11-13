@@ -35,6 +35,7 @@ import { fetchComponentData } from './util/fetchData';
 import posts from './routes/post.routes';
 import events from './routes/event.routes';
 import authentification from './routes/authentification.routes';
+import user from './routes/user.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
 import auth from './auth';
@@ -62,6 +63,7 @@ app.use(auth.initialize());
 app.use('/api', posts);
 app.use('/api', events);
 app.use('/api', authentification);
+app.use('/api', user);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {

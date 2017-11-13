@@ -1,6 +1,5 @@
 import Post from './models/post';
 import Event from './models/event';
-import User from './models/user';
 
 const jsonEvents = require('./events.json');
 export default function () {
@@ -43,20 +42,6 @@ export default function () {
     Post.create([post1, post2], (error) => {
       if (!error) {
         // console.log('ready to go....');
-      }
-    });
-  });
-
-  User.count().exec((err, count) => {
-    if (count > 0) {
-      return;
-    }
-    const newUser = new User({ username: "Test", slug: 'test-user', cuid: 'cikqgkv4p31ck7453ualdn3hd', email: 'test@test.be' });
-    newUser.password = newUser.generateHash('test');
-
-    User.create([newUser], (error) => {
-      if (!error) {
-        //console.log('ready to go....');
       }
     });
   });
