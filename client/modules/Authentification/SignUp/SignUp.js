@@ -1,19 +1,33 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { Card, CardText } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
-
+import Button from 'material-ui/Button';
 
 const SignUp = ({
   onSubmit,
   onChange,
+  isOpen,
+  handleClose,
   errors,
   user,
 }) => (
-  <div>
-    <h2>Sign up</h2>
-  </div>
+  <Dialog open={isOpen} onRequestClose={handleClose}>
+    <DialogTitle>Sign Up</DialogTitle>
+    <DialogActions>
+      <Button onClick={handleClose} color="primary">
+        Cancel
+      </Button>
+      <Button onClick={handleClose} color="primary">
+        Submit
+      </Button>
+    </DialogActions>
+  </Dialog>
 );
 
 SignUp.propTypes = {

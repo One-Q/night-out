@@ -9,6 +9,7 @@ class LoginContainer extends React.Component {
    */
   constructor(props) {
     super(props);
+    console.log(props);
 
     // set the initial component state
     this.state = {
@@ -57,6 +58,8 @@ class LoginContainer extends React.Component {
   render() {
     return (
       <Login
+        isOpen={this.props.isOpen}
+        handleClose={this.props.handleClose}
         onSubmit={this.processForm}
         onChange={this.changeUser}
         errors={this.state.errors}

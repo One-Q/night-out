@@ -59,6 +59,8 @@ class SignUpContainer extends React.Component {
   render() {
     return (
       <SignUp
+        isOpen={this.props.isOpen}
+        handleClose={this.props.handleClose}
         onSubmit={this.processForm}
         onChange={this.changeUser}
         errors={this.state.errors}
