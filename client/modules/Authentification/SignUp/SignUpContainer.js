@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import SignUpForm from './SignUp';
+import SignUp from './SignUp';
 
 
 class SignUpContainer extends React.Component {
@@ -58,7 +58,7 @@ class SignUpContainer extends React.Component {
    */
   render() {
     return (
-      <SignUpForm
+      <SignUp
         onSubmit={this.processForm}
         onChange={this.changeUser}
         errors={this.state.errors}

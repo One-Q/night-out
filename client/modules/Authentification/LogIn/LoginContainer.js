@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import LoginForm from './Login';
+import Login from './Login';
 
 
 class LoginContainer extends React.Component {
@@ -56,7 +56,7 @@ class LoginContainer extends React.Component {
    */
   render() {
     return (
-      <LoginForm
+      <Login
         onSubmit={this.processForm}
         onChange={this.changeUser}
         errors={this.state.errors}
