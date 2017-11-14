@@ -20,7 +20,7 @@ let isLocated=false;
 
 class Event extends Component {
 
-  
+  //Test
 
   componentDidMount() {
     this.handleClickClack = this.handleClickClack.bind(this);

@@ -786,21 +786,21 @@
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
 	var _Event = {
-	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
-	  "single-event": "_2Ucm-nXTucrLpyqmK0mwTG",
-	  "event-title": "_30rZWoSelktXziNHZ4AzL2",
-	  "location": "_1HqoozAZAb5aV33rF3QoLs",
-	  "event-desc": "gwBvdLZTvuaxj0oPJULOD",
-	  "eevnt-detail": "_3rhf2hynhbItVf-i1861_E",
-	  "event-detail": "XPAFlXEDc4knjbIR_hMeQ"
+	  "event-div": "_1bsciJyhVFuLam1kjvDFnO",
+	  "single-event": "_3JBZgC0ed2h9y2WFzKlGM0",
+	  "event-title": "_65jErK1rcXdpCOGzYVGKK",
+	  "location": "_3jSMkUOX_4JFP9zMRZjoic",
+	  "event-desc": "_1e2qla6Si7eA8kaWJXIIsD",
+	  "eevnt-detail": "_3-8RyBjXKvuyqqn1i2DkTO",
+	  "event-detail": "_3MhQ_-bBzfu4nygtz_iNQ7"
 	};
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -817,15 +817,9 @@
 	
 	
 	var facebook = false;
+	var long = void 0;
+	var lat = void 0;
 	var isLocated = false;
-	var long;
-	var lat;
-	
-	function errorPositionFunction() {
-	  //TODO: Afficher une autre erreur
-	  alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
-	  isLocated = false;
-	}
 	
 	var _ref2 = _jsx('h1', {}, void 0, 'Les \xE9v\xE9nements');
 	
@@ -850,22 +844,27 @@
 	
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Event.__proto__ || Object.getPrototypeOf(Event)).call.apply(_ref, [this].concat(args))), _this), _this.handleClickClack = function (value) {
 	      facebook = false;
-	      if (value) {
-	        _this.props.dispatch((0, _EventActions.fetchResearch)(value));
-	      } else {
-	        _this.props.dispatch((0, _EventActions.fetchEvents)());
-	      }
-	    }, _this.handleClickClackFacebook = function (value, distance) {
-	      console.log(_this.long);
-	      console.log(_this.lat);
-	      facebook = true;
-	      console.log(isLocated);
 	      if (isLocated) {
 	        if (value) {
-	          _this.props.dispatch((0, _EventActions.fetchEventsFromFacebook)(value, distance, _this.long, _this.lat, null));
+	          _this.props.dispatch((0, _EventActions.fetchResearch)(value));
 	        } else {
-	          _this.props.dispatch((0, _EventActions.fetchEventsFromFacebookWithoutValue)(_this.long, _this.lat, distance));
+	          _this.props.dispatch((0, _EventActions.fetchEvents)());
 	        }
+	      } else {
+	        alert('Tu peux pas!');
+	      }
+	    }, _this.handleClickClackFacebook = function (value, distance) {
+	      console.log(long);
+	      console.log(lat);
+	      facebook = true;
+	      if (isLocated) {
+	        if (value) {
+	          _this.props.dispatch((0, _EventActions.fetchEventsFromFacebook)(value, distance, long, lat, null));
+	        } else {
+	          _this.props.dispatch((0, _EventActions.fetchEventsFromFacebookWithoutValue)(long, lat, distance));
+	        }
+	      } else {
+	        alert('Oh non fdp , tu peux pas!');
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -875,16 +874,20 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 	
-	      this.props.dispatch((0, _EventActions.fetchEvents)());
 	      this.handleClickClack = this.handleClickClack.bind(this);
 	      this.handleClickClackFacebook = this.handleClickClackFacebook.bind(this);
-	      if (navigator.geolocation) {
-	        navigator.geolocation.getCurrentPosition(function (position) {
-	          isLocated = true;
-	          _this2.lat = position.coords.latitude;
-	          _this2.long = position.coords.longitude;
-	        }, errorPositionFunction);
-	      }
+	      Promise.all([canLocated()]).then(function (res) {
+	        if (res == "prompt" || res == "granted") {
+	          navigator.geolocation.getCurrentPosition(function (position) {
+	            _this2.props.dispatch((0, _EventActions.fetchEvents)());
+	            isLocated = true;
+	            lat = position.coords.latitude;
+	            long = position.coords.longitude;
+	          });
+	        }
+	      }, function () {
+	        isLocated = false;
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -920,6 +923,26 @@
 	
 	  return Event;
 	}(_react.Component);
+	
+	function canLocated() {
+	  return new Promise(function (res, rej) {
+	    navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
+	      console.log(result.state);
+	      if (result.state === 'granted') {
+	        //granted
+	        isLocated = true;
+	        res("granted");
+	      } else if (result.state === 'denied') {
+	        //denied
+	        isLocated = false;
+	        rej("denied");
+	      } else {
+	        //prompt
+	        res("prompt");
+	      }
+	    });
+	  });
+	}
 	
 	function mapStateToProps(state) {
 	  return {
@@ -993,13 +1016,13 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _PostListItem = {
-	  "single-post": "_3B15Q62CNe0LaxJ8BUZr5W",
-	  "post-title": "_3mZF-WLrnBUxaWr9zFi6Q_",
-	  "author-name": "_1cSDPptMi8rvUEB2tAonlW",
-	  "post-desc": "_3D8Fgk2edKTkFyBDsUEZ2u",
-	  "post-action": "_3S84cKmlvGO49pK1biPlXr",
-	  "divider": "y2SIF3ydn02JYMgeklO7S",
-	  "post-detail": "_3W9vrxIdnQ93EmH-x2UgJR"
+	  "single-post": "_2wFZUrnLLPIM2UvuNgnV1r",
+	  "post-title": "_1BU3HyU1b5fh1tsPA9MtRq",
+	  "author-name": "_2pYEGhQRMs0Mh9CsoJsCrq",
+	  "post-desc": "_2hG8tPFCGI0k7BZ5cz9nnH",
+	  "post-action": "_37qYFcYfJHxrTH_bV6-TQo",
+	  "divider": "_3H_6OlXO_Hx_93avyoPoZ2",
+	  "post-detail": "_16xorg78DM6DwmPTBglw02"
 	};
 	
 	var _PostListItem2 = _interopRequireDefault(_PostListItem);
@@ -1885,9 +1908,9 @@
 	var _reactRedux = __webpack_require__(2);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -2014,15 +2037,15 @@
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
 	var _Footer = {
-	  "footer": "_3vPEi87A1wyh1iLR3bsBGf"
+	  "footer": "_1oiRVDtQ6fOWkhBVWcRyE_"
 	};
 	
 	var _Footer2 = _interopRequireDefault(_Footer);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -2120,20 +2143,20 @@
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
 	var _Header = {
-	  "header": "_2sEZYfHlvDy9uXqVIXG1aM",
-	  "content": "_1eavAvnySzoZc5rld6Q4pa",
-	  "site-title": "UfFn6muOcOBjkVI5_yltp",
-	  "add-post-button": "CkTz6a2gQTJjwXIEAlTSk",
-	  "language-switcher": "_3bviQya5ZWCvWr6lGdfO9h",
-	  "selected": "_3IRlmCpgSZBcTGVIGHvgaI"
+	  "header": "_3EGjKVGKCGTGQn_m_YASdF",
+	  "content": "_391cv5n_RFU0K9SBOjXDEt",
+	  "site-title": "_11V45Tl3_Hdy_ARI53CW9g",
+	  "add-post-button": "XrNjmGRHH_vMEgGeC3S75",
+	  "language-switcher": "X6vAu1vEuRDWiN2kDvA_z",
+	  "selected": "_3ecuVjN6tTUWkR7u3Co3s"
 	};
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -2653,9 +2676,9 @@
 	var _EventReducer = __webpack_require__(11);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -2859,12 +2882,12 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _PostCreateWidget = {
-	  "form": "_1HNxVmVCIfsWU6Q22cRSd7",
-	  "form-content": "VlHIHfXe5nkoruuc0N8pJ",
-	  "form-title": "_32cczwmKrlcNdTsvCr-oBL",
-	  "form-field": "_1srubE9zVaJuCqkgKCA3lY",
-	  "post-submit-button": "_2m9Bzr_sJcQ7FK3o3X0PBL",
-	  "appear": "_30KT3DYyUvGj_5sBYnixvw"
+	  "form": "_1_WEV3z8MyISJ_IVeQGbfN",
+	  "form-content": "_3CPctdi6XIS37va2ubmlCG",
+	  "form-title": "_1CSMUfhA4ysKjSED0EfzhX",
+	  "form-field": "_2UV8G3K76UKXYl2G9ov3yn",
+	  "post-submit-button": "_1atG94QrpmrK4ei1Y4lDc3",
+	  "appear": "_38mS7lSZiNDV5iEXieRUC7"
 	};
 	
 	var _PostCreateWidget2 = _interopRequireDefault(_PostCreateWidget);
@@ -3002,13 +3025,13 @@
 	var _reactIntl = __webpack_require__(1);
 	
 	var _PostListItem = {
-	  "single-post": "_3B15Q62CNe0LaxJ8BUZr5W",
-	  "post-title": "_3mZF-WLrnBUxaWr9zFi6Q_",
-	  "author-name": "_1cSDPptMi8rvUEB2tAonlW",
-	  "post-desc": "_3D8Fgk2edKTkFyBDsUEZ2u",
-	  "post-action": "_3S84cKmlvGO49pK1biPlXr",
-	  "divider": "y2SIF3ydn02JYMgeklO7S",
-	  "post-detail": "_3W9vrxIdnQ93EmH-x2UgJR"
+	  "single-post": "_2wFZUrnLLPIM2UvuNgnV1r",
+	  "post-title": "_1BU3HyU1b5fh1tsPA9MtRq",
+	  "author-name": "_2pYEGhQRMs0Mh9CsoJsCrq",
+	  "post-desc": "_2hG8tPFCGI0k7BZ5cz9nnH",
+	  "post-action": "_37qYFcYfJHxrTH_bV6-TQo",
+	  "divider": "_3H_6OlXO_Hx_93avyoPoZ2",
+	  "post-detail": "_16xorg78DM6DwmPTBglw02"
 	};
 	
 	var _PostListItem2 = _interopRequireDefault(_PostListItem);
