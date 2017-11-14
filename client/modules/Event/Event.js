@@ -12,54 +12,59 @@ import styles from './Event.css';
 import appStyles from '../App/App.css';
 
 let facebook = false;
-let isLocated = false;
-var long;
-var lat;
+let long;
+let lat;
+let isLocated=false;
 
 
-function errorPositionFunction(){
-  //TODO: Afficher une autre erreur
-  alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');  
-  isLocated=false;
-}
 
 class Event extends Component {
 
   
 
   componentDidMount() {
-    this.props.dispatch(fetchEvents());
     this.handleClickClack = this.handleClickClack.bind(this);
     this.handleClickClackFacebook = this.handleClickClackFacebook.bind(this);
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) =>{
-        isLocated=true;
-        this.lat = position.coords.latitude;
-        this.long = position.coords.longitude;
-      }, errorPositionFunction);
-    }
+    Promise.all([canLocated()]).then((res) => {
+      if(res == "prompt" || res == "granted"){
+        navigator.geolocation.getCurrentPosition((position) =>{
+          this.props.dispatch(fetchEvents());
+          isLocated=true;
+          lat = position.coords.latitude;
+          long = position.coords.longitude;
+        })
+      }
+    },()=>{
+      isLocated=false;
+    });
   }
 
   handleClickClack = (value) => {
     facebook = false;
-     if(value){
-      this.props.dispatch(fetchResearch(value));
-     }else{
-       this.props.dispatch(fetchEvents());
-     }
-  }
-  handleClickClackFacebook = (value,distance) => {
-    console.log(this.long);
-    console.log(this.lat);
-    facebook=true;
-    console.log(isLocated);
     if(isLocated){
       if(value){
-        this.props.dispatch(fetchEventsFromFacebook(value,distance,this.long,this.lat,null));
-      }else{
-        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.long,this.lat,distance));
-      }
+        this.props.dispatch(fetchResearch(value));
+       }else{
+         this.props.dispatch(fetchEvents());
+       }
+    }else{
+      alert('Tu peux pas!');
     }
+  }
+
+  handleClickClackFacebook = (value,distance) => {
+    console.log(long);
+    console.log(lat);
+    facebook=true;
+    if(isLocated){
+      if(value){
+        this.props.dispatch(fetchEventsFromFacebook(value,distance,long,lat,null));
+      }else{
+        this.props.dispatch(fetchEventsFromFacebookWithoutValue(long,lat,distance));
+      }
+    }else{
+      alert('Oh non fdp , tu peux pas!');
+    }   
   }
 
   render() {
@@ -97,6 +102,26 @@ class Event extends Component {
       </div>
     );
   }
+}
+
+function canLocated(){
+  return new Promise ((res,rej) => {
+    navigator.permissions.query({name:'geolocation'}).then(function(result) {
+    console.log(result.state);
+    if (result.state === 'granted') {
+        //granted
+       isLocated=true;
+       res("granted");
+    } else if (result.state === 'denied') {
+        //denied
+       isLocated=false;
+       rej("denied");
+    } else{
+        //prompt
+       res("prompt");
+    }
+  })
+  });
 }
 
 
