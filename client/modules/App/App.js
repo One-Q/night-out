@@ -13,6 +13,7 @@ import Footer from './components/Footer/Footer';
 // Import Actions
 import { toggleAddPost } from './AppActions';
 import { switchLanguage } from '../../modules/Intl/IntlActions';
+import { getUser } from '../../modules/Authentification/AuthentificationReducer';
 
 export class App extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ export class App extends Component {
               },
             ]}
           />
-          <Header />
+          <Header user={ this.props.user } />
           <div>
             {this.props.children}
           </div>
@@ -69,6 +70,7 @@ App.propTypes = {
 function mapStateToProps(store) {
   return {
     intl: store.intl,
+    user: store.authentification.user,
   };
 }
 

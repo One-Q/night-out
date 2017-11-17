@@ -51,6 +51,20 @@ class Header extends Component {
   }
 
   render() {
+
+    let screen;
+
+    if (this.props.user.token) {
+
+    } else {
+      screen = (<div>
+        <Button color="contrast" onClick={this.handleLoginOpen}>Login</Button>
+        <LoginContainer isOpen={this.state.loginOpen} handleClose={this.handleLoginClose} />
+        <Button color="contrast" onClick={this.handleSignUpOpen}>Sign Up</Button>
+        <SignUpContainer isOpen={this.state.signUpOpen} handleClose={this.handleSignUpClose} />
+      </div>);
+    }
+
     return (
       <div>
         <AppBar
@@ -73,10 +87,7 @@ class Header extends Component {
                   <Search />
                 </Button>
               </Link>
-              <Button color="contrast" onClick={this.handleLoginOpen}>Login</Button>
-              <LoginContainer isOpen={this.state.loginOpen} handleClose={this.handleLoginClose} />
-              <Button color="contrast" onClick={this.handleSignUpOpen}>Sign Up</Button>
-              <SignUpContainer isOpen={this.state.signUpOpen} handleClose={this.handleSignUpClose} />
+              {screen}
             </Toolbar>
           </div>
         </AppBar>
