@@ -24,17 +24,26 @@ const Login = ({
       <TextField
         autoFocus
         margin="dense"
-        id="name"
-        label="Email Address"
-        type="email"
+        name="username"
+        label="Username"
+        type="text"
         fullWidth
+        onChange={onChange}
+      />
+      <TextField
+        margin="dense"
+        name="password"
+        label="Password"
+        type="password"
+        fullWidth
+        onChange={onChange}
       />
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose} color="primary">
         Cancel
       </Button>
-      <Button onClick={handleClose} color="primary">
+      <Button onClick={onSubmit} color="primary">
         Submit
       </Button>
     </DialogActions>

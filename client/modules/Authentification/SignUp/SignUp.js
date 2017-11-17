@@ -19,11 +19,50 @@ const SignUp = ({
 }) => (
   <Dialog open={isOpen} onRequestClose={handleClose}>
     <DialogTitle>Sign Up</DialogTitle>
+    <DialogContent>
+      <TextField
+        autoFocus
+        margin="dense"
+        name="username"
+        label="Username"
+        type="text"
+        value={user.username}
+        fullWidth
+        onChange={onChange}
+      />
+      <TextField
+        margin="dense"
+        name="email"
+        label="Email"
+        type="email"
+        value={user.email}
+        fullWidth
+        onChange={onChange}
+      />
+      <TextField
+        margin="dense"
+        name="password"
+        label="Password"
+        type="password"
+        value={user.password}
+        fullWidth
+        onChange={onChange}
+      />
+      <TextField
+        margin="dense"
+        name="passwordCheck"
+        label="Password"
+        type="password"
+        value={user.passwordCheck}
+        fullWidth
+        onChange={onChange}
+      />
+    </DialogContent>
     <DialogActions>
       <Button onClick={handleClose} color="primary">
         Cancel
       </Button>
-      <Button onClick={handleClose} color="primary">
+      <Button onClick={onSubmit} color="primary">
         Submit
       </Button>
     </DialogActions>
