@@ -14,7 +14,16 @@ export function login(user) {
     return callApi('login', 'post', {
       username: user.username,
       password: user.password,
-    }).then(res => dispatch(setUser(user)));
+    }).then((res) => {
+      console.log(res);
+      if (res.token) {
+        const userReceive = {
+          username: user.username,
+          token: res.token,
+        };
+        dispatch(setUser(userReceive));
+      }
+    });
   };
 }
 
@@ -24,6 +33,9 @@ export function signUp(user) {
       username: user.username,
       email: user.email,
       password: user.password,
-    }).then(res => dispatch(setUser(user)));
+    }).then((res) => {
+      console.log(res);
+      dispatch(setUser(user));
+    });
   }
 }

@@ -35,7 +35,9 @@ class LoginContainer extends React.Component {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
-    this.props.dispatch(login(this.state.user)).then();
+    this.props.dispatch(login(this.state.user)).then((res) => {
+      this.props.handleClose();
+    });
   }
 
   /**
