@@ -52,7 +52,13 @@ class SignUpContainer extends React.Component {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
-    this.props.dispatch(signUp(this.state.user));
+    this.props.dispatch(signUp(this.state.user)).then((err) => {
+      if (err) {
+
+      } else {
+        this.props.handleClose();
+      }
+    });
   }
 
   /**

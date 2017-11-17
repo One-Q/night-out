@@ -19,7 +19,7 @@ class Header extends Component {
     this.state = {
       loginOpen: false,
       signUpOpen: false,
-      hasToken: localStorage.getItem('token'),
+      hasToken: true,
     };
     this.handleLoginOpen = this.handleLoginOpen.bind(this);
     this.handleLoginClose = this.handleLoginClose.bind(this);
@@ -29,6 +29,12 @@ class Header extends Component {
   }
 
   componentWillReceiveProps() {
+    this.setState({
+      hasToken: localStorage.getItem('token'),
+    });
+  }
+
+  componentDidMount() {
     this.setState({
       hasToken: localStorage.getItem('token'),
     });

@@ -35,8 +35,15 @@ export function signUp(user) {
       email: user.email,
       password: user.password,
     }).then((res) => {
-      localStorage.setItem('token', res.token);
-      dispatch(setUser(user));
+      if (res.token) {
+        const userReceive = {
+          username: user.username,
+          token: res.token,
+        };
+        localStorage.setItem('token', res.token);
+        dispatch(setUser(userReceive));
+      }
+      return res;
     });
   }
 }
