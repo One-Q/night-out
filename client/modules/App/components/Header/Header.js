@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router';
-import { FormattedMessage } from 'react-intl';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -8,13 +7,6 @@ import Button from 'material-ui/Button';
 import Search from 'material-ui-icons/Search';
 import LoginContainer from '../../../Authentification/LogIn/LoginContainer';
 import SignUpContainer from '../../../Authentification/SignUp/SignUpContainer';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
 
 // Import Style
 import styles from './Header.css';
