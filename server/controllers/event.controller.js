@@ -9,13 +9,8 @@ let client = new elasticsearch.Client({
   log: "trace"
 });
 
-<<<<<<< HEAD
 const accessTokenFacebook ="https://graph.facebook.com/endpoint?key=value&access_token=1506957062727502|77a270d081b143d06581ac7dc05424b4";
 const accessTokenGoogle="AIzaSyCcbC1CoG5lG1TqdSG1S7Z1kwlMi6A3lzE";
-=======
-const accessToken = "https://graph.facebook.com/endpoint?key=value&access_token=1506957062727502|77a270d081b143d06581ac7dc05424b4";
-
->>>>>>> ec1ce51ebcecbd207b000c4d54bb511203757188
 
 // Instantiate EventSearch
 let es = new EventSearch();
@@ -159,15 +154,9 @@ function fetchEventsFacebook(lng, lat, distance = 0) {
   options.lng = lng;
   options.lat = lat;
   options.distance = distance;
-<<<<<<< HEAD
   options.accessTokenFacebook = accessTokenFacebook;
   options.sort="distance";
   return new Promise((res,rej) =>{
-=======
-  options.accessToken = accessToken;
-  options.sort = "distance";
-  return new Promise((res, rej) => {
->>>>>>> ec1ce51ebcecbd207b000c4d54bb511203757188
     es.search(options).then(function (eventsFacebook) {
       res(eventsFacebook.events);
     }).catch(function (error) {
@@ -201,6 +190,7 @@ export function getAdress(req,res){
   fetch(urlGoogleApi).then((result) => {
     return result.json();
   }).then(resultat => {return res.json({adresses : resultat})});
+}
      //return res.json({result: result.json()});
 /**
  * Create a new Event, require an authentification
