@@ -25,7 +25,7 @@ let value = "";
  * @param res
  */
 export function getEvent(req, res) {
-  console.log(req.params.slug);
+  //console.log(req.params.slug);
   Event.findOne({ slug: req.params.slug }).exec((err, event) => {
     if (err) {
       res.status(500).send(err);
@@ -180,6 +180,11 @@ function distinctFacebookEvents(events) {
   })
 }
 
+/**
+ * Create a new Event, require an authentification
+ * @param req
+ * @param res
+ */
 export function createEvent(req, res) {
   let idCreator = req.user.id;
   let name = req.body.name;
@@ -207,14 +212,39 @@ export function createEvent(req, res) {
     },
     startTime: new Date(startTime),
     creator: idCreator,
-    slug: slug(name.toLowerCase()+'-'+Date.now()),
+    slug: slug(name.toLowerCase() + '-' + Date.now()),
     cuid: cuid()
   });
   Event.create(event, (error) => {
     if (!error) {
-      //console.log('ready to go....');
+      return res.sendStatus(200)
     }
     else
       console.log(error)
+  });
+}
+
+/**
+ * Delete an Event, require an authentification and user to be the author of the Event
+ * @param req
+ * @param res
+ */
+export function deleteEvent(req, res) {
+  let eventId = req.body.id;
+  if (!eventId)
+    return res.status(400).json("Veuillez fournir l'évènement à supprimer.")
+  Event.findOne({ cuid: eventId }).then((event) => {
+    if (!event)
+      return res.status(400).json("Event introuvable.")
+    else {
+      if (req.user.id != event.creator)
+        return res.status(400).json("Impossible de supprimer un évènement qui n'est pas le votre.")
+      Event.remove({ cuid: eventId }, (error) => {
+        if (!error)
+          return res.status(200).json("Evènement supprimé avec succès.")
+        else
+          return res.status(400).json("Erreur interne.")
+      })
+    }
   });
 }
