@@ -15,15 +15,15 @@ export function login(req, res) {
                     res.json({ token: token });
                 }
                 else {
-                    res.sendStatus(403);
+                    res.status(400).json({ error: "Mot de passe incorrect" });
                 }
             }
             else
-                res.sendStatus(402);
+                res.status(400).json({ error: "Utilisateur introuvable" });
         });
     }
     else {
-        res.sendStatus(401);
+        res.status(400).json({ error: "Veuillez remplir tous les champs." });
     }
 }
 

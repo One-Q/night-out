@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Link } from 'react-router';
-import { FormattedMessage } from 'react-intl';
+import { Link, Router } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -8,13 +7,6 @@ import Button from 'material-ui/Button';
 import Search from 'material-ui-icons/Search';
 import LoginContainer from '../../../Authentification/LogIn/LoginContainer';
 import SignUpContainer from '../../../Authentification/SignUp/SignUpContainer';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
 
 // Import Style
 import styles from './Header.css';
@@ -27,11 +19,25 @@ class Header extends Component {
     this.state = {
       loginOpen: false,
       signUpOpen: false,
+      hasToken: true,
     };
     this.handleLoginOpen = this.handleLoginOpen.bind(this);
     this.handleLoginClose = this.handleLoginClose.bind(this);
     this.handleSignUpOpen = this.handleSignUpOpen.bind(this);
     this.handleSignUpClose = this.handleSignUpClose.bind(this);
+    this.signOut = this.signOut.bind(this);
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      hasToken: localStorage.getItem('token'),
+    });
+  }
+
+  componentDidMount() {
+    this.setState({
+      hasToken: localStorage.getItem('token'),
+    });
   }
 
   handleLoginOpen() {
@@ -58,7 +64,29 @@ class Header extends Component {
     });
   }
 
+  signOut() {
+    localStorage.removeItem('token');
+    this.setState({
+      hasToken: false,
+    });
+  }
+
   render() {
+    let screen;
+
+    if (this.state.hasToken) {
+      screen = (<div>
+        <Button color="contrast" onClick={this.signOut}>Sign Out</Button>
+      </div>);
+    } else {
+      screen = (<div>
+        <Button color="contrast" onClick={this.handleLoginOpen}>Login</Button>
+        <LoginContainer isOpen={this.state.loginOpen} handleClose={this.handleLoginClose} />
+        <Button color="contrast" onClick={this.handleSignUpOpen}>Sign Up</Button>
+        <SignUpContainer isOpen={this.state.signUpOpen} handleClose={this.handleSignUpClose} />
+      </div>);
+    }
+
     return (
       <div>
         <AppBar
@@ -81,10 +109,7 @@ class Header extends Component {
                   <Search />
                 </Button>
               </Link>
-              <Button color="contrast" onClick={this.handleLoginOpen}>Login</Button>
-              <LoginContainer isOpen={this.state.loginOpen} handleClose={this.handleLoginClose} />
-              <Button color="contrast" onClick={this.handleSignUpOpen}>Sign Up</Button>
-              <SignUpContainer isOpen={this.state.signUpOpen} handleClose={this.handleSignUpClose} />
+              {screen}
             </Toolbar>
           </div>
         </AppBar>
@@ -94,7 +119,7 @@ class Header extends Component {
 }
 
 Header.contextTypes = {
-  router: React.PropTypes.object,
+  router: React.PropTypes.object.isRequired,
 };
 
 Header.propTypes = {

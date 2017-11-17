@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import Login from './Login';
-
+import { login } from '../AuthentificationActions';
+import { getUser } from '../AuthentificationReducer';
+import { connect } from 'react-redux';
 
 class LoginContainer extends React.Component {
 
@@ -15,8 +17,8 @@ class LoginContainer extends React.Component {
     this.state = {
       errors: {},
       user: {
-        email: '',
-        password: ''
+        username: '',
+        password: '',
       }
     };
 
@@ -33,8 +35,9 @@ class LoginContainer extends React.Component {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
-    console.log('email:', this.state.user.email);
-    console.log('password:', this.state.user.password);
+    this.props.dispatch(login(this.state.user)).then((res) => {
+      this.props.handleClose();
+    });
   }
 
   /**
@@ -50,6 +53,7 @@ class LoginContainer extends React.Component {
     this.setState({
       user
     });
+    console.log(this.state);
   }
 
   /**
@@ -70,4 +74,14 @@ class LoginContainer extends React.Component {
 
 }
 
-export default LoginContainer;
+function mapStateToProps(state) {
+  return {
+    user: getUser(state),
+  };
+}
+
+LoginContainer.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps)(LoginContainer);

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as EventController from '../controllers/event.controller';
+import auth from '../auth';
 
 const router = new Router();
 
@@ -21,4 +22,10 @@ router.route('/eventsFromFacebook/:value&:distance&:long&:lat&:category').get(Ev
 
 // Get events from Facebook without input value
 router.route('/eventsFromFacebook/:long&:lat&:distance').get(EventController.getEventsFromFacebookWithoutValue);
+
+// Create an event (login required)
+router.route('/createEvent').post(auth.authenticate(),EventController.createEvent);
+
+// Delete a event (login required + needs to be the creator of the event)
+router.route('/deleteEvent').post(auth.authenticate(),EventController.deleteEvent);
 export default router;
