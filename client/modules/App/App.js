@@ -49,7 +49,7 @@ export class App extends Component {
               },
             ]}
           />
-          <Header user={ this.props.user } />
+          <Header user={ this.props.user } history={this.props.history} />
           <div>
             {this.props.children}
           </div>

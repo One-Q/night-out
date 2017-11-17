@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Link } from 'react-router';
+import { Link, Router } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -19,11 +19,19 @@ class Header extends Component {
     this.state = {
       loginOpen: false,
       signUpOpen: false,
+      hasToken: localStorage.getItem('token'),
     };
     this.handleLoginOpen = this.handleLoginOpen.bind(this);
     this.handleLoginClose = this.handleLoginClose.bind(this);
     this.handleSignUpOpen = this.handleSignUpOpen.bind(this);
     this.handleSignUpClose = this.handleSignUpClose.bind(this);
+    this.signOut = this.signOut.bind(this);
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      hasToken: localStorage.getItem('token'),
+    });
   }
 
   handleLoginOpen() {
@@ -50,12 +58,20 @@ class Header extends Component {
     });
   }
 
-  render() {
+  signOut() {
+    localStorage.removeItem('token');
+    this.setState({
+      hasToken: false,
+    });
+  }
 
+  render() {
     let screen;
 
-    if (this.props.user.token) {
-
+    if (this.state.hasToken) {
+      screen = (<div>
+        <Button color="contrast" onClick={this.signOut}>Sign Out</Button>
+      </div>);
     } else {
       screen = (<div>
         <Button color="contrast" onClick={this.handleLoginOpen}>Login</Button>
@@ -97,7 +113,7 @@ class Header extends Component {
 }
 
 Header.contextTypes = {
-  router: React.PropTypes.object,
+  router: React.PropTypes.object.isRequired,
 };
 
 Header.propTypes = {

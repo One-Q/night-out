@@ -21,6 +21,7 @@ export function login(user) {
           username: user.username,
           token: res.token,
         };
+        localStorage.setItem('token', res.token);
         dispatch(setUser(userReceive));
       }
     });
@@ -34,7 +35,7 @@ export function signUp(user) {
       email: user.email,
       password: user.password,
     }).then((res) => {
-      console.log(res);
+      localStorage.setItem('token', res.token);
       dispatch(setUser(user));
     });
   }
