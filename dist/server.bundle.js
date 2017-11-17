@@ -871,6 +871,10 @@
 	
 	  _createClass(Event, [{
 	    key: 'componentDidMount',
+	
+	
+	    //Test
+	
 	    value: function componentDidMount() {
 	      var _this2 = this;
 	

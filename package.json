@@ -78,6 +78,7 @@
     "jsonwebtoken": "^8.1.0",
     "jwt-simple": "^0.5.1",
     "limax": "^1.5.0",
+    "lodash.throttle": "^4.1.1",
     "material-ui": "^1.0.0-beta.20",
     "material-ui-icons": "^1.0.0-beta.17",
     "mock-css-modules": "^1.0.0",

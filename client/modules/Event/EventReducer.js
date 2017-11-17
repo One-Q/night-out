@@ -1,8 +1,8 @@
 // Import Actions
-import { ADD_EVENT, ADD_EVENTS, DELETE_EVENT, RESEARCH_EVENTS } from './EventActions';
+import { ADD_EVENT, ADD_EVENTS, DELETE_EVENT, RESEARCH_EVENTS , RESEARCHED_ADRESS} from './EventActions';
 
 // Initial State
-const initialState = { data: [] };
+const initialState = { data: [],adress:[] };
 
 const EventReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -15,13 +15,18 @@ const EventReducer = (state = initialState, action) => {
       return {
         data: action.events,
       };
-
+    case RESEARCHED_ADRESS :
+      return {
+        adress: action.adress,
+      };
     default:
       return state;
   }
 };
 
 export const getEvents = state => state.events.data;
+
+export const getAdress = state => state.events.adress;
 
 export const getEvent = (state, slug) => {
   if (state.events.data[0] === null) return '';

@@ -7,8 +7,8 @@ let client = new elasticsearch.Client({
   log: "trace"
 });
 
-const accessToken ="https://graph.facebook.com/endpoint?key=value&access_token=1506957062727502|77a270d081b143d06581ac7dc05424b4";
-
+const accessTokenFacebook ="https://graph.facebook.com/endpoint?key=value&access_token=1506957062727502|77a270d081b143d06581ac7dc05424b4";
+const accessTokenGoogle="AIzaSyCcbC1CoG5lG1TqdSG1S7Z1kwlMi6A3lzE";
 
 // Instantiate EventSearch
 let es = new EventSearch();
@@ -151,7 +151,7 @@ function fetchEventsFacebook(lng,lat,distance=0){
   options.lng =lng;
   options.lat =lat;
   options.distance = distance;
-  options.accessToken = accessToken;
+  options.accessTokenFacebook = accessTokenFacebook;
   options.sort="distance";
   return new Promise((res,rej) =>{
     es.search(options).then(function (eventsFacebook) {
@@ -175,4 +175,17 @@ function distinctFacebookEvents(events){
     });
     res(distinctEvents);
   })
+}
+
+export function getAdress(req,res){
+  let json = "json";
+  let type = "geocode";
+  let language = "fr";
+  let value = req.params.adress
+  let urlGoogleApi = "https://maps.googleapis.com/maps/api/place/autocomplete/"+json+"?input="+value+"&types="+type+"&language="+language+"&key="+accessTokenGoogle
+  console.log(urlGoogleApi);
+  fetch(urlGoogleApi).then((result) => {
+    return result.json();
+  }).then(resultat => {return res.json({adresses : resultat})});
+     //return res.json({result: result.json()});
 }

@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchEvents , fetchResearch , fetchEventsFromFacebook , fetchEventsFromFacebookWithoutValue} from './EventActions';
+import { fetchEvents , fetchResearch , fetchEventsFromFacebook , fetchEventsFromFacebookWithoutValue , fetchResearchedAdress} from './EventActions';
 import { EventResearch } from './EventResearch/EventResearch';
-import { getEvents } from './EventReducer';
+import { getEvents , getAdress} from './EventReducer';
 import { Link } from 'react-router';
 import Grid from 'material-ui/Grid';
+import throttle from 'lodash.throttle';
 
 // Import Style
 import styles from './Event.css';
@@ -20,7 +21,6 @@ let isLocated=false;
 
 class Event extends Component {
 
-  //Test
 
   componentDidMount() {
     this.handleClickClack = this.handleClickClack.bind(this);
@@ -67,6 +67,13 @@ class Event extends Component {
     }   
   }
 
+  handleResearchAdress= (input) => {
+    console.log("Cote Event" + input);
+    console.log(this.props.adress);
+    this.props.dispatch(fetchResearchedAdress(input));
+    //throttle(this.props.dispatch(fetchResearchedAdress(input)),1000);
+  }
+
   render() {
     let events;
     if (this.props.events !== undefined) {
@@ -87,7 +94,7 @@ class Event extends Component {
 
     return (
       <div>
-        <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook}/>
+        <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook} researchAdress={this.handleResearchAdress} adresses={this.props.adress}/>
         <div className={appStyles.container}>
           <h1>Les événements</h1>
           <Grid container spacing={24} style={{ width: '100%' }}>
@@ -127,8 +134,10 @@ function canLocated(){
 
 
 function mapStateToProps(state) {
+  console.log("state" + getAdress(state));
   return {
     events: getEvents(state),
+    adress : getAdress(state),
   };
 }
 

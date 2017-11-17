@@ -5,6 +5,7 @@ export const ADD_EVENT = 'ADD_EVENT';
 export const ADD_EVENTS = 'ADD_EVENTS';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const RESEARCH_EVENTS = 'RESEARCH_EVENTS';
+export const RESEARCHED_ADRESS = 'RESEARCHED_ADRESS';
 
 // Export Actions
 export function addEvent(event) {
@@ -26,6 +27,13 @@ export function researchEvents(events) {
     type: ADD_EVENTS,
     events,
   };
+}
+
+export function researchAdress(adress){
+  return {
+    type: RESEARCHED_ADRESS,
+    adress,
+  }
 }
 
 export function fetchEvents() {
@@ -58,4 +66,10 @@ export function fetchEventsFromFacebookWithoutValue(long,lat,distance){
   return (dispatch) => {
     return callApi(`eventsFromFacebook/${long}&${lat}&${distance*1000}`).then(res =>dispatch(researchEvents(res.eventsFacebook)));
   };
+}
+
+export function fetchResearchedAdress(adress){
+  return(dispatch) => {
+    return callApi(`researchAdress/${adress}`).then(res => { dispatch(researchAdress(res.adresses))});
+  }
 }

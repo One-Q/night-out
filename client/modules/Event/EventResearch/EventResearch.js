@@ -9,9 +9,9 @@ import Radio, { RadioGroup } from 'material-ui/Radio';
 import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 
-import { getEvents } from '../EventReducer';
-
 import appStyles from '../../App/App.css';
+
+let options;
 
 
 export class EventResearch extends Component {
@@ -28,7 +28,17 @@ export class EventResearch extends Component {
     this.ClickClack = this.ClickClack.bind(this);
     this.handleTrackBar = this.handleTrackBar.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
+    this.handleCityResearch = this.handleCityResearch.bind(this);
   }
+
+  handleCityResearch(input){
+    const target = input.target;
+    const value = target.value;
+    const name = target.name;
+    console.log(value);
+    this.props.researchAdress(value);
+  }
+
 
   handleOptionChange(radio) {
     const target = radio.target;
@@ -72,7 +82,6 @@ export class EventResearch extends Component {
     });
     console.log(value);
   }
-
   render() {
     return (
       <div className={appStyles.container}>
@@ -101,6 +110,12 @@ export class EventResearch extends Component {
               Envoyer
             </Button>
           </FormControl>
+
+          <input list="adress" type="text" name="inputCityResearch" id="researchCity" ref="researchCity" onChange={this.handleCityResearch}/>
+          <datalist id="adress" ref="datalist" >
+            {this.props.adresses ? this.props.adresses.predictions!==undefined ? this.props.adresses.predictions.map((adress) =>
+               <option value={adress.description} />
+                ) : "" : "" }</datalist>
         </form>
       </div>
     );
@@ -108,10 +123,8 @@ export class EventResearch extends Component {
 
 }
 
+
 function mapStateToProps(state) {
-  return {
-    events : getEvents(state)
-  };
 }
 
 EventResearch.propTypes = {
