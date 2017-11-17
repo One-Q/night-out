@@ -11,28 +11,51 @@ export function signUp(req, res) {
     let email = req.body.email;
     let password = req.body.password;
     if (!username || !email || !password)
-        return res.status(400).json('Veuillez remplir tous les champs.');
+        return res.status(400).json({ error: 'Veuillez remplir tous les champs.' });
     //Username 6-15 carac ne peut pas commencer par un chiffre
     if (!regUsername.test(username))
-        return res.status(400).json('Veuillez entrer un nom d\'utilisateur valide.');
+        return res.status(400).json({ error: 'Veuillez entrer un nom d\'utilisateur valide.' });
     if (!regEmail.test(email))
-        return res.status(400).json('Veuillez entrer une adresse email valide.');
+        return res.status(400).json({ error: 'Veuillez entrer une adresse email valide.' });
     //mdp 8-64 carac sans espaces
     if (!regPassword.test(password))
-        return res.status(400).json('Veuillez entrer un mot de passe valide.');
+        return res.status(400).json({ error: 'Veuillez entrer un mot de passe valide.' });
     Promise.all([checkEmail(email), checkUsername(username)]).then(() => {
-        const newUser = new User({ username: username, email: email, slug : slug(username.toLowerCase(), { lowercase: true }), cuid : cuid()});
+        const newUser = new User({ username: username, email: email, slug: slug(username.toLowerCase(), { lowercase: true }), cuid: cuid() });
         newUser.password = newUser.generateHash(password);
         User.create(newUser, (error) => {
             if (!error)
                 return res.sendStatus(200);
-            console.log('Erreur d\'insertion user : '+error);
-            return res.status(500).json('Erreur interne');
+            console.log('Erreur d\'insertion user : ' + error);
+            return res.status(500).json({ error: 'Erreur interne' });
         })
     }).catch((error) => {
-        return res.status(400).json(error);
+        return res.status(400).json({ error: error });
     })
 }
+
+export function changePassword(req, res) {
+    let cuid = req.user.id;
+    let oldPassword = req.body.oldPassword;
+    let newPassword = req.body.newPassword;
+    if (!cuid || !oldPassword || !newPassword)
+        return res.status(400).json({ error: 'Veuillez remplir tous les champs.' });
+    if (!regPassword.test(newPassword))
+        return res.status(400).json({ error: 'Veuillez entrer un nouveau mot de passe valide.' });
+    User.findOne({ cuid }).then((user) => {
+        if (!user) // Pas sensé arriver
+            return res.status(500).json({ error: 'Erreur interne.' });
+        if (!user.validatePassword(oldPassword))
+            return res.status(400).json({ error: 'Ancien mot de passe incorrect.' });
+        user.password = user.generateHash(newPassword);
+        user.save((err) => {
+            if (err)
+                return res.status(500).json({ error: 'Erreur interne' });
+            return res.sendStatus(200);
+        })
+    });
+}
+
 
 function checkEmail(email) {
     return new Promise((res, rej) => {

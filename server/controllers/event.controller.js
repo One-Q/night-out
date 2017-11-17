@@ -193,13 +193,13 @@ export function createEvent(req, res) {
   let startTime = req.body.startTime;
   let location = req.body.location;
   if (!idCreator || !name || !description || !category || !startTime || !location)
-    return res.status(400).json('Veuillez remplir tous les champs.');
+    return res.status(400).json({error : 'Veuillez remplir tous les champs.'});
   let city = req.body.location.city;
   let street = req.body.location.street;
   let latitude = req.body.location.latitude;
   let longitude = req.body.location.longitude;
   if (!city || !street || !latitude || !longitude)
-    return res.status(400).json('Veuillez remplir tous les champs.');
+    return res.status(400).json({error : 'Veuillez remplir tous les champs.'});
   const event = new Event({
     name: name,
     description: description,
@@ -220,7 +220,7 @@ export function createEvent(req, res) {
       return res.sendStatus(200)
     }
     else
-      console.log(error)
+      return res.status(500).json(error)
   });
 }
 
@@ -232,18 +232,18 @@ export function createEvent(req, res) {
 export function deleteEvent(req, res) {
   let eventId = req.body.id;
   if (!eventId)
-    return res.status(400).json("Veuillez fournir l'évènement à supprimer.")
+    return res.status(400).json({error : "Veuillez fournir l'évènement à supprimer."})
   Event.findOne({ cuid: eventId }).then((event) => {
     if (!event)
-      return res.status(400).json("Event introuvable.")
+      return res.status(400).json({error : "Event introuvable."})
     else {
       if (req.user.id != event.creator)
-        return res.status(400).json("Impossible de supprimer un évènement qui n'est pas le votre.")
+        return res.status(400).json({error : "Impossible de supprimer un évènement qui n'est pas le votre."})
       Event.remove({ cuid: eventId }, (error) => {
         if (!error)
-          return res.status(200).json("Evènement supprimé avec succès.")
+          return res.status(200)
         else
-          return res.status(400).json("Erreur interne.")
+          return res.status(500).json({error : "Erreur interne."})
       })
     }
   });
