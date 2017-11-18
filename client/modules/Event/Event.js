@@ -7,20 +7,25 @@ import { getEvents , getAdress} from './EventReducer';
 import { Link } from 'react-router';
 import Grid from 'material-ui/Grid';
 import throttle from 'lodash.throttle';
+import Eventmap from './EventMap/EventMap';
 
 // Import Style
 import styles from './Event.css';
 import appStyles from '../App/App.css';
 
 let facebook = false;
-let long;
-let lat;
-let isLocated=false;
-
-
+let long = 4.3799652;
+let lat = 50.8613156;
+let isLocated = false;
 
 class Event extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+    };
+  }
 
   componentDidMount() {
     this.handleClickClack = this.handleClickClack.bind(this);
@@ -76,10 +81,16 @@ class Event extends Component {
 
   render() {
     let events;
-    if (this.props.events !== undefined) {
+    let markers = [];
+    if (this.props.events) {
      events = this.props.events.map((event) => {
+       if (facebook) {
+         console.log(event);
+       } else {
+         markers.push({ lat: event.location.latitude, lng: event.location.longitude });
+       }
       return (
-          <div key={facebook ? console.log(event.id) : event._id} className={styles['event-div']}>
+          <div key={facebook ? console.log(event.id) : event._id} className={styles['single-event']}>
             <h2 className={styles['event-title']}>
               <Link to={`/events/${event.slug}`}>
                 {event.name}
@@ -90,23 +101,39 @@ class Event extends Component {
           </div>
         );
       });
+      console.log(lat, long);
+      return (
+        <div>
+          <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook} researchAdress={this.handleResearchAdress} adresses={this.props.adress}/>
+          <div className={appStyles.container}>
+            <h1>Les événements</h1>
+            <div className={styles['event-div']}>
+              <Grid container spacing={24} style={{ width: '100%' }}>
+                <Grid item md={6}>
+                  {events}
+                </Grid>
+                <Grid item md={6}>
+                  <div style={{width: '100%', height: 600}}>
+                    <Eventmap
+                      location={{ lat, lng: long }}
+                      isMarkerShown
+                      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places"
+                      loadingElement={<div style={{ height: `100%` }} />}
+                      containerElement={<div style={{ height: `400px` }} />}
+                      mapElement={<div style={{ height: `100%` }} />}
+                      markers={markers}
+                    />
+                  </div>
+                </Grid>
+              </Grid>
+            </div>
+          </div>
+        </div>
+      );
     }
 
     return (
-      <div>
-        <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook} researchAdress={this.handleResearchAdress} adresses={this.props.adress}/>
-        <div className={appStyles.container}>
-          <h1>Les événements</h1>
-          <Grid container spacing={24} style={{ width: '100%' }}>
-            <Grid item md={6}>
-              {events}
-            </Grid>
-            <Grid item md={6}>
-              Map
-            </Grid>
-          </Grid>
-        </div>
-      </div>
+      <h1>Ho</h1>
     );
   }
 }
