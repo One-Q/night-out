@@ -4,6 +4,10 @@ import { signUp } from '../AuthentificationActions';
 import { getUser } from '../AuthentificationReducer';
 import { connect } from 'react-redux';
 
+const regUsername = /^[^\d\s][\S0-9]{5,14}$/;
+const regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const regPassword = /^\S{8,64}$/;
+
 
 class SignUpContainer extends React.Component {
 
@@ -52,9 +56,40 @@ class SignUpContainer extends React.Component {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
+    this.setState({
+      errors: {},
+    });
+    const username = this.state.user.username;
+    const password = this.state.user.password;
+    const email = this.state.user.email;
+    const passwordCheck = this.state.user.passwordCheck;
+    let errors = {};
+    if (!username || !regUsername.test(username)) {
+      errors.username = 'Veuillez rentrer un username valide (5 - 14 caractères)';
+    }
+    if (!email || !regEmail.test(email)) {
+      errors.email = 'Veuillez rentrer une adresse mail valide';
+    }
+    if (!password || !regPassword(password)) {
+      errors.password = 'Veuillez rentrer un mot de passe valide (8 - 64 caractères)';
+    }
+    if (password !== passwordCheck) {
+      errors.passwordCheck = 'Les mots de passe ne correspondent pas';
+    }
+    if (Object.keys(errors).length > 0) {
+      this.setState({
+        errors,
+      });
+      return;
+    }
+
     this.props.dispatch(signUp(this.state.user)).then((err) => {
       if (err) {
-
+        this.setState({
+          errors: {
+            main: err.error,
+          },
+        });
       } else {
         this.props.handleClose();
       }

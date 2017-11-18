@@ -3,6 +3,10 @@ import Login from './Login';
 import { login } from '../AuthentificationActions';
 import { getUser } from '../AuthentificationReducer';
 import { connect } from 'react-redux';
+import { userInfo } from 'os';
+
+const regUsername = /^[^\d\s][\S0-9]{5,14}$/;
+const regPassword = /^\S{8,64}$/;
 
 class LoginContainer extends React.Component {
 
@@ -34,9 +38,34 @@ class LoginContainer extends React.Component {
   processForm(event) {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
-
-    this.props.dispatch(login(this.state.user)).then((res) => {
-      this.props.handleClose();
+    this.setState({
+      errors: {},
+    });
+    const username = this.state.user.username;
+    const password = this.state.user.password;
+    let errors = {};
+    if (!username || !regUsername.test(username)) {
+      errors.username = 'Veuillez rentrer un username valide (5 - 14 caractères)';
+    }
+    if (!password || !regPassword.test(password)) {
+      errors.password = 'Veuillez rentrer un mot de passe valide (8 - 64 caractères)';
+    }
+    if (Object.keys(errors).length > 0) {
+      this.setState({
+        errors,
+      });
+      return;
+    }
+    this.props.dispatch(login(this.state.user)).then((err) => {
+      if (err) {
+        this.setState({
+          errors: {
+            main: err.error,
+          },
+        });
+      } else {
+        this.props.handleClose();
+      }
     });
   }
 

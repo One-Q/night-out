@@ -15,7 +15,6 @@ export function login(user) {
       username: user.username,
       password: user.password,
     }).then((res) => {
-      console.log(res);
       if (res.token) {
         const userReceive = {
           username: user.username,
@@ -23,6 +22,8 @@ export function login(user) {
         };
         localStorage.setItem('token', res.token);
         dispatch(setUser(userReceive));
+      } else {
+        return res;
       }
     });
   };

@@ -8,6 +8,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import { FormControl, FormHelperText } from 'material-ui/Form';
 
 
 const Login = ({
@@ -18,11 +19,16 @@ const Login = ({
   errors,
   user
 }) => (
-  <Dialog open={isOpen} onRequestClose={handleClose}>
+  <Dialog open={isOpen} onRequestClose={handleClose} fullWidth>
     <DialogTitle>Login</DialogTitle>
     <DialogContent>
+      {errors.main &&
+        <DialogContentText style={{ color: 'red' }}>
+          {errors.main}
+        </DialogContentText>}
       <TextField
         autoFocus
+        error={errors.username}
         margin="dense"
         name="username"
         label="Username"
@@ -30,14 +36,17 @@ const Login = ({
         fullWidth
         onChange={onChange}
       />
+      {errors.username && <FormHelperText style={{ color: 'red' }}>{errors.username}</FormHelperText>}
       <TextField
         margin="dense"
         name="password"
         label="Password"
         type="password"
         fullWidth
+        error={errors.password}
         onChange={onChange}
       />
+      {errors.password && <FormHelperText style={{ color: 'red' }}>{errors.password}</FormHelperText>}
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose} color="primary">
