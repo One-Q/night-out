@@ -22,8 +22,8 @@ class Event extends Component {
     super(props);
     this.state = {
       isLoading: false,
-      long: 4.3799652,
-      lat: 50.8613156,
+      long: 4.2,
+      lat: 50.8,
     };
     this.handleCenter = this.handleCenter.bind(this);
     this.handleClickClack = this.handleClickClack.bind(this);
@@ -32,7 +32,7 @@ class Event extends Component {
 
   componentDidMount() {
     Promise.all([canLocated()]).then((res) => {
-      if (res === 'prompt' || res === 'granted') {
+      if (res[0] === 'prompt' || res[0] === 'granted') {
         navigator.geolocation.getCurrentPosition((position) =>{
           this.props.dispatch(fetchEvents());
           isLocated = true;
@@ -42,7 +42,7 @@ class Event extends Component {
           });
         });
       }
-    },()=>{
+    }, () => {
       isLocated = false;
     });
   }
