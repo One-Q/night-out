@@ -70,7 +70,7 @@ class SignUpContainer extends React.Component {
     if (!email || !regEmail.test(email)) {
       errors.email = 'Veuillez rentrer une adresse mail valide';
     }
-    if (!password || !regPassword(password)) {
+    if (!password || !regPassword.test(password)) {
       errors.password = 'Veuillez rentrer un mot de passe valide (8 - 64 caractères)';
     }
     if (password !== passwordCheck) {

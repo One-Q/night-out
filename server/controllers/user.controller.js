@@ -1,6 +1,7 @@
 import User from '../models/user';
 import cuid from 'cuid';
 import slug from 'limax';
+import nodemailer from 'nodemailer';
 
 const regUsername = /^[^\d\s][\S0-9]{5,14}$/;
 const regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -24,8 +25,28 @@ export function signUp(req, res) {
         const newUser = new User({ username: username, email: email, slug: slug(username.toLowerCase(), { lowercase: true }), cuid: cuid() });
         newUser.password = newUser.generateHash(password);
         User.create(newUser, (error) => {
-            if (!error)
-                return res.sendStatus(200);
+            if (!error) {
+                let transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'webprojectnightout@gmail.com',
+                        pass: 'nightoutRRQ',
+                    },
+                });
+                const mailOptions = {
+                    from: 'webprojectnightout@gmail.com', // sender address
+                    to: newUser.email, // list of receivers
+                    subject: 'Signed Up', // Subject line
+                    html: `<p>You are signed up : ${newUser.username}</p>`// plain text body
+                };
+                transporter.sendMail(mailOptions, function (err, info) {
+                    if(err)
+                      console.log(err)
+                    else
+                      console.log(info);
+                 });
+                 return res.sendStatus(200);
+            }
             console.log('Erreur d\'insertion user : ' + error);
             return res.status(500).json({ error: 'Erreur interne' });
         })
