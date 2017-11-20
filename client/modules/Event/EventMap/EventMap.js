@@ -5,9 +5,10 @@ const EventMap = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
     defaultZoom={10}
     defaultCenter={props.location}
+    center={props.location}
   >
     {props.markers.map(marker => (
-      <Marker position={marker} />
+      <Marker position={marker.location} />
     ))}
   </GoogleMap>
 ));
