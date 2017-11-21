@@ -17,6 +17,7 @@ const EventReducer = (state = initialState, action) => {
       };
     case RESEARCHED_ADRESS :
       return {
+        ...state,
         adress: action.adress,
       };
     default:
