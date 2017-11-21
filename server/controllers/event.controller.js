@@ -9,7 +9,7 @@ let client = new elasticsearch.Client({
   log: "trace"
 });
 
-const accessTokenFacebook ="https://graph.facebook.com/endpoint?key=value&access_token=1506957062727502|77a270d081b143d06581ac7dc05424b4";
+const accessTokenFacebook ="https://graph.facebook.com/oauth/access_token?client_id=112374466143248&client_secret=2f0f3f7ce28c61a070f06afa8a5e1226&grant_type=client_credentials";
 const accessTokenGoogle="AIzaSyCcbC1CoG5lG1TqdSG1S7Z1kwlMi6A3lzE";
 
 // Instantiate EventSearch
