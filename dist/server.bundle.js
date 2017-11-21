@@ -712,6 +712,8 @@
 	});
 	exports.getEvent = exports.getAdress = exports.getEvents = undefined;
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _EventActions = __webpack_require__(11);
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } // Import Actions
@@ -735,9 +737,9 @@
 	        data: action.events
 	      };
 	    case _EventActions.RESEARCHED_ADRESS:
-	      return {
+	      return _extends({}, state, {
 	        adress: action.adress
-	      };
+	      });
 	    default:
 	      return state;
 	  }
@@ -1029,8 +1031,6 @@
 	
 	var _ref = _jsx('h1', {}, void 0, 'Les \xE9v\xE9nements');
 	
-	var _ref2 = _jsx('h1', {}, void 0, 'Ho');
-	
 	var Event = function (_Component) {
 	  _inherits(Event, _Component);
 	
@@ -1142,45 +1142,43 @@
 	            to: '/events/' + event.slug
 	          }, void 0, event.name)), _jsx('p', {}, void 0, event.description), _jsx('p', {}, void 0, facebook ? event.venue.location.city : event.location.city, ' , ', facebook ? event.venue.location.street : event.location.street, ' '));
 	        });
-	        return _jsx('div', {}, void 0, _jsx(_EventResearch.EventResearch, {
-	          research: this.handleClickClack,
-	          researchViaFacebook: this.handleClickClackFacebook,
-	          researchAdress: this.handleResearchAdress,
-	          adresses: this.props.adress
-	        }), _jsx('div', {
-	          className: _App2.default.container
-	        }, void 0, _ref, _jsx('div', {
-	          className: _Event2.default['event-div']
-	        }, void 0, _jsx(_Grid2.default, {
-	          container: true,
-	          spacing: 24,
-	          style: { width: '100%' }
-	        }, void 0, _jsx(_Grid2.default, {
-	          item: true,
-	          md: 6
-	        }, void 0, events), _jsx(_Grid2.default, {
-	          item: true,
-	          md: 6
-	        }, void 0, _jsx('div', {
-	          style: { width: '100%', height: 600 }
-	        }, void 0, _jsx(_EventMap2.default, {
-	          location: { lat: this.state.lat, lng: this.state.long },
-	          isMarkerShown: true,
-	          googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places',
-	          loadingElement: _jsx('div', {
-	            style: { height: '100%' }
-	          }),
-	          containerElement: _jsx('div', {
-	            style: { height: '400px' }
-	          }),
-	          mapElement: _jsx('div', {
-	            style: { height: '100%' }
-	          }),
-	          markers: markers
-	        })))))));
 	      }
-	
-	      return _ref2;
+	      return _jsx('div', {}, void 0, _jsx(_EventResearch.EventResearch, {
+	        research: this.handleClickClack,
+	        researchViaFacebook: this.handleClickClackFacebook,
+	        researchAdress: this.handleResearchAdress,
+	        adresses: this.props.adress
+	      }), _jsx('div', {
+	        className: _App2.default.container
+	      }, void 0, _ref, _jsx('div', {
+	        className: _Event2.default['event-div']
+	      }, void 0, _jsx(_Grid2.default, {
+	        container: true,
+	        spacing: 24,
+	        style: { width: '100%' }
+	      }, void 0, _jsx(_Grid2.default, {
+	        item: true,
+	        md: 6
+	      }, void 0, events), _jsx(_Grid2.default, {
+	        item: true,
+	        md: 6
+	      }, void 0, _jsx('div', {
+	        style: { width: '100%', height: 600 }
+	      }, void 0, markers.length > 0 && _jsx(_EventMap2.default, {
+	        location: { lat: this.state.lat, lng: this.state.long },
+	        isMarkerShown: true,
+	        googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places',
+	        loadingElement: _jsx('div', {
+	          style: { height: '100%' }
+	        }),
+	        containerElement: _jsx('div', {
+	          style: { height: '400px' }
+	        }),
+	        mapElement: _jsx('div', {
+	          style: { height: '100%' }
+	        }),
+	        markers: markers
+	      })))))));
 	    }
 	  }]);
 	
@@ -3694,7 +3692,7 @@
 	  log: "trace"
 	});
 	
-	var accessTokenFacebook = "https://graph.facebook.com/endpoint?key=value&access_token=1506957062727502|77a270d081b143d06581ac7dc05424b4";
+	var accessTokenFacebook = "https://graph.facebook.com/oauth/access_token?client_id=112374466143248&client_secret=2f0f3f7ce28c61a070f06afa8a5e1226&grant_type=client_credentials";
 	var accessTokenGoogle = "AIzaSyCcbC1CoG5lG1TqdSG1S7Z1kwlMi6A3lzE";
 	
 	// Instantiate EventSearch
