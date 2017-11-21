@@ -49,10 +49,26 @@ export default (
       }}
     />
     <Route
+      path="event/add"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Event/EventAdd/EventAdd').default);
+        });
+      }}
+    />
+    <Route
       path="/events/:slug"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Event/EventDetails/EventDetails').default);
+        });
+      }}
+    />
+    <Route
+      path="*"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/NotFound/NotFound').default);
         });
       }}
     />
