@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchEvents , fetchResearch , fetchEventsFromFacebook , fetchEventsFromFacebookWithoutValue , fetchResearchedAdress} from '../EventActions';
-import { getEvents , getAdress} from '../EventReducer';
+import { createEvent } from '../EventActions';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import { FormControl } from 'material-ui/Form';
@@ -30,27 +29,62 @@ class EventAdd extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      name: '',
+      description: '',
+      category: 'MUSIC',
+      date: '',
+      city: '',
+      street: '',
+      error: {},
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange = name => event => {
+    console.log(name, event);
+    this.setState({
+      [name]: event.target.value,
+    });
+    console.log(this.state);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const adresse = this.state.street.replace(/ /g, '-') + '+' + this.state.city.replace(/ /g, '-');
+    let lat;
+    let lng;
+    // Do the checks
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${adresse}&key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8`)
+    .then(res => res.json())
+    .then((res) => {
+      if (res.status === 'OK') {
+        lat = res.results[0].geometry.location.lat;
+        lng = res.results[0].geometry.location.lng;
+        this.props.dispatch(createEvent(this.state.name, this.state.description, this.state.category, this.state.city, this.state.street, lat, lng, this.state.date));
+      } else {
+        console.log(res);
+      }
+    });
   }
 
   render() {
-    console.log(this.props, 'props');
-    console.log(this.state, 'state');
     return (
       <div style={{ marginTop: '20px' }}>
         <div className={appStyles.container}>
           <Grid container spacing={24} style={{ width: '100%' }}>
             <Grid item md={6}>
               <h2>Ajouter un événement</h2>
-              <form style={{ paddingTop: '20px', paddingBottom: '30px' }}>
+              <form style={{ paddingTop: '20px', paddingBottom: '30px' }} onSubmit={this.handleSubmit}>
                 <TextField
                   required
                   id="name"
                   label="Titre"
                   name="name"
                   style={{ marginBottom: '20px' }}
+                  value={this.state.name}
                   fullWidth
+                  onChange={this.handleChange('name')}
                 />
                 <TextField
                   required
@@ -60,12 +94,15 @@ class EventAdd extends Component {
                   fullWidth
                   style={{ marginBottom: '20px' }}
                   className={thisStyles.textField}
+                  value={this.state.description}
+                  onChange={this.handleChange('description')}
                 />
                 <FormControl style={{ marginBottom: '20px', display: 'block' }}>
                   <InputLabel htmlFor="category">Categorie</InputLabel>
                   <Select
-                    value={categories[0].value}
-                    input={<Input id="category" />}
+                    value={this.state.category}
+                    onChange={this.handleChange('category')}
+                    input={<Input id="category" name="category" />}
                   >
                     {categories.map((cat) => {
                       return <MenuItem value={cat.value}>{cat.name}</MenuItem>;
@@ -82,6 +119,8 @@ class EventAdd extends Component {
                   className={thisStyles.textField}
                   type="date"
                   placeholder="jj/mm/aaaa"
+                  value={this.state.date}
+                  onChange={this.handleChange('date')}
                 />
                 <TextField
                   required
@@ -91,6 +130,8 @@ class EventAdd extends Component {
                   fullWidth
                   style={{ marginBottom: '20px' }}
                   className={thisStyles.textField}
+                  value={this.state.city}
+                  onChange={this.handleChange('city')}
                 />
                 <TextField
                   required
@@ -100,10 +141,12 @@ class EventAdd extends Component {
                   fullWidth
                   style={{ marginBottom: '20px' }}
                   className={thisStyles.textField}
+                  value={this.state.street}
+                  onChange={this.handleChange('street')}
                 />
-                <Button raised color="primary" style={{ marginTop: '20px' }}>
+                <Button raised color="primary" style={{ marginTop: '20px' }} type="submit">
                   Send
-                  <Send style={{marginLeft: '20px' }} />
+                  <Send style={{ marginLeft: '20px' }} />
                 </Button>
               </form>
             </Grid>

@@ -73,3 +73,22 @@ export function fetchResearchedAdress(adress){
     return callApi(`researchAdress/${adress}`).then(res => { dispatch(researchAdress(res.adresses))});
   }
 }
+
+export function createEvent(name, description, category, city, street, latitude, longitude, date) {
+  return (dispatch) => {
+    return callApi('create', 'post', {
+      name,
+      description,
+      category,
+      location: {
+        city,
+        street,
+        latitude,
+        longitude,
+      },
+      startTime: new Date(date),
+    }).then((res) => {
+      console.log(res);
+    });
+  };
+}

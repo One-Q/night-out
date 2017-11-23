@@ -24,7 +24,7 @@ router.route('/eventsFromFacebook/:value&:distance&:long&:lat&:category').get(Ev
 router.route('/eventsFromFacebook/:long&:lat&:distance').get(EventController.getEventsFromFacebookWithoutValue);
 
 // Create an event (login required)
-router.route('/add').post(auth.authenticate(),EventController.createEvent);
+router.route('/create').post(auth.authenticate(),EventController.createEvent);
 
 // Delete a event (login required + needs to be the creator of the event)
 router.route('/remove').post(auth.authenticate(),EventController.deleteEvent);
