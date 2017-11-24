@@ -26,9 +26,9 @@ export function getEvent(req, res) {
   //console.log(req.params.slug);
   Event.findOne({ slug: req.params.slug }).exec((err, event) => {
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
-    res.json({ event });
+    return res.json({ event });
   });
 }
 
@@ -40,9 +40,9 @@ export function getEvent(req, res) {
 export function getEvents(req, res) {
   Event.find().exec((err, event) => {
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
-    res.json({ event });
+    return res.json({ event });
   });
 }
 
@@ -66,14 +66,12 @@ export function getResearch(req, res) {
     function (body) {
       elastic_response = body.hits.hits;
 
-      retrieveId(elastic_response).then(table_id => getEventsByidFromMongo(table_id)).then(elastic_mongo_response => { return res.json({ elastic_mongo_response }) });
+      retrieveId(elastic_response).then(table_id => getEventsByidFromMongo(table_id)).then(elastic_mongo_response => { console.log(elastic_mongo_response); return res.json({ elastic_mongo_response }) });
     },
     function (error) {
       return res.status(500).send(error);
     }
     );
-
-  return res.status(200).json({ success: "ok" });
 }
 
 /**
@@ -81,8 +79,10 @@ export function getResearch(req, res) {
  * @param events
  */
 function getEventsByidFromMongo(e) {
+  console.log(e);
   return new Promise((res, rej) => {
     Event.find({ '_id': { $in: e } }).exec((err, event) => {
+      console.log("ffhjfjghfhjfjghf"+event)
       res(event)
     });
   }
