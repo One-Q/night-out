@@ -9,14 +9,13 @@ let client = new elasticsearch.Client({
   log: "trace"
 });
 
-const accessTokenFacebook ="https://graph.facebook.com/oauth/access_token?client_id=112374466143248&client_secret=2f0f3f7ce28c61a070f06afa8a5e1226&grant_type=client_credentials";
+const accessTokenFacebook = "https://graph.facebook.com/oauth/access_token?client_id=112374466143248&client_secret=2f0f3f7ce28c61a070f06afa8a5e1226&grant_type=client_credentials";
 
 // Instantiate EventSearch
 let es = new EventSearch();
 
 // Instantiate value for facebook research
 let value = "";
-
 
 /**
  * Get a single event
@@ -27,9 +26,9 @@ export function getEvent(req, res) {
   //console.log(req.params.slug);
   Event.findOne({ slug: req.params.slug }).exec((err, event) => {
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
-    res.json({ event });
+    return res.json({ event });
   });
 }
 
@@ -41,9 +40,9 @@ export function getEvent(req, res) {
 export function getEvents(req, res) {
   Event.find().exec((err, event) => {
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
-    res.json({ event });
+    return res.json({ event });
   });
 }
 
@@ -67,14 +66,12 @@ export function getResearch(req, res) {
     function (body) {
       elastic_response = body.hits.hits;
 
-      retrieveId(elastic_response).then(table_id => getEventsByidFromMongo(table_id)).then(elastic_mongo_response => { return res.json({ elastic_mongo_response }) });
+      retrieveId(elastic_response).then(table_id => getEventsByidFromMongo(table_id)).then(elastic_mongo_response => { console.log(elastic_mongo_response); return res.json({ elastic_mongo_response }) });
     },
     function (error) {
       return res.status(500).send(error);
     }
     );
-
-  return res.status(200).json({success : "ok"});
 }
 
 /**
@@ -82,8 +79,10 @@ export function getResearch(req, res) {
  * @param events
  */
 function getEventsByidFromMongo(e) {
+  console.log(e);
   return new Promise((res, rej) => {
     Event.find({ '_id': { $in: e } }).exec((err, event) => {
+      console.log("ffhjfjghfhjfjghf"+event)
       res(event)
     });
   }
@@ -114,7 +113,7 @@ function retrieveId(events) {
 
 export function getEventsFromFacebook(req, res) {
   value = req.params.value;
-  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance,req.params.sort)
+  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance)
     .then(events => mapFacebookEvents(events, req.params.value))
     .then(events => distinctFacebookEvents(events))
     .then(eventsFacebook => { return res.json({ eventsFacebook }) });
@@ -127,7 +126,7 @@ export function getEventsFromFacebook(req, res) {
  * @param res
  */
 export function getEventsFromFacebookWithoutValue(req, res) {
-  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance,req.params.sort)
+  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance)
     .then(events => distinctFacebookEvents(events))
     .then(eventsFacebook => { return res.json({ eventsFacebook }) });
 }
@@ -157,16 +156,14 @@ function includeStr(event) {
   return event.name !== undefined ? event.name.includes(value) : false || event.description !== undefined ? event.description.includes(value) : false;
 }
 
-function fetchEventsFacebook(lng, lat, distance = 0,sort) {
-  fetch(accessTokenFacebook).then((res) => {return res.json()}).then(accessToken => console.log(accessToken));
+function fetchEventsFacebook(lng, lat, distance = 0) {
   let options = {};
   options.lng = lng;
   options.lat = lat;
   options.distance = distance;
-  options.accessToken = "112374466143248|8UiCaiSCYvpP8Oylv0OgWwJ1TzY";
-  console.log(sort);
-  options.sort=sort;
-  return new Promise((res,rej) =>{
+  options.accessTokenFacebook = accessTokenFacebook;
+  options.sort = "distance";
+  return new Promise((res, rej) => {
     es.search(options).then(function (eventsFacebook) {
       res(eventsFacebook.events);
     }).catch(function (error) {
@@ -203,13 +200,13 @@ export function createEvent(req, res) {
   let startTime = req.body.startTime;
   let location = req.body.location;
   if (!idCreator || !name || !description || !category || !startTime || !location)
-    return res.status(400).json({error : 'Veuillez remplir tous les champs.'});
+    return res.status(400).json({ error: 'Veuillez remplir tous les champs.' });
   let city = req.body.location.city;
   let street = req.body.location.street;
   let latitude = req.body.location.latitude;
   let longitude = req.body.location.longitude;
   if (!city || !street || !latitude || !longitude)
-    return res.status(400).json({error : 'Veuillez remplir tous les champs.'});
+    return res.status(400).json({ error: 'Veuillez remplir tous les champs.' });
   const event = new Event({
     name: name,
     description: description,
@@ -225,26 +222,30 @@ export function createEvent(req, res) {
     slug: slug(name.toLowerCase() + '-' + Date.now()),
     cuid: cuid()
   });
-  event.save((err,saved) => {
+  event.save((err, saved) => {
     if (!err) {
       client.index({
-        index : "events",
-        type : "event",
-        id : saved.id,
-        body : {
-          name : name,
-          description : description,
-          category : category,
-          startTime : startTime,
-          cuid : saved.cuid,
-          slug : saved.slug,
-          location : saved.location
+        index: "events",
+        type: "event",
+        id: saved.id,
+        body: {
+          name: name,
+          description: description,
+          category: category,
+          startTime: startTime,
+          cuid: saved.cuid,
+          slug: saved.slug,
+          location: saved.location
         }
+      }, (err, resp) => {
+        if (!err)
+          return res.status(200).json({ success: "ok" })
+        else
+          return res.status(500).json({ error: "Erreur interne." })
       })
-      return res.status(200).json({success : "ok"})
     }
     else
-      return res.status(500).json(err)
+      return res.status(500).json({ error: "Erreur interne." })
   });
 }
 
@@ -256,18 +257,29 @@ export function createEvent(req, res) {
 export function deleteEvent(req, res) {
   let eventId = req.body.id;
   if (!eventId)
-    return res.status(400).json({error : "Veuillez fournir l'évènement à supprimer."})
+    return res.status(400).json({ error: "Veuillez fournir l'évènement à supprimer." })
   Event.findOne({ cuid: eventId }).then((event) => {
     if (!event)
-      return res.status(400).json({error : "Event introuvable."})
+      return res.status(400).json({ error: "Event introuvable." })
     else {
+      console.log(event)
       if (req.user.id != event.creator)
-        return res.status(400).json({error : "Impossible de supprimer un évènement qui n'est pas le votre."})
+        return res.status(400).json({ error: "Impossible de supprimer un évènement qui n'est pas le votre." })
       Event.remove({ cuid: eventId }, (error) => {
-        if (!error)
-          return res.status(200).json({success : "ok"})
+        if (!error) {
+          client.delete({
+            index: "events",
+            type: "event",
+            id: event.id
+          }, (err, resp) => {
+            if (!err)
+              return res.status(200).json({ success: "ok" })
+            else
+              return res.status(500).json({ error: "Erreur interne." })
+          })
+        }
         else
-          return res.status(500).json({error : "Erreur interne."})
+          return res.status(500).json({ error: "Erreur interne." })
       })
     }
   });

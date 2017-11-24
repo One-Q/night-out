@@ -48,15 +48,19 @@ class Event extends Component {
     }, () => {
       isLocated = false;
     });
+    console.log(isLocated);
   }
 
   handleClickClack = (value) => {
+    this.setState({
+      isLoading: true,
+    });
     facebook = false;
     if (isLocated) {
       if (value) {
-        this.props.dispatch(fetchResearch(value));
+        this.props.dispatch(fetchResearch(value)).then(this.setState({ isLoading: false }));
       } else {
-         this.props.dispatch(fetchEvents());
+         this.props.dispatch(fetchEvents()).then(this.setState({ isLoading: false }));
       }
     } else {
       alert('Tu peux pas!');
@@ -64,13 +68,16 @@ class Event extends Component {
   }
 
   handleClickClackFacebook = (value, distance, sort) => {
+    this.setState({
+      isLoading: true,
+    });
     facebook = true;
 
     if (isLocated) {
       if (value) {
-        this.props.dispatch(fetchEventsFromFacebook(value, distance, sort, this.state.long, this.state.lat, null));
+        this.props.dispatch(fetchEventsFromFacebook(value, distance, sort, this.state.long, this.state.lat, null)).then(this.setState({ isLoading: false }));;
       } else {
-        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance, sort));
+        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance, sort)).then(this.setState({ isLoading: false }));;
       }
     } else {
       alert('Oh non fdp , tu peux pas!');
@@ -97,8 +104,12 @@ class Event extends Component {
   }
 
   render() {
+    console.log(this.state);
     let events;
     let markers = [];
+    if(this.state.isLoading){
+      return <h2>Ah</h2>
+    }
     if (this.props.events) {
       events = this.props.events.map((event) => {
         if (facebook) {
