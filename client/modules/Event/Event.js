@@ -75,9 +75,9 @@ class Event extends Component {
 
     if (isLocated) {
       if (value) {
-        this.props.dispatch(fetchEventsFromFacebook(value, distance, sort, this.state.long, this.state.lat, null)).then(this.setState({ isLoading: false }));;
+        this.props.dispatch(fetchEventsFromFacebook(value, distance, sort, this.state.long, this.state.lat, null)).then(this.setState({ isLoading: false }));
       } else {
-        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance, sort)).then(this.setState({ isLoading: false }));;
+        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance, sort)).then(this.setState({ isLoading: false }));
       }
     } else {
       alert('Oh non fdp , tu peux pas!');
