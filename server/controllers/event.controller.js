@@ -149,11 +149,12 @@ function includeStr(event) {
 }
 
 function fetchEventsFacebook(lng, lat, distance = 0) {
+  fetch(accessTokenFacebook).then((res) => {return res.json()}).then(accessToken => console.log(accessToken));
   let options = {};
   options.lng = lng;
   options.lat = lat;
   options.distance = distance;
-  options.accessTokenFacebook = accessTokenFacebook;
+  options.accessToken = "112374466143248|8UiCaiSCYvpP8Oylv0OgWwJ1TzY";
   options.sort="distance";
   return new Promise((res,rej) =>{
     es.search(options).then(function (eventsFacebook) {
