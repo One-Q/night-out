@@ -10,7 +10,6 @@ let client = new elasticsearch.Client({
 });
 
 const accessTokenFacebook ="https://graph.facebook.com/oauth/access_token?client_id=112374466143248&client_secret=2f0f3f7ce28c61a070f06afa8a5e1226&grant_type=client_credentials";
-const accessTokenGoogle="AIzaSyCcbC1CoG5lG1TqdSG1S7Z1kwlMi6A3lzE";
 
 // Instantiate EventSearch
 let es = new EventSearch();
@@ -180,18 +179,6 @@ function distinctFacebookEvents(events) {
   })
 }
 
-export function getAdress(req,res){
-  let json = "json";
-  let type = "geocode";
-  let language = "fr";
-  let value = req.params.adress
-  let urlGoogleApi = "https://maps.googleapis.com/maps/api/place/autocomplete/"+json+"?input="+value+"&types="+type+"&language="+language+"&key="+accessTokenGoogle
-  console.log(urlGoogleApi);
-  fetch(urlGoogleApi).then((result) => {
-    return result.json();
-  }).then(resultat => {return res.json({adresses : resultat})});
-}
-     //return res.json({result: result.json()});
 /**
  * Create a new Event, require an authentification
  * @param req

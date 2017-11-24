@@ -11,7 +11,6 @@ import createPalette from 'material-ui/styles/createPalette';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import {blue, purple, red} from 'material-ui/colors';
 
-// Test
 
 const muiTheme = createMuiTheme({
 	palette: createPalette({

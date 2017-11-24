@@ -68,12 +68,6 @@ export function fetchEventsFromFacebookWithoutValue(long,lat,distance){
   };
 }
 
-export function fetchResearchedAdress(adress){
-  return(dispatch) => {
-    return callApi(`researchAdress/${adress}`).then(res => { dispatch(researchAdress(res.adresses))});
-  }
-}
-
 export function createEvent(name, description, category, city, street, latitude, longitude, date) {
   return (dispatch) => {
     return callApi('create', 'post', {

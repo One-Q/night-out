@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchEvents , fetchResearch , fetchEventsFromFacebook , fetchEventsFromFacebookWithoutValue , fetchResearchedAdress} from './EventActions';
 import { EventResearch } from './EventResearch/EventResearch';
-import { getEvents , getAdress} from './EventReducer';
+import { getEvents } from './EventReducer';
 import { Link } from 'react-router';
 import Grid from 'material-ui/Grid';
 import throttle from 'lodash.throttle';
 import Eventmap from './EventMap/EventMap';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+
 
 // Import Style
 import styles from './Event.css';
@@ -28,6 +30,7 @@ class Event extends Component {
     this.handleCenter = this.handleCenter.bind(this);
     this.handleClickClack = this.handleClickClack.bind(this);
     this.handleClickClackFacebook = this.handleClickClackFacebook.bind(this);
+    this.handleGoogle = this.handleGoogle.bind(this);
   }
 
   componentDidMount() {
@@ -73,18 +76,21 @@ class Event extends Component {
     }
   }
 
-  handleResearchAdress= (input) => {
-    console.log("Cote Event" + input);
-    console.log(this.props.adress);
-    this.props.dispatch(fetchResearchedAdress(input));
-    //throttle(this.props.dispatch(fetchResearchedAdress(input)),1000);
-  }
-
   handleCenter(latitude, longitude) {
     this.setState({
       lat: latitude,
       long: longitude,
     });
+  }
+
+  handleGoogle(adress){
+    geocodeByAddress(adress)
+    .then((results) => getLatLng(results[0]))
+    .then(({ lat, lng }) => {
+      lat: lat;
+      long: lng;
+      console.log('Je suis la', { lat, lng });
+    })
   }
 
   render() {
@@ -124,7 +130,8 @@ class Event extends Component {
     }
     return (
       <div>
-        <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook} researchAdress={this.handleResearchAdress} adresses={this.props.adress}/>
+       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAytyiovY8eruaEMlTODwAVO0Z_z3QHoe4&libraries=places"></script>
+       <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook}  geocodeByAdress={this.handleGoogle}/>
         <div className={appStyles.container}>
           <h1>Les événements</h1>
           <div className={styles['event-div']}>
@@ -176,10 +183,8 @@ function canLocated() {
 
 
 function mapStateToProps(state) {
-  console.log('state' + getAdress(state));
   return {
     events: getEvents(state),
-    adress: getAdress(state),
   };
 }
 
