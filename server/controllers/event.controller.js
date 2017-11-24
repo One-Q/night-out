@@ -132,6 +132,15 @@ export function getEventsFromFacebookWithoutValue(req, res) {
     .then(eventsFacebook => { return res.json({ eventsFacebook }) });
 }
 
+/**
+ * Get events from Facebook without value , only long and lat 
+ * @param req
+ * @param res
+ */
+
+export function getEventFromFacebookById(req,res){
+  console.log(res.id);
+}
 
 /**
  * Map events by the value

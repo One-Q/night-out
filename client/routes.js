@@ -65,6 +65,14 @@ export default (
       }}
     />
     <Route
+      path="/events/facebook/:slug"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Event/EventDetails/EventDetailsFacebook').default);
+        });
+      }}
+    />
+    <Route
       path="*"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {

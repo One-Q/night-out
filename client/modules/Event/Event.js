@@ -120,7 +120,7 @@ class Event extends Component {
         }
         return (
           <div
-            key={facebook ? console.log(event.id) : event._id}
+            key={facebook ? event.id : event._id}
             className={styles['single-event']}
             onMouseEnter={() => {
               facebook ? this.handleCenter(event.venue.location.latitude, event.venue.location.longitude) :this.handleCenter(event.location.latitude, event.location.longitude);
