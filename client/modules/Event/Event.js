@@ -63,14 +63,14 @@ class Event extends Component {
     }
   }
 
-  handleClickClackFacebook = (value, distance) => {
+  handleClickClackFacebook = (value, distance, sort) => {
     facebook = true;
-    console.log()
+
     if (isLocated) {
       if (value) {
-        this.props.dispatch(fetchEventsFromFacebook(value, distance, this.state.long, this.state.lat, null));
+        this.props.dispatch(fetchEventsFromFacebook(value, distance, sort, this.state.long, this.state.lat, null));
       } else {
-        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance));
+        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance, sort));
       }
     } else {
       alert('Oh non fdp , tu peux pas!');

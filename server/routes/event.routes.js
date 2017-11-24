@@ -14,10 +14,10 @@ router.route('/events/:slug').get(EventController.getEvent);
 router.route('/research/:event').get(EventController.getResearch);
 
 // Get events from Facebook
-router.route('/eventsFromFacebook/:value&:distance&:long&:lat&:category').get(EventController.getEventsFromFacebook);
+router.route('/eventsFromFacebook/:value&:distance&:sort&:long&:lat&:category').get(EventController.getEventsFromFacebook);
 
 // Get events from Facebook without input value
-router.route('/eventsFromFacebook/:long&:lat&:distance').get(EventController.getEventsFromFacebookWithoutValue);
+router.route('/eventsFromFacebook/:long&:lat&:distance&:sort').get(EventController.getEventsFromFacebookWithoutValue);
 
 // Create an event (login required)
 router.route('/create').post(auth.authenticate(),EventController.createEvent);

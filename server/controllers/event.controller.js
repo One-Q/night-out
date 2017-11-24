@@ -114,7 +114,7 @@ function retrieveId(events) {
 
 export function getEventsFromFacebook(req, res) {
   value = req.params.value;
-  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance)
+  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance,req.params.sort)
     .then(events => mapFacebookEvents(events, req.params.value))
     .then(events => distinctFacebookEvents(events))
     .then(eventsFacebook => { return res.json({ eventsFacebook }) });
@@ -127,7 +127,7 @@ export function getEventsFromFacebook(req, res) {
  * @param res
  */
 export function getEventsFromFacebookWithoutValue(req, res) {
-  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance)
+  fetchEventsFacebook(req.params.long, req.params.lat, req.params.distance,req.params.sort)
     .then(events => distinctFacebookEvents(events))
     .then(eventsFacebook => { return res.json({ eventsFacebook }) });
 }
@@ -148,14 +148,15 @@ function includeStr(event) {
   return event.name !== undefined ? event.name.includes(value) : false || event.description !== undefined ? event.description.includes(value) : false;
 }
 
-function fetchEventsFacebook(lng, lat, distance = 0) {
+function fetchEventsFacebook(lng, lat, distance = 0,sort) {
   fetch(accessTokenFacebook).then((res) => {return res.json()}).then(accessToken => console.log(accessToken));
   let options = {};
   options.lng = lng;
   options.lat = lat;
   options.distance = distance;
   options.accessToken = "112374466143248|8UiCaiSCYvpP8Oylv0OgWwJ1TzY";
-  options.sort="distance";
+  console.log(sort);
+  options.sort=sort;
   return new Promise((res,rej) =>{
     es.search(options).then(function (eventsFacebook) {
       res(eventsFacebook.events);
