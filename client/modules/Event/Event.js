@@ -107,8 +107,8 @@ class Event extends Component {
     console.log(this.state);
     let events;
     let markers = [];
-    if(this.state.isLoading){
-      return <h2>Ah</h2>
+    if (this.state.isLoading) {
+      return <h2>Ah</h2>;
     }
     if (this.props.events) {
       events = this.props.events.map((event) => {

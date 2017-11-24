@@ -83,11 +83,11 @@ class SignUpContainer extends React.Component {
       return;
     }
 
-    this.props.dispatch(signUp(this.state.user)).then((err) => {
-      if (err) {
+    this.props.dispatch(signUp(this.state.user)).then((res) => {
+      if (res.error) {
         this.setState({
           errors: {
-            main: err.error,
+            main: res.error,
           },
         });
       } else {
