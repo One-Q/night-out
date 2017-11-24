@@ -56,15 +56,15 @@ export function fetchResearch(event) {
   };
 }
 
-export function fetchEventsFromFacebook(value,distance,long,lat,category){
+export function fetchEventsFromFacebook(value,distance,sort,long,lat,category){
   return (dispatch) => {
-    return callApi(`eventsFromFacebook/${value}&${distance*1000}&${long}&${lat}&${category}`).then(res =>dispatch(researchEvents(res.eventsFacebook)));
+    return callApi(`eventsFromFacebook/${value}&${distance*1000}&${sort}&${long}&${lat}&${category}`).then(res =>dispatch(researchEvents(res.eventsFacebook)));
   };
 }
 
-export function fetchEventsFromFacebookWithoutValue(long,lat,distance){
+export function fetchEventsFromFacebookWithoutValue(long,lat,distance,sort){
   return (dispatch) => {
-    return callApi(`eventsFromFacebook/${long}&${lat}&${distance*1000}`).then(res =>dispatch(researchEvents(res.eventsFacebook)));
+    return callApi(`eventsFromFacebook/${long}&${lat}&${distance*1000}&${sort}`).then(res =>dispatch(researchEvents(res.eventsFacebook)));
   };
 }
 

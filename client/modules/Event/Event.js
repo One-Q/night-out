@@ -63,13 +63,14 @@ class Event extends Component {
     }
   }
 
-  handleClickClackFacebook = (value, distance) => {
+  handleClickClackFacebook = (value, distance, sort) => {
     facebook = true;
+
     if (isLocated) {
       if (value) {
-        this.props.dispatch(fetchEventsFromFacebook(value, distance, this.state.long, this.state.lat, null));
+        this.props.dispatch(fetchEventsFromFacebook(value, distance, sort, this.state.long, this.state.lat, null));
       } else {
-        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance));
+        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance, sort));
       }
     } else {
       alert('Oh non fdp , tu peux pas!');
@@ -87,8 +88,10 @@ class Event extends Component {
     geocodeByAddress(adress)
     .then((results) => getLatLng(results[0]))
     .then(({ lat, lng }) => {
-      lat: lat;
-      long: lng;
+      this.setState({
+        lat: lat,
+        long: lng,
+      })
       console.log('Je suis la', { lat, lng });
     })
   }
@@ -99,7 +102,13 @@ class Event extends Component {
     if (this.props.events) {
       events = this.props.events.map((event) => {
         if (facebook) {
-          console.log(event);
+          markers.push({
+            location : {
+              lat : event.venue.location.latitude,
+              lng : event.venue.location.longitude,
+            },
+            showInfo: false,
+          });
         } else {
           markers.push({
             location: {
@@ -114,7 +123,7 @@ class Event extends Component {
             key={facebook ? console.log(event.id) : event._id}
             className={styles['single-event']}
             onMouseEnter={() => {
-              this.handleCenter(event.location.latitude, event.location.longitude);
+              facebook ? this.handleCenter(event.venue.location.latitude, event.venue.location.longitude) :this.handleCenter(event.location.latitude, event.location.longitude);
             }}
           >
             <h2 className={styles['event-title']}>

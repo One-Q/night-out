@@ -17,7 +17,6 @@ let es = new EventSearch();
 // Instantiate value for facebook research
 let value = "";
 
-
 /**
  * Get a single event
  * @param req containing the name of the event

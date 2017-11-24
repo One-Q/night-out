@@ -8,6 +8,7 @@ import { FormLabel, FormControl, FormControlLabel, FormHelperText } from 'materi
 import Radio, { RadioGroup } from 'material-ui/Radio';
 import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
+import { MenuItem } from 'material-ui/Menu'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import appStyles from '../../App/App.css';
 
@@ -20,6 +21,7 @@ export class EventResearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      sort: '',
       adress :'',
       inputResearch: '',
       selectedOption:'ourDB',
@@ -31,6 +33,7 @@ export class EventResearch extends Component {
     this.handleInputChange= this.handleInputChange.bind(this);
     this.handleResearchChange = this.handleResearchChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleChangeInputSort = this.handleChangeInputSort.bind(this);
   }
 
 
@@ -63,12 +66,13 @@ export class EventResearch extends Component {
     console.log(JSON.stringify(this.state));
     const input = this.state.inputResearch;
     const distance = this.state.distance;
+    const sort = this.state.sort;
     if(this.state.selectedOption == "ourDB"){
       console.log("Tu as choisi notre DB");
       this.props.research(input);      
     }else if(this.state.selectedOption == "facebookDB"){
       console.log("Test vers Facebook");
-      this.props.researchViaFacebook(input,distance);
+      this.props.researchViaFacebook(input,distance,sort);
     }else{
       console.log("C'est une putain d'erreur pour arriver la!");
     }
@@ -90,6 +94,12 @@ export class EventResearch extends Component {
       adress,
     })
   }
+
+  handleChangeInputSort(select) {
+    this.setState({ 
+      sort : select.target.value,
+    });
+  };
 
   render() {
     const inputProps = {
@@ -162,6 +172,16 @@ export class EventResearch extends Component {
               Envoyer
             </Button>
           </FormControl>
+
+          <Select
+            value={this.state.sort}
+            onChange={this.handleChangeInputSort}
+            input={<Input id="sort" />}
+          >
+            <MenuItem value="time">Temps</MenuItem>
+            <MenuItem value="popularity">Popularité</MenuItem>
+            <MenuItem value="distance">Distance</MenuItem>
+          </Select>
 
           <PlacesAutocomplete
             onSelect={this.handleSelect}
