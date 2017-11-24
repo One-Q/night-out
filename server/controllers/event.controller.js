@@ -9,7 +9,7 @@ let client = new elasticsearch.Client({
   log: "trace"
 });
 
-const accessTokenFacebook ="https://graph.facebook.com/oauth/access_token?client_id=112374466143248&client_secret=2f0f3f7ce28c61a070f06afa8a5e1226&grant_type=client_credentials";
+const accessTokenFacebook = "https://graph.facebook.com/oauth/access_token?client_id=112374466143248&client_secret=2f0f3f7ce28c61a070f06afa8a5e1226&grant_type=client_credentials";
 
 // Instantiate EventSearch
 let es = new EventSearch();
@@ -74,7 +74,7 @@ export function getResearch(req, res) {
     }
     );
 
-  return res.status(200).json({success : "ok"});
+  return res.status(200).json({ success: "ok" });
 }
 
 /**
@@ -154,8 +154,8 @@ function fetchEventsFacebook(lng, lat, distance = 0) {
   options.lat = lat;
   options.distance = distance;
   options.accessTokenFacebook = accessTokenFacebook;
-  options.sort="distance";
-  return new Promise((res,rej) =>{
+  options.sort = "distance";
+  return new Promise((res, rej) => {
     es.search(options).then(function (eventsFacebook) {
       res(eventsFacebook.events);
     }).catch(function (error) {
@@ -192,13 +192,13 @@ export function createEvent(req, res) {
   let startTime = req.body.startTime;
   let location = req.body.location;
   if (!idCreator || !name || !description || !category || !startTime || !location)
-    return res.status(400).json({error : 'Veuillez remplir tous les champs.'});
+    return res.status(400).json({ error: 'Veuillez remplir tous les champs.' });
   let city = req.body.location.city;
   let street = req.body.location.street;
   let latitude = req.body.location.latitude;
   let longitude = req.body.location.longitude;
   if (!city || !street || !latitude || !longitude)
-    return res.status(400).json({error : 'Veuillez remplir tous les champs.'});
+    return res.status(400).json({ error: 'Veuillez remplir tous les champs.' });
   const event = new Event({
     name: name,
     description: description,
@@ -214,26 +214,30 @@ export function createEvent(req, res) {
     slug: slug(name.toLowerCase() + '-' + Date.now()),
     cuid: cuid()
   });
-  event.save((err,saved) => {
+  event.save((err, saved) => {
     if (!err) {
       client.index({
-        index : "events",
-        type : "event",
-        id : saved.id,
-        body : {
-          name : name,
-          description : description,
-          category : category,
-          startTime : startTime,
-          cuid : saved.cuid,
-          slug : saved.slug,
-          location : saved.location
+        index: "events",
+        type: "event",
+        id: saved.id,
+        body: {
+          name: name,
+          description: description,
+          category: category,
+          startTime: startTime,
+          cuid: saved.cuid,
+          slug: saved.slug,
+          location: saved.location
         }
+      }, (err, resp) => {
+        if (!err)
+          return res.status(200).json({ success: "ok" })
+        else
+          return res.status(500).json({ error: "Erreur interne." })
       })
-      return res.status(200).json({success : "ok"})
     }
     else
-      return res.status(500).json(err)
+      return res.status(500).json({ error: "Erreur interne." })
   });
 }
 
@@ -245,18 +249,29 @@ export function createEvent(req, res) {
 export function deleteEvent(req, res) {
   let eventId = req.body.id;
   if (!eventId)
-    return res.status(400).json({error : "Veuillez fournir l'évènement à supprimer."})
+    return res.status(400).json({ error: "Veuillez fournir l'évènement à supprimer." })
   Event.findOne({ cuid: eventId }).then((event) => {
     if (!event)
-      return res.status(400).json({error : "Event introuvable."})
+      return res.status(400).json({ error: "Event introuvable." })
     else {
+      console.log(event)
       if (req.user.id != event.creator)
-        return res.status(400).json({error : "Impossible de supprimer un évènement qui n'est pas le votre."})
+        return res.status(400).json({ error: "Impossible de supprimer un évènement qui n'est pas le votre." })
       Event.remove({ cuid: eventId }, (error) => {
-        if (!error)
-          return res.status(200).json({success : "ok"})
+        if (!error) {
+          client.delete({
+            index: "events",
+            type: "event",
+            id: event.id
+          }, (err, resp) => {
+            if (!err)
+              return res.status(200).json({ success: "ok" })
+            else
+              return res.status(500).json({ error: "Erreur interne." })
+          })
+        }
         else
-          return res.status(500).json({error : "Erreur interne."})
+          return res.status(500).json({ error: "Erreur interne." })
       })
     }
   });
