@@ -74,7 +74,7 @@ export function getResearch(req, res) {
     }
     );
 
-  return res.status(200);
+  return res.status(200).json({success : "ok"});
 }
 
 /**
@@ -215,12 +215,26 @@ export function createEvent(req, res) {
     slug: slug(name.toLowerCase() + '-' + Date.now()),
     cuid: cuid()
   });
-  Event.create(event, (error) => {
-    if (!error) {
-      return res.sendStatus(200)
+  event.save((err,saved) => {
+    if (!err) {
+      client.index({
+        index : "events",
+        type : "event",
+        id : saved.id,
+        body : {
+          name : name,
+          description : description,
+          category : category,
+          startTime : startTime,
+          cuid : saved.cuid,
+          slug : saved.slug,
+          location : saved.location
+        }
+      })
+      return res.status(200).json({success : "ok"})
     }
     else
-      return res.status(500).json(error)
+      return res.status(500).json(err)
   });
 }
 
@@ -241,7 +255,7 @@ export function deleteEvent(req, res) {
         return res.status(400).json({error : "Impossible de supprimer un évènement qui n'est pas le votre."})
       Event.remove({ cuid: eventId }, (error) => {
         if (!error)
-          return res.status(200)
+          return res.status(200).json({success : "ok"})
         else
           return res.status(500).json({error : "Erreur interne."})
       })

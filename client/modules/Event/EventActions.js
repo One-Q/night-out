@@ -81,7 +81,8 @@ export function createEvent(name, description, category, city, street, latitude,
         longitude,
       },
       startTime: new Date(date),
-    }).then((res) => {
+    }, localStorage.getItem('token'))
+    .then((res) => {
       console.log(res);
     });
   };

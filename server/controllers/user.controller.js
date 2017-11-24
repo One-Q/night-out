@@ -45,7 +45,7 @@ export function signUp(req, res) {
                     else
                       console.log(info);
                  });
-                 return res.sendStatus(200);
+                 return res.status(200).json({success : "ok"});
             }
             console.log('Erreur d\'insertion user : ' + error);
             return res.status(500).json({ error: 'Erreur interne' });
@@ -72,7 +72,7 @@ export function changePassword(req, res) {
         user.save((err) => {
             if (err)
                 return res.status(500).json({ error: 'Erreur interne' });
-            return res.sendStatus(200);
+            return res.status(200).json({success : "ok"});
         })
     });
 }
