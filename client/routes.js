@@ -18,6 +18,8 @@ if (process.env.NODE_ENV !== 'production') {
   // Require async routes only in development for react-hot-reloader to work.
   require('./modules/Post/pages/PostListPage/PostListPage');
   require('./modules/Post/pages/PostDetailPage/PostDetailPage');
+  require('./modules/Event/EventDetails/EventDetails')
+  require('./modules/Event/EventDetails/EventDetailsFacebook')
   require('./modules/Event/Event');
 }
 
@@ -57,18 +59,18 @@ export default (
       }}
     />
     <Route
-      path="/events/:slug"
+      path="/events/facebook/:id"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/Event/EventDetails/EventDetails').default);
+          cb(null, require('./modules/Event/EventDetails/EventDetailsFacebook').default);
         });
       }}
     />
     <Route
-      path="/events/facebook/:slug"
+      path="/events/:slug"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/Event/EventDetails/EventDetailsFacebook').default);
+          cb(null, require('./modules/Event/EventDetails/EventDetails').default);
         });
       }}
     />

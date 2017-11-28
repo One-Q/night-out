@@ -11,6 +11,7 @@ let client = new elasticsearch.Client({
 
 const accessTokenFacebook = "https://graph.facebook.com/oauth/access_token?client_id=112374466143248&client_secret=2f0f3f7ce28c61a070f06afa8a5e1226&grant_type=client_credentials";
 
+
 // Instantiate EventSearch
 let es = new EventSearch();
 
@@ -138,7 +139,11 @@ export function getEventsFromFacebookWithoutValue(req, res) {
  */
 
 export function getEventFromFacebookById(req,res){
-  console.log(res.id);
+  var connection = "https://graph.facebook.com/v2.10/"+ req.params.id +
+  "?fields=can_viewer_post,can_guests_invite,cover,declined_count,description,guest_list_enabled,id,interested_count,is_canceled,is_draft,end_time,is_viewer_admin,maybe_count,is_page_owned,name,attending_count,start_time,updated_time,type,timezone,noreply_count,scheduled_publish_time,owner,place,ticket_uri,ticketing_privacy_uri,ticketing_terms_uri" +
+  "&access_token=112374466143248|8UiCaiSCYvpP8Oylv0OgWwJ1TzY"
+  fetch(connection,"get").then(res => {return res.json()})
+  .then(event => { return res.json({event})});
 }
 
 /**

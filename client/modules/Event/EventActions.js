@@ -6,6 +6,7 @@ export const ADD_EVENTS = 'ADD_EVENTS';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const RESEARCH_EVENTS = 'RESEARCH_EVENTS';
 export const RESEARCHED_ADRESS = 'RESEARCHED_ADRESS';
+export const FACEBOOK_EVENT = 'FACEBOOK_EVENT';
 
 // Export Actions
 export function addEvent(event) {
@@ -29,10 +30,10 @@ export function researchEvents(events) {
   };
 }
 
-export function researchAdress(adress){
+export function displayEventFacebook(eventFacebook){
   return {
-    type: RESEARCHED_ADRESS,
-    adress,
+    type : FACEBOOK_EVENT,
+    eventFacebook
   }
 }
 
@@ -50,6 +51,12 @@ export function fetchEvent(slug) {
   };
 }
 
+export function fetchEventFromFacebook(id) {
+  return (dispatch) => {
+    return callApi(`events/${id}`).then(res => {console.log("Action : "+ res.event); dispatch(displayEventFacebook(res.event))});
+  };
+}
+
 export function fetchResearch(event) {
   return (dispatch) => {
     return callApi(`research/${event}`).then(res =>dispatch(researchEvents(res.elastic_mongo_response)));
@@ -64,7 +71,7 @@ export function fetchEventsFromFacebook(value,distance,sort,long,lat,category){
 
 export function fetchEventsFromFacebookWithoutValue(long,lat,distance,sort){
   return (dispatch) => {
-    return callApi(`eventsFromFacebook/${long}&${lat}&${distance*1000}&${sort}`).then(res =>dispatch(researchEvents(res.eventsFacebook)));
+    return callApi(`eventsFromFacebook/${long}&${lat}&${distance*1000}&${sort}`).then(res => dispatch(researchEvents(res.eventsFacebook)));
   };
 }
 

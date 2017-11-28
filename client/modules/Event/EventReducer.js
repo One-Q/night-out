@@ -1,8 +1,8 @@
 // Import Actions
-import { ADD_EVENT, ADD_EVENTS, DELETE_EVENT, RESEARCH_EVENTS } from './EventActions';
+import { ADD_EVENT, ADD_EVENTS, DELETE_EVENT, RESEARCH_EVENTS , FACEBOOK_EVENT } from './EventActions';
 
 // Initial State
-const initialState = { data: [] };
+const initialState = { data: [] , event_facebook: [] };
 
 const EventReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -15,12 +15,23 @@ const EventReducer = (state = initialState, action) => {
       return {
         data: action.events,
       };
+    case FACEBOOK_EVENT :
+      console.log('Facebook Event' + action.eventFacebook);
+      return {
+        event_facebook : action.eventFacebook,
+      }
     default:
       return state;
   }
 };
 
 export const getEvents = state => state.events.data;
+
+export const getEventFacebook = (state, id) => {
+  console.log("state"+ state.events.event_facebook);
+  if (state.events.event_facebook === null) return '';
+  return state.events.event_facebook;
+};
 
 
 export const getEvent = (state, slug) => {

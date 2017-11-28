@@ -7,6 +7,9 @@ const router = new Router();
 // Get all events
 router.route('/events').get(EventController.getEvents);
 
+// Get a event from Facebook 
+router.route('/events/:id').get(EventController.getEventFromFacebookById);
+
 // Get on event by name
 router.route('/events/:slug').get(EventController.getEvent);
 

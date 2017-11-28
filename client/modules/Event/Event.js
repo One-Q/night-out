@@ -138,7 +138,7 @@ class Event extends Component {
             }}
           >
             <h2 className={styles['event-title']}>
-              <Link to={`/events/${event.slug}`}>
+              <Link to={facebook ? `/events/facebook/${event.id}` :  `/events/${event.slug}`}>
                 {event.name}
               </Link>
             </h2>
