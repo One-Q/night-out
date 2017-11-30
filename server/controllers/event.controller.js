@@ -140,7 +140,7 @@ export function getEventsFromFacebookWithoutValue(req, res) {
 export function getEventFromFacebookById(req,res){
   var connection = "https://graph.facebook.com/v2.10/"+ req.params.id +
   "?fields=can_viewer_post,can_guests_invite,cover,declined_count,description,guest_list_enabled,id,interested_count,is_canceled,is_draft,end_time,is_viewer_admin,maybe_count,is_page_owned,name,attending_count,start_time,updated_time,type,timezone,noreply_count,scheduled_publish_time,owner,place,ticket_uri,ticketing_privacy_uri,ticketing_terms_uri" +
-  "&access_token=112374466143248|8UiCaiSCYvpP8Oylv0OgWwJ1TzY"
+  "&access_token=112374466143248|8UiCaiSCYvpP8Oylv0OgWwJ1TzY";
   fetch(connection,"get").then(res => {return res.json()})
   .then(event => { return res.json({event})});
 }

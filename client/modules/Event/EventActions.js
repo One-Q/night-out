@@ -54,7 +54,10 @@ export function fetchEvent(slug) {
 
 export function fetchEventFromFacebook(id) {
   return (dispatch) => {
-    return callApi(`events/${id}`).then(res => {console.log("Action : "+ res.event); dispatch(displayEventFacebook(res.event))});
+    return callApi(`events/facebook/${id}`).then(res => {
+      console.log("Action : "+ res.event); 
+      dispatch(displayEventFacebook(res.event));
+    });
   };
 }
 

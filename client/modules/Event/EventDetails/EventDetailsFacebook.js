@@ -17,6 +17,7 @@ import appStyles from '../../App/App.css';
 class EventDetailsFacebook extends Component {
 
   render() {
+    console.log(this.props.event);
     if (this.props.event === '') {
       return (
         <div>
@@ -34,7 +35,20 @@ class EventDetailsFacebook extends Component {
             </Grid>
             <Grid item md={6}>
               <div style={{width: '100%', height: 600}}>
-                
+                <p className={styles['location']}>
+                  <FormattedMessage id="Location" /> : {this.props.event.place.location.city}, {this.props.event.place.location.street}
+                </p>
+             
+
+                <Eventmap
+                  location={{lat: this.props.event.place.location.latitude, lng: this.props.event.place.location.longitude}}
+                  isMarkerShown
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `400px` }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+                  markers={[{lat:this.props.event.place.location.latitude, lng: this.props.event.place.location.longitude}]}
+                />
               </div>
             </Grid>
           </Grid>
@@ -59,11 +73,11 @@ function mapStateToProps(state, props) {
 
 /*
 
-<p className={styles['location']}><FormattedMessage id="Location" /> : {this.props.event.venue.location.city}, {this.props.event.venue.location.street}</p>
+<p className={styles['location']}><FormattedMessage id="Location" /> : {this.props.event.place.location.city}, {this.props.event.veplacenue.location.street}</p>
              
 
 <Eventmap
-                  location={{lat: this.props.event.venue.location.latitude, lng: this.props.event.venue.location.longitude}}
+                  location={{lat: this.props.event.place.location.latitude, lng: this.props.event.place.location.longitude}}
                   isMarkerShown
                   googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places"
                   loadingElement={<div style={{ height: `100%` }} />}
