@@ -41,6 +41,7 @@ export function fetchEvents() {
   return (dispatch) => {
     return callApi('events').then(res => {
       dispatch(addEvents(res.event));
+      return res;
     });
   };
 }

@@ -9,6 +9,7 @@ import Grid from 'material-ui/Grid';
 import throttle from 'lodash.throttle';
 import Eventmap from './EventMap/EventMap';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import { CircularProgress } from 'material-ui/Progress';
 
 
 // Import Style
@@ -56,11 +57,20 @@ class Event extends Component {
       isLoading: true,
     });
     facebook = false;
+    const app = this;
     if (isLocated) {
       if (value) {
-        this.props.dispatch(fetchResearch(value)).then(this.setState({ isLoading: false }));
+        this.props.dispatch(fetchResearch(value)).then((res) => {
+          app.setState({
+            isLoading: false,
+          });
+        });
       } else {
-         this.props.dispatch(fetchEvents()).then(this.setState({ isLoading: false }));
+        this.props.dispatch(fetchEvents()).then((res) => {
+          app.setState({
+            isLoading: false,
+          });
+        });
       }
     } else {
       alert('Tu peux pas!');
@@ -72,12 +82,20 @@ class Event extends Component {
       isLoading: true,
     });
     facebook = true;
-
+    const app = this;
     if (isLocated) {
       if (value) {
-        this.props.dispatch(fetchEventsFromFacebook(value, distance, sort, this.state.long, this.state.lat, null)).then(this.setState({ isLoading: false }));
+        this.props.dispatch(fetchEventsFromFacebook(value, distance, sort, this.state.long, this.state.lat, null)).then((res) => {
+          app.setState({
+            isLoading: false,
+          });
+        });
       } else {
-        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance, sort)).then(this.setState({ isLoading: false }));
+        this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance, sort)).then((res) => {
+          app.setState({
+            isLoading: false,
+          });
+        });
       }
     } else {
       alert('Oh non fdp , tu peux pas!');
@@ -107,8 +125,24 @@ class Event extends Component {
     console.log(this.state);
     let events;
     let markers = [];
-    if(this.state.isLoading){
-      return <h2>Ah</h2>
+    if (this.state.isLoading) {
+      return (
+        <div>
+          <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook}  geocodeByAdress={this.handleGoogle}/>
+          <div className={appStyles.container}>
+            <h1>Les événements</h1>
+            <div className={styles['event-div']}>
+              <Grid container spacing={24} style={{ width: '100%' }}>
+                <Grid item md={12}>
+                  <div style={{ textAlign: 'center', paddingBottom: '30px' }}>
+                    <CircularProgress />
+                  </div>
+                </Grid>
+              </Grid>
+            </div>
+          </div>
+        </div>
+      );
     }
     if (this.props.events) {
       events = this.props.events.map((event) => {
@@ -150,7 +184,6 @@ class Event extends Component {
     }
     return (
       <div>
-       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAytyiovY8eruaEMlTODwAVO0Z_z3QHoe4&libraries=places"></script>
        <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook}  geocodeByAdress={this.handleGoogle}/>
         <div className={appStyles.container}>
           <h1>Les événements</h1>

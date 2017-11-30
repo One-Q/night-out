@@ -48,6 +48,12 @@ export class App extends Component {
                 content: 'width=device-width, initial-scale=1',
               },
             ]}
+            script={[
+              {
+                "src": "https://maps.googleapis.com/maps/api/js?key=AIzaSyAytyiovY8eruaEMlTODwAVO0Z_z3QHoe4&libraries=places", 
+                "type": "text/javascript"
+              }
+            ]}
           />
           <Header user={ this.props.user } history={this.props.history} />
           <div>

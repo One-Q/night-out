@@ -24,7 +24,6 @@ let value = "";
  * @param res
  */
 export function getEvent(req, res) {
-  //console.log(req.params.slug);
   Event.findOne({ slug: req.params.slug }).exec((err, event) => {
     if (err) {
       return res.status(500).send(err);
