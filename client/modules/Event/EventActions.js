@@ -61,11 +61,12 @@ export function fetchEventFromFacebook(id) {
   };
 }
 
-export function fetchResearch(event) {
+export function fetchResearch(event,distance,long,lat) {
   return (dispatch) => {
-    return callApi(`research/${event}`).then(res =>dispatch(researchEvents(res.elastic_mongo_response)));
+    return callApi(`research/${event}&${distance}&${long}&${lat}`).then(res =>dispatch(researchEvents(res.elastic_mongo_response)));
   };
 }
+
 
 export function fetchEventsFromFacebook(value,distance,sort,long,lat,category){
   return (dispatch) => {

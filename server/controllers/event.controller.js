@@ -53,6 +53,9 @@ export function getEvents(req, res) {
  */
 export function getResearch(req, res) {
   let search_query = req.params.event;
+  let distance = req.params.distance;
+  let lat = req.params.lat;
+  let lng = req.params.long;
   let elastic_response;
   let mongo_response;
   client
@@ -66,7 +69,7 @@ export function getResearch(req, res) {
     function (body) {
       elastic_response = body.hits.hits;
 
-      retrieveId(elastic_response).then(table_id => getEventsByidFromMongo(table_id)).then(elastic_mongo_response => { console.log(elastic_mongo_response); return res.json({ elastic_mongo_response }) });
+      retrieveId(elastic_response).then(table_id => getEventsByidFromMongo(table_id,distance,lat,lng)).then(elastic_mongo_response => { console.log(elastic_mongo_response); return res.json({ elastic_mongo_response }) });
     },
     function (error) {
       return res.status(500).send(error);
@@ -78,16 +81,46 @@ export function getResearch(req, res) {
  * Get events by id from mongo db
  * @param events
  */
-function getEventsByidFromMongo(e) {
-  console.log(e);
+function getEventsByidFromMongo(e,distance,lat,lng) { 
+  var m = distance;
+  let posLocallat = lng;
+  let posLocalLng = lat;
   return new Promise((res, rej) => {
-    Event.find({ '_id': { $in: e } }).exec((err, event) => {
+    Event.find({ $and:[{ '_id': { $in: e } } , { active: true , $where : function(){
+      return get_distance_m(posLocallat, posLocalLng, this.location.latitude, this.location.longitude) <= m; 
+    }}]  }).exec((err, event) => {
       console.log("ffhjfjghfhjfjghf"+event)
       res(event)
     });
   }
   )
 }
+/*
+ * Compare distance between 2 location
+ * @param lat1 , lng1 , lat2 , lng2
+ */
+function get_distance_m(lat1, lng1, lat2, lng2) {
+  let earth_radius = 6378137;
+ // Terre = sphère de 6378km de rayon 
+  // CONVERSION 
+  let ourLng = deg2rad(lng1);
+  let ourLat = deg2rad(lat1);
+  let mongoLng = deg2rad(lng2);
+  let mongoLat = deg2rad(lat2); 
+  let distanceLng = ($mongoLng - $ourLng) / 2;
+  let distanceLat = ($mongoLat - $ourLat) / 2; 
+  let a = (Math.sin($distanceLat) * Math.sin($distanceLat)) + Math.cos($ourLat) * Math.cos($mongoLat) * (Math.sin($distanceLng) * Math.sin($distanceLng));
+  let d = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return (earth_radius * d); 
+} 
+     
+
+/*
+ * @param x
+ */
+function deg2rad(x){
+   return Math.PI * x/ 180; 
+  }
 
 /**
  * retrieve Id from a events from elasticsearch

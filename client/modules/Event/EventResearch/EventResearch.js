@@ -69,7 +69,7 @@ export class EventResearch extends Component {
     const sort = this.state.sort;
     if(this.state.selectedOption == "ourDB"){
       console.log("Tu as choisi notre DB");
-      this.props.research(input);      
+      this.props.research(input,distance);      
     }else if(this.state.selectedOption == "facebookDB"){
       console.log("Test vers Facebook");
       this.props.researchViaFacebook(input,distance,sort);

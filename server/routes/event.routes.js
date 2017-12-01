@@ -5,7 +5,7 @@ import auth from '../auth';
 const router = new Router();
 
 // Get all events
-router.route('/events').get(EventController.getEvents);
+router.route('/events').get(EventController.getEvents); // &:distance&:long&:lat
 
 // Get a event from Facebook 
 router.route('/events/facebook/:id').get(EventController.getEventFromFacebookById);
@@ -14,7 +14,8 @@ router.route('/events/facebook/:id').get(EventController.getEventFromFacebookByI
 router.route('/events/:slug').get(EventController.getEvent);
 
 // Get events from our DB
-router.route('/research/:event').get(EventController.getResearch);
+router.route('/research/:event&:distance&:long&:lat').get(EventController.getResearch);
+
 
 // Get events from Facebook
 router.route('/eventsFromFacebook/:value&:distance&:sort&:long&:lat&:category').get(EventController.getEventsFromFacebook);
