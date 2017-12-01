@@ -5,12 +5,15 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Search from 'material-ui-icons/Search';
+import Add from 'material-ui-icons/Add';
 import LoginContainer from '../../../Authentification/LogIn/LoginContainer';
 import SignUpContainer from '../../../Authentification/SignUp/SignUpContainer';
+import Tooltip from 'material-ui/Tooltip';
 
 // Import Style
 import styles from './Header.css';
 import appStyles from '../../App.css';
+import IconButton from 'material-ui/IconButton';
 
 class Header extends Component {
 
@@ -104,11 +107,22 @@ class Header extends Component {
                   Night Out
                 </Link>
               </Typography>
-              <Link to="/events" style={{ textDecoration: 'none' }}>
-                <Button color="contrast" style={{ padding: 0 }}>
-                  <Search />
-                </Button>
-              </Link>
+              <Tooltip title="Recherche" placement="bottom">
+                <Link to="/events" style={{ textDecoration: 'none' }}>
+                  <IconButton color="contrast">
+                    <Search />
+                  </IconButton>
+                </Link>
+              </Tooltip>
+              {this.state.hasToken &&
+                <Tooltip title="Créer" placement="bottom">
+                  <Link to="/create" style={{ textDecoration: 'none' }}>
+                    <IconButton color="contrast">
+                      <Add />
+                    </IconButton>
+                  </Link>
+                </Tooltip>
+              }
               {screen}
             </Toolbar>
           </div>
