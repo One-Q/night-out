@@ -102,11 +102,11 @@
 	"use strict";
 	'use strict';
 	
-	var _passport = __webpack_require__(103);
+	var _passport = __webpack_require__(106);
 	
 	var _passport2 = _interopRequireDefault(_passport);
 	
-	var _passportJwt = __webpack_require__(104);
+	var _passportJwt = __webpack_require__(107);
 	
 	var _passportJwt2 = _interopRequireDefault(_passportJwt);
 	
@@ -535,7 +535,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGoogleMaps = __webpack_require__(108);
+	var _reactGoogleMaps = __webpack_require__(111);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -829,7 +829,7 @@
 	  value: true
 	});
 	var config = {
-	  mongoURL: process.env.MONGO_URL || 'mongodb://heroku_q73bd7nd:ifkof4c5qtc4ls2rblt1ac8mu8@ds117965.mlab.com:17965/heroku_q73bd7nd', //'mongodb://localhost:27017/mern-starter',
+	  mongoURL: process.env.MONGO_URL || /*'mongodb://heroku_q73bd7nd:ifkof4c5qtc4ls2rblt1ac8mu8@ds117965.mlab.com:17965/heroku_q73bd7nd',*/'mongodb://localhost:27017/mern-starter',
 	  port: process.env.PORT || 8000
 	};
 	
@@ -871,7 +871,7 @@
 	
 	__webpack_require__(89);
 	
-	var _en = __webpack_require__(109);
+	var _en = __webpack_require__(112);
 	
 	var _en2 = _interopRequireDefault(_en);
 	
@@ -881,7 +881,7 @@
 	
 	__webpack_require__(90);
 	
-	var _fr = __webpack_require__(110);
+	var _fr = __webpack_require__(113);
 	
 	var _fr2 = _interopRequireDefault(_fr);
 	
@@ -1012,13 +1012,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reduxDevtools = __webpack_require__(111);
+	var _reduxDevtools = __webpack_require__(114);
 	
-	var _reduxDevtoolsLogMonitor = __webpack_require__(113);
+	var _reduxDevtoolsLogMonitor = __webpack_require__(116);
 	
 	var _reduxDevtoolsLogMonitor2 = _interopRequireDefault(_reduxDevtoolsLogMonitor);
 	
-	var _reduxDevtoolsDockMonitor = __webpack_require__(112);
+	var _reduxDevtoolsDockMonitor = __webpack_require__(115);
 	
 	var _reduxDevtoolsDockMonitor2 = _interopRequireDefault(_reduxDevtoolsDockMonitor);
 	
@@ -1076,7 +1076,7 @@
 	
 	var _reactPlacesAutocomplete2 = _interopRequireDefault(_reactPlacesAutocomplete);
 	
-	var _Progress = __webpack_require__(98);
+	var _Progress = __webpack_require__(100);
 	
 	var _Event = {
 	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
@@ -1136,13 +1136,17 @@
 	        if (value) {
 	          _this.props.dispatch((0, _EventActions.fetchResearch)(value)).then(function (res) {
 	            app.setState({
-	              isLoading: false
+	              isLoading: false,
+	              centerLat: _this.state.lat,
+	              centerLong: _this.state.long
 	            });
 	          });
 	        } else {
 	          _this.props.dispatch((0, _EventActions.fetchEvents)()).then(function (res) {
 	            app.setState({
-	              isLoading: false
+	              isLoading: false,
+	              centerLat: _this.state.lat,
+	              centerLong: _this.state.long
 	            });
 	          });
 	        }
@@ -1155,19 +1159,24 @@
 	      _this.setState({
 	        isLoading: true
 	      });
+	      console.log(_this.state);
 	      facebook = true;
 	      var app = _this;
 	      if (isLocated) {
 	        if (value) {
 	          _this.props.dispatch((0, _EventActions.fetchEventsFromFacebook)(value, distance, sort, _this.state.long, _this.state.lat, null)).then(function (res) {
 	            app.setState({
-	              isLoading: false
+	              isLoading: false,
+	              centerLat: _this.state.lat,
+	              centerLong: _this.state.long
 	            });
 	          });
 	        } else {
 	          _this.props.dispatch((0, _EventActions.fetchEventsFromFacebookWithoutValue)(_this.state.long, _this.state.lat, distance, sort)).then(function (res) {
 	            app.setState({
-	              isLoading: false
+	              isLoading: false,
+	              centerLat: _this.state.lat,
+	              centerLong: _this.state.long
 	            });
 	          });
 	        }
@@ -1179,7 +1188,9 @@
 	    _this.state = {
 	      isLoading: false,
 	      long: 4.2,
-	      lat: 50.8
+	      lat: 50.8,
+	      centerLong: 4.2,
+	      centerLat: 50.8
 	    };
 	    _this.handleCenter = _this.handleCenter.bind(_this);
 	    _this.handleClickClack = _this.handleClickClack.bind(_this);
@@ -1213,8 +1224,8 @@
 	    key: 'handleCenter',
 	    value: function handleCenter(latitude, longitude) {
 	      this.setState({
-	        lat: latitude,
-	        long: longitude
+	        centerLat: latitude,
+	        centerLong: longitude
 	      });
 	    }
 	  }, {
@@ -1240,7 +1251,7 @@
 	    value: function render() {
 	      var _this4 = this;
 	
-	      console.log(this.state);
+	      console.log(this.props.events);
 	      var events = void 0;
 	      var markers = [];
 	      if (this.state.isLoading) {
@@ -1268,8 +1279,8 @@
 	          if (facebook) {
 	            markers.push({
 	              location: {
-	                lat: event.venue.location.latitude,
-	                lng: event.venue.location.longitude
+	                lat: event.place.location.latitude,
+	                lng: event.place.location.longitude
 	              },
 	              showInfo: false
 	            });
@@ -1285,13 +1296,13 @@
 	          return _jsx('div', {
 	            className: _Event2.default['single-event'],
 	            onMouseEnter: function onMouseEnter() {
-	              facebook ? _this4.handleCenter(event.venue.location.latitude, event.venue.location.longitude) : _this4.handleCenter(event.location.latitude, event.location.longitude);
+	              facebook ? _this4.handleCenter(event.place.location.latitude, event.place.location.longitude) : _this4.handleCenter(event.location.latitude, event.location.longitude);
 	            }
 	          }, facebook ? event.id : event._id, _jsx('h2', {
 	            className: _Event2.default['event-title']
 	          }, void 0, _jsx(_reactRouter.Link, {
 	            to: facebook ? '/events/facebook/' + event.id : '/events/' + event.slug
-	          }, void 0, event.name)), _jsx('p', {}, void 0, event.description), _jsx('p', {}, void 0, facebook ? event.venue.location.city : event.location.city, ' , ', facebook ? event.venue.location.street : event.location.street, ' '));
+	          }, void 0, event.name)), _jsx('p', {}, void 0, event.description), _jsx('p', {}, void 0, facebook ? event.place.location.city : event.location.city, ' , ', facebook ? event.place.location.street : event.location.street, ' '));
 	        });
 	      }
 	      return _jsx('div', {}, void 0, _jsx(_EventResearch.EventResearch, {
@@ -1315,7 +1326,7 @@
 	      }, void 0, _jsx('div', {
 	        style: { width: '100%', height: 600 }
 	      }, void 0, markers.length > 0 && _jsx(_EventMap2.default, {
-	        location: { lat: this.state.lat, lng: this.state.long },
+	        location: { lat: this.state.centerLat, lng: this.state.centerLong },
 	        isMarkerShown: true,
 	        googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places',
 	        loadingElement: _jsx('div', {
@@ -2132,7 +2143,7 @@
 	  path: 'create',
 	  getComponent: function getComponent(nextState, cb) {
 	    __webpack_require__.e/* nsure */(2).catch(function(err) { __webpack_require__.oe(err); }).then((function (require) {
-	      cb(null, __webpack_require__(116).default);
+	      cb(null, __webpack_require__(119).default);
 	    }).bind(null, __webpack_require__));
 	  }
 	}), _jsx(_reactRouter.Route, {
@@ -2153,7 +2164,7 @@
 	  path: '*',
 	  getComponent: function getComponent(nextState, cb) {
 	    __webpack_require__.e/* nsure */(1).catch(function(err) { __webpack_require__.oe(err); }).then((function (require) {
-	      cb(null, __webpack_require__(117).default);
+	      cb(null, __webpack_require__(120).default);
 	    }).bind(null, __webpack_require__));
 	  }
 	}));
@@ -2172,7 +2183,7 @@
 	
 	var _redux = __webpack_require__(13);
 	
-	var _reduxThunk = __webpack_require__(114);
+	var _reduxThunk = __webpack_require__(117);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -2464,9 +2475,9 @@
 	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
 	
 	var webpack = __webpack_require__(26);
-	var cssnext = __webpack_require__(105);
-	var postcssFocus = __webpack_require__(106);
-	var postcssReporter = __webpack_require__(107);
+	var cssnext = __webpack_require__(108);
+	var postcssFocus = __webpack_require__(109);
+	var postcssReporter = __webpack_require__(110);
 	
 	module.exports = {
 	  devtool: 'cheap-module-eval-source-map',
@@ -2807,11 +2818,11 @@
 	
 	var _Typography2 = _interopRequireDefault(_Typography);
 	
-	var _Divider = __webpack_require__(96);
+	var _Divider = __webpack_require__(97);
 	
 	var _Divider2 = _interopRequireDefault(_Divider);
 	
-	var _List = __webpack_require__(97);
+	var _List = __webpack_require__(99);
 	
 	var _List2 = _interopRequireDefault(_List);
 	
@@ -2885,11 +2896,11 @@
 	
 	var _reactRouter = __webpack_require__(2);
 	
-	var _AppBar = __webpack_require__(95);
+	var _AppBar = __webpack_require__(96);
 	
 	var _AppBar2 = _interopRequireDefault(_AppBar);
 	
-	var _Toolbar = __webpack_require__(100);
+	var _Toolbar = __webpack_require__(102);
 	
 	var _Toolbar2 = _interopRequireDefault(_Toolbar);
 	
@@ -2901,9 +2912,13 @@
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
-	var _Search = __webpack_require__(94);
+	var _Search = __webpack_require__(95);
 	
 	var _Search2 = _interopRequireDefault(_Search);
+	
+	var _Add = __webpack_require__(94);
+	
+	var _Add2 = _interopRequireDefault(_Add);
 	
 	var _LoginContainer = __webpack_require__(68);
 	
@@ -2912,6 +2927,10 @@
 	var _SignUpContainer = __webpack_require__(70);
 	
 	var _SignUpContainer2 = _interopRequireDefault(_SignUpContainer);
+	
+	var _Tooltip = __webpack_require__(103);
+	
+	var _Tooltip2 = _interopRequireDefault(_Tooltip);
 	
 	var _Header = {
 	  "header": "_2sEZYfHlvDy9uXqVIXG1aM",
@@ -2932,6 +2951,10 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
+	var _IconButton = __webpack_require__(98);
+	
+	var _IconButton2 = _interopRequireDefault(_IconButton);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2943,7 +2966,13 @@
 	// Import Style
 	
 	
-	var _ref = _jsx(_Search2.default, {});
+	var _ref = _jsx(_IconButton2.default, {
+	  color: 'contrast'
+	}, void 0, _jsx(_Search2.default, {}));
+	
+	var _ref2 = _jsx(_IconButton2.default, {
+	  color: 'contrast'
+	}, void 0, _jsx(_Add2.default, {}));
 	
 	var Header = function (_Component) {
 	  _inherits(Header, _Component);
@@ -3061,13 +3090,19 @@
 	      }, void 0, _jsx(_reactRouter.Link, {
 	        to: '/',
 	        style: { textDecoration: 'none', color: 'white' }
-	      }, void 0, 'Night Out')), _jsx(_reactRouter.Link, {
+	      }, void 0, 'Night Out')), _jsx(_Tooltip2.default, {
+	        title: 'Recherche',
+	        placement: 'bottom'
+	      }, void 0, _jsx(_reactRouter.Link, {
 	        to: '/events',
 	        style: { textDecoration: 'none' }
-	      }, void 0, _jsx(_Button2.default, {
-	        color: 'contrast',
-	        style: { padding: 0 }
-	      }, void 0, _ref)), screen))));
+	      }, void 0, _ref)), this.state.hasToken && _jsx(_Tooltip2.default, {
+	        title: 'Cr\xE9er',
+	        placement: 'bottom'
+	      }, void 0, _jsx(_reactRouter.Link, {
+	        to: '/create',
+	        style: { textDecoration: 'none' }
+	      }, void 0, _ref2)), screen))));
 	    }
 	  }]);
 	
@@ -3191,7 +3226,7 @@
 	
 	var _reactRedux = __webpack_require__(1);
 	
-	var _os = __webpack_require__(102);
+	var _os = __webpack_require__(105);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3634,7 +3669,7 @@
 	
 	var _Form = __webpack_require__(15);
 	
-	var _Radio = __webpack_require__(99);
+	var _Radio = __webpack_require__(101);
 	
 	var _Radio2 = _interopRequireDefault(_Radio);
 	
@@ -4595,7 +4630,7 @@
 	
 	var _limax2 = _interopRequireDefault(_limax);
 	
-	var _sanitizeHtml = __webpack_require__(115);
+	var _sanitizeHtml = __webpack_require__(118);
 	
 	var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 	
@@ -4702,7 +4737,7 @@
 	
 	var _limax2 = _interopRequireDefault(_limax);
 	
-	var _nodemailer = __webpack_require__(101);
+	var _nodemailer = __webpack_require__(104);
 	
 	var _nodemailer2 = _interopRequireDefault(_nodemailer);
 	
@@ -5108,138 +5143,156 @@
 /* 94 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui-icons/Search");
+	module.exports = require("material-ui-icons/Add");
 
 /***/ },
 /* 95 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/AppBar");
+	module.exports = require("material-ui-icons/Search");
 
 /***/ },
 /* 96 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/Divider");
+	module.exports = require("material-ui/AppBar");
 
 /***/ },
 /* 97 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/List");
+	module.exports = require("material-ui/Divider");
 
 /***/ },
 /* 98 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/Progress");
+	module.exports = require("material-ui/IconButton");
 
 /***/ },
 /* 99 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/Radio");
+	module.exports = require("material-ui/List");
 
 /***/ },
 /* 100 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/Toolbar");
+	module.exports = require("material-ui/Progress");
 
 /***/ },
 /* 101 */
 /***/ function(module, exports) {
 
-	module.exports = require("nodemailer");
+	module.exports = require("material-ui/Radio");
 
 /***/ },
 /* 102 */
 /***/ function(module, exports) {
 
-	module.exports = require("os");
+	module.exports = require("material-ui/Toolbar");
 
 /***/ },
 /* 103 */
 /***/ function(module, exports) {
 
-	module.exports = require("passport");
+	module.exports = require("material-ui/Tooltip");
 
 /***/ },
 /* 104 */
 /***/ function(module, exports) {
 
-	module.exports = require("passport-jwt");
+	module.exports = require("nodemailer");
 
 /***/ },
 /* 105 */
 /***/ function(module, exports) {
 
-	module.exports = require("postcss-cssnext");
+	module.exports = require("os");
 
 /***/ },
 /* 106 */
 /***/ function(module, exports) {
 
-	module.exports = require("postcss-focus");
+	module.exports = require("passport");
 
 /***/ },
 /* 107 */
 /***/ function(module, exports) {
 
-	module.exports = require("postcss-reporter");
+	module.exports = require("passport-jwt");
 
 /***/ },
 /* 108 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-google-maps");
+	module.exports = require("postcss-cssnext");
 
 /***/ },
 /* 109 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-intl/locale-data/en");
+	module.exports = require("postcss-focus");
 
 /***/ },
 /* 110 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-intl/locale-data/fr");
+	module.exports = require("postcss-reporter");
 
 /***/ },
 /* 111 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-devtools");
+	module.exports = require("react-google-maps");
 
 /***/ },
 /* 112 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-devtools-dock-monitor");
+	module.exports = require("react-intl/locale-data/en");
 
 /***/ },
 /* 113 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-devtools-log-monitor");
+	module.exports = require("react-intl/locale-data/fr");
 
 /***/ },
 /* 114 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-thunk");
+	module.exports = require("redux-devtools");
 
 /***/ },
 /* 115 */
 /***/ function(module, exports) {
 
+	module.exports = require("redux-devtools-dock-monitor");
+
+/***/ },
+/* 116 */
+/***/ function(module, exports) {
+
+	module.exports = require("redux-devtools-log-monitor");
+
+/***/ },
+/* 117 */
+/***/ function(module, exports) {
+
+	module.exports = require("redux-thunk");
+
+/***/ },
+/* 118 */
+/***/ function(module, exports) {
+
 	module.exports = require("sanitize-html");
 
 /***/ },
-/* 116 */,
-/* 117 */,
-/* 118 */
+/* 119 */,
+/* 120 */,
+/* 121 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui-icons/Send");

@@ -1,7 +1,7 @@
 exports.ids = [2];
 exports.modules = {
 
-/***/ 116:
+/***/ 119:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45,7 +45,7 @@ exports.modules = {
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
-	var _Send = __webpack_require__(118);
+	var _Send = __webpack_require__(121);
 	
 	var _Send2 = _interopRequireDefault(_Send);
 	
