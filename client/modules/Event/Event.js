@@ -27,6 +27,8 @@ class Event extends Component {
       isLoading: false,
       long: 4.2,
       lat: 50.8,
+      centerLong: 4.2,
+      centerLat: 50.8,
     };
     this.handleCenter = this.handleCenter.bind(this);
     this.handleClickClack = this.handleClickClack.bind(this);
@@ -63,12 +65,16 @@ class Event extends Component {
         this.props.dispatch(fetchResearch(value)).then((res) => {
           app.setState({
             isLoading: false,
+            centerLat: this.state.lat,
+            centerLong: this.state.long,
           });
         });
       } else {
         this.props.dispatch(fetchEvents()).then((res) => {
           app.setState({
             isLoading: false,
+            centerLat: this.state.lat,
+            centerLong: this.state.long,
           });
         });
       }
@@ -81,6 +87,7 @@ class Event extends Component {
     this.setState({
       isLoading: true,
     });
+    console.log(this.state);
     facebook = true;
     const app = this;
     if (isLocated) {
@@ -88,12 +95,16 @@ class Event extends Component {
         this.props.dispatch(fetchEventsFromFacebook(value, distance, sort, this.state.long, this.state.lat, null)).then((res) => {
           app.setState({
             isLoading: false,
+            centerLat: this.state.lat,
+            centerLong: this.state.long,
           });
         });
       } else {
         this.props.dispatch(fetchEventsFromFacebookWithoutValue(this.state.long, this.state.lat, distance, sort)).then((res) => {
           app.setState({
             isLoading: false,
+            centerLat: this.state.lat,
+            centerLong: this.state.long,
           });
         });
       }
@@ -104,8 +115,8 @@ class Event extends Component {
 
   handleCenter(latitude, longitude) {
     this.setState({
-      lat: latitude,
-      long: longitude,
+      centerLat: latitude,
+      centerLong: longitude,
     });
   }
 
@@ -122,7 +133,7 @@ class Event extends Component {
   }
 
   render() {
-    console.log(this.state);
+    console.log(this.props.events);
     let events;
     let markers = [];
     if (this.state.isLoading) {
@@ -149,8 +160,8 @@ class Event extends Component {
         if (facebook) {
           markers.push({
             location : {
-              lat : event.venue.location.latitude,
-              lng : event.venue.location.longitude,
+              lat : event.place.location.latitude,
+              lng : event.place.location.longitude,
             },
             showInfo: false,
           });
@@ -168,7 +179,7 @@ class Event extends Component {
             key={facebook ? event.id : event._id}
             className={styles['single-event']}
             onMouseEnter={() => {
-              facebook ? this.handleCenter(event.venue.location.latitude, event.venue.location.longitude) :this.handleCenter(event.location.latitude, event.location.longitude);
+              facebook ? this.handleCenter(event.place.location.latitude, event.place.location.longitude) :this.handleCenter(event.location.latitude, event.location.longitude);
             }}
           >
             <h2 className={styles['event-title']}>
@@ -177,7 +188,7 @@ class Event extends Component {
               </Link>
             </h2>
             <p>{event.description}</p>
-            <p>{facebook ? event.venue.location.city: event.location.city} , {facebook ? event.venue.location.street: event.location.street} </p>
+            <p>{facebook ? event.place.location.city: event.location.city} , {facebook ? event.place.location.street: event.location.street} </p>
           </div>
         );
       });
@@ -195,7 +206,7 @@ class Event extends Component {
               <Grid item md={6}>
                 <div style={{width: '100%', height: 600}}>
                   {markers.length > 0 && <Eventmap
-                    location={{ lat: this.state.lat, lng: this.state.long }}
+                    location={{ lat: this.state.centerLat, lng: this.state.centerLong }}
                     isMarkerShown
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `100%` }} />}
