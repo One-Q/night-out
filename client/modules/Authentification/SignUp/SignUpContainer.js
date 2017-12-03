@@ -65,7 +65,7 @@ class SignUpContainer extends React.Component {
     const passwordCheck = this.state.user.passwordCheck;
     let errors = {};
     if (!username || !regUsername.test(username)) {
-      errors.username = 'Veuillez rentrer un username valide (5 - 14 caractères)';
+      errors.username = 'Veuillez rentrer un nom d\'utilisateur valide (5 - 14 caractères)';
     }
     if (!email || !regEmail.test(email)) {
       errors.email = 'Veuillez rentrer une adresse mail valide';

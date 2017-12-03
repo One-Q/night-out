@@ -45,7 +45,7 @@ class LoginContainer extends React.Component {
     const password = this.state.user.password;
     let errors = {};
     if (!username || !regUsername.test(username)) {
-      errors.username = 'Veuillez rentrer un username valide (5 - 14 caractères)';
+      errors.username = 'Veuillez rentrer un nom d\'utilisateur valide (5 - 14 caractères)';
     }
     if (!password || !regPassword.test(password)) {
       errors.password = 'Veuillez rentrer un mot de passe valide (8 - 64 caractères)';

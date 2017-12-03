@@ -20,7 +20,7 @@ const Login = ({
   user
 }) => (
   <Dialog open={isOpen} onRequestClose={handleClose} fullWidth>
-    <DialogTitle>Login</DialogTitle>
+    <DialogTitle>Connexion</DialogTitle>
     <DialogContent>
       {errors.main &&
         <DialogContentText style={{ color: 'red' }}>
@@ -31,7 +31,7 @@ const Login = ({
         error={errors.username}
         margin="dense"
         name="username"
-        label="Username"
+        label="Nom d'utilisateur"
         type="text"
         fullWidth
         onChange={onChange}
@@ -40,7 +40,7 @@ const Login = ({
       <TextField
         margin="dense"
         name="password"
-        label="Password"
+        label="Mot de passe"
         type="password"
         fullWidth
         error={errors.password}
@@ -50,10 +50,10 @@ const Login = ({
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose} color="primary">
-        Cancel
+        Annuler
       </Button>
-      <Button onClick={onSubmit} color="primary">
-        Submit
+      <Button onClick={onSubmit} color="primary" raised type="submit">
+        Envoyer
       </Button>
     </DialogActions>
   </Dialog>

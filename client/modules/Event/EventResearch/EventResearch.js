@@ -221,7 +221,7 @@ export class EventResearch extends Component {
                 }
               </Grid>
               <Grid item md={12}>
-                <Button raised color="primary" onClick={this.ClickClack}>
+                <Button raised color="primary" onClick={this.ClickClack} type="submit">
                   Rechercher
                 </Button>
               </Grid>

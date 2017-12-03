@@ -95,7 +95,7 @@ export function createEvent(name, description, category, city, street, latitude,
       startTime: new Date(date),
     }, localStorage.getItem('token'))
     .then((res) => {
-      console.log(res);
+      return res;
     });
   };
 }

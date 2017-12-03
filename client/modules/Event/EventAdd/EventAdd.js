@@ -9,6 +9,7 @@ import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 import Send from 'material-ui-icons/Send';
 import { MenuItem } from 'material-ui/Menu';
+import Snackbar from 'material-ui/Snackbar';
 
 import appStyles from '../../App/App.css';
 import thisStyles from './EventAdd.css';
@@ -36,6 +37,7 @@ class EventAdd extends Component {
       city: '',
       street: '',
       error: {},
+      success: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -51,6 +53,9 @@ class EventAdd extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({
+      success: false,
+    });
     const adresse = this.state.street.replace(/ /g, '-') + '+' + this.state.city.replace(/ /g, '-');
     let lat;
     let lng;
@@ -61,7 +66,20 @@ class EventAdd extends Component {
       if (res.status === 'OK') {
         lat = res.results[0].geometry.location.lat;
         lng = res.results[0].geometry.location.lng;
-        this.props.dispatch(createEvent(this.state.name, this.state.description, this.state.category, this.state.city, this.state.street, lat, lng, this.state.date));
+        this.props.dispatch(createEvent(this.state.name, this.state.description, this.state.category, this.state.city, this.state.street, lat, lng, this.state.date))
+        .then((result) => {
+          if (result.success) {
+            this.setState({
+              name: '',
+              description: '',
+              date: '',
+              city: '',
+              street: '',
+              success: true,
+            });
+          }
+          console.log(result);
+        });
       } else {
         console.log(res);
       }
@@ -74,7 +92,7 @@ class EventAdd extends Component {
         <div className={appStyles.container}>
           <Grid container spacing={24} style={{ width: '100%' }}>
             <Grid item md={6}>
-              <h2>Ajouter un événement</h2>
+              <h2>Ajouter un évènement</h2>
               <form style={{ paddingTop: '20px', paddingBottom: '30px' }} onSubmit={this.handleSubmit}>
                 <TextField
                   required
@@ -145,10 +163,20 @@ class EventAdd extends Component {
                   onChange={this.handleChange('street')}
                 />
                 <Button raised color="primary" style={{ marginTop: '20px' }} type="submit">
-                  Send
+                  Envoyer
                   <Send style={{ marginLeft: '20px' }} />
                 </Button>
               </form>
+              <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={this.state.success}
+                onRequestClose={() => { this.setState({ success: false }); }}
+                autoHideDuration={3000}
+                SnackbarContentProps={{
+                  'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">Evènement créé</span>}
+              />
             </Grid>
           </Grid>
         </div>

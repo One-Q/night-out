@@ -3,7 +3,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "reac
 
 const EventMap = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
-    defaultZoom={10}
+    defaultZoom={16}
     defaultCenter={props.location}
     center={props.location}
   >

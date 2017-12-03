@@ -19,7 +19,7 @@ const SignUp = ({
   user,
 }) => (
   <Dialog open={isOpen} onRequestClose={handleClose} fullWidth>
-    <DialogTitle>Sign Up</DialogTitle>
+    <DialogTitle>Inscription</DialogTitle>
     <DialogContent>
       {errors.main &&
         <DialogContentText style={{ color: 'red' }}>
@@ -29,7 +29,7 @@ const SignUp = ({
         autoFocus
         margin="dense"
         name="username"
-        label="Username"
+        label="Nom d'utilisateur"
         type="text"
         value={user.username}
         fullWidth
@@ -51,7 +51,7 @@ const SignUp = ({
       <TextField
         margin="dense"
         name="password"
-        label="Password"
+        label="Mot de passe"
         type="password"
         value={user.password}
         fullWidth
@@ -62,7 +62,7 @@ const SignUp = ({
       <TextField
         margin="dense"
         name="passwordCheck"
-        label="Password"
+        label="Confirmation mot de passe"
         type="password"
         value={user.passwordCheck}
         fullWidth
@@ -73,10 +73,10 @@ const SignUp = ({
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose} color="primary">
-        Cancel
+        Annuler
       </Button>
-      <Button onClick={onSubmit} color="primary">
-        Submit
+      <Button onClick={onSubmit} color="primary" raised type="submit">
+        Envoyer
       </Button>
     </DialogActions>
   </Dialog>

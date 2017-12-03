@@ -160,8 +160,8 @@ class Event extends Component {
         if (facebook) {
           markers.push({
             location : {
-              lat : event.place.location.latitude,
-              lng : event.place.location.longitude,
+              lat : event.venue.location.latitude,
+              lng : event.venue.location.longitude,
             },
             showInfo: false,
           });
@@ -179,7 +179,7 @@ class Event extends Component {
             key={facebook ? event.id : event._id}
             className={styles['single-event']}
             onMouseEnter={() => {
-              facebook ? this.handleCenter(event.place.location.latitude, event.place.location.longitude) :this.handleCenter(event.location.latitude, event.location.longitude);
+              facebook ? this.handleCenter(event.venue.location.latitude, event.venue.location.longitude) :this.handleCenter(event.location.latitude, event.location.longitude);
             }}
           >
             <h2 className={styles['event-title']}>
@@ -188,7 +188,7 @@ class Event extends Component {
               </Link>
             </h2>
             <p>{event.description}</p>
-            <p>{facebook ? event.place.location.city: event.location.city} , {facebook ? event.place.location.street: event.location.street} </p>
+            <p>{facebook ? event.venue.location.city: event.location.city} , {facebook ? event.venue.location.street: event.location.street} </p>
           </div>
         );
       });

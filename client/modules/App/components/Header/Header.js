@@ -79,13 +79,13 @@ class Header extends Component {
 
     if (this.state.hasToken) {
       screen = (<div>
-        <Button color="contrast" onClick={this.signOut}>Sign Out</Button>
+        <Button color="contrast" onClick={this.signOut}>Déconnexion</Button>
       </div>);
     } else {
       screen = (<div>
-        <Button color="contrast" onClick={this.handleLoginOpen}>Login</Button>
+        <Button color="contrast" onClick={this.handleLoginOpen}>Connexion</Button>
         <LoginContainer isOpen={this.state.loginOpen} handleClose={this.handleLoginClose} />
-        <Button color="contrast" onClick={this.handleSignUpOpen}>Sign Up</Button>
+        <Button color="contrast" onClick={this.handleSignUpOpen}>Inscription</Button>
         <SignUpContainer isOpen={this.state.signUpOpen} handleClose={this.handleSignUpClose} />
       </div>);
     }
