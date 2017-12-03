@@ -102,15 +102,15 @@
 	"use strict";
 	'use strict';
 	
-	var _passport = __webpack_require__(106);
+	var _passport = __webpack_require__(107);
 	
 	var _passport2 = _interopRequireDefault(_passport);
 	
-	var _passportJwt = __webpack_require__(107);
+	var _passportJwt = __webpack_require__(108);
 	
 	var _passportJwt2 = _interopRequireDefault(_passportJwt);
 	
-	var _user = __webpack_require__(22);
+	var _user = __webpack_require__(23);
 	
 	var _user2 = _interopRequireDefault(_user);
 	
@@ -173,7 +173,7 @@
 	exports.fetchEventsFromFacebookWithoutValue = fetchEventsFromFacebookWithoutValue;
 	exports.createEvent = createEvent;
 	
-	var _apiCaller = __webpack_require__(21);
+	var _apiCaller = __webpack_require__(22);
 	
 	var _apiCaller2 = _interopRequireDefault(_apiCaller);
 	
@@ -216,9 +216,9 @@
 	  };
 	}
 	
-	function fetchEvents() {
+	function fetchEvents(distance, long, lat) {
 	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('events').then(function (res) {
+	    return (0, _apiCaller2.default)('events/' + distance + '&' + long + '&' + lat).then(function (res) {
 	      dispatch(addEvents(res.event));
 	      return res;
 	    });
@@ -242,9 +242,9 @@
 	  };
 	}
 	
-	function fetchResearch(event) {
+	function fetchResearch(event, distance, long, lat) {
 	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('research/' + event).then(function (res) {
+	    return (0, _apiCaller2.default)('research/' + event + '&' + distance + '&' + long + '&' + lat).then(function (res) {
 	      return dispatch(researchEvents(res.elastic_mongo_response));
 	    });
 	  };
@@ -289,19 +289,19 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	module.exports = require("mongoose");
+	module.exports = require("material-ui/Grid");
 
 /***/ },
 /* 9 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/Button");
+	module.exports = require("mongoose");
 
 /***/ },
 /* 10 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/Grid");
+	module.exports = require("material-ui/Button");
 
 /***/ },
 /* 11 */
@@ -315,7 +315,7 @@
 	});
 	exports.getUser = undefined;
 	
-	var _AuthentificationActions = __webpack_require__(17);
+	var _AuthentificationActions = __webpack_require__(18);
 	
 	var initialState = { user: {} };
 	
@@ -431,6 +431,12 @@
 /* 16 */
 /***/ function(module, exports) {
 
+	module.exports = require("material-ui/TextField");
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
 	"use strict";
 	'use strict';
 	
@@ -449,7 +455,7 @@
 	}
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -463,7 +469,7 @@
 	exports.login = login;
 	exports.signUp = signUp;
 	
-	var _apiCaller = __webpack_require__(21);
+	var _apiCaller = __webpack_require__(22);
 	
 	var _apiCaller2 = _interopRequireDefault(_apiCaller);
 	
@@ -519,7 +525,7 @@
 	}
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -535,7 +541,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGoogleMaps = __webpack_require__(111);
+	var _reactGoogleMaps = __webpack_require__(112);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -554,7 +560,7 @@
 	exports.default = EventMap;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -572,7 +578,7 @@
 	exports.deletePost = deletePost;
 	exports.deletePostRequest = deletePostRequest;
 	
-	var _apiCaller = __webpack_require__(21);
+	var _apiCaller = __webpack_require__(22);
 	
 	var _apiCaller2 = _interopRequireDefault(_apiCaller);
 	
@@ -644,7 +650,7 @@
 	}
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -655,7 +661,7 @@
 	});
 	exports.getPost = exports.getPosts = undefined;
 	
-	var _PostActions = __webpack_require__(19);
+	var _PostActions = __webpack_require__(20);
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
@@ -707,7 +713,7 @@
 	exports.default = PostReducer;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -723,7 +729,7 @@
 	
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 	
-	var _config = __webpack_require__(25);
+	var _config = __webpack_require__(26);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
@@ -765,7 +771,7 @@
 	}
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -775,7 +781,7 @@
 	  value: true
 	});
 	
-	var _mongoose = __webpack_require__(8);
+	var _mongoose = __webpack_require__(9);
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
@@ -807,19 +813,19 @@
 	exports.default = _mongoose2.default.model('User', userSchema);
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	module.exports = require("cuid");
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	module.exports = require("limax");
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -829,23 +835,17 @@
 	  value: true
 	});
 	var config = {
-	  mongoURL: process.env.MONGO_URL || /*'mongodb://heroku_q73bd7nd:ifkof4c5qtc4ls2rblt1ac8mu8@ds117965.mlab.com:17965/heroku_q73bd7nd',*/'mongodb://localhost:27017/mern-starter',
+	  mongoURL: process.env.MONGO_URL || 'mongodb://heroku_q73bd7nd:ifkof4c5qtc4ls2rblt1ac8mu8@ds117965.mlab.com:17965/heroku_q73bd7nd', /*'mongodb://localhost:27017/mern-starter',*/
 	  port: process.env.PORT || 8000
 	};
 	
 	exports.default = config;
 
 /***/ },
-/* 26 */
-/***/ function(module, exports) {
-
-	module.exports = require("webpack");
-
-/***/ },
 /* 27 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/TextField");
+	module.exports = require("webpack");
 
 /***/ },
 /* 28 */
@@ -871,7 +871,7 @@
 	
 	__webpack_require__(89);
 	
-	var _en = __webpack_require__(112);
+	var _en = __webpack_require__(113);
 	
 	var _en2 = _interopRequireDefault(_en);
 	
@@ -881,7 +881,7 @@
 	
 	__webpack_require__(90);
 	
-	var _fr = __webpack_require__(113);
+	var _fr = __webpack_require__(114);
 	
 	var _fr2 = _interopRequireDefault(_fr);
 	
@@ -962,7 +962,7 @@
 	});
 	exports.getShowAddPost = undefined;
 	
-	var _AppActions = __webpack_require__(16);
+	var _AppActions = __webpack_require__(17);
 	
 	// Initial State
 	var initialState = {
@@ -1012,13 +1012,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reduxDevtools = __webpack_require__(114);
+	var _reduxDevtools = __webpack_require__(115);
 	
-	var _reduxDevtoolsLogMonitor = __webpack_require__(116);
+	var _reduxDevtoolsLogMonitor = __webpack_require__(117);
 	
 	var _reduxDevtoolsLogMonitor2 = _interopRequireDefault(_reduxDevtoolsLogMonitor);
 	
-	var _reduxDevtoolsDockMonitor = __webpack_require__(115);
+	var _reduxDevtoolsDockMonitor = __webpack_require__(116);
 	
 	var _reduxDevtoolsDockMonitor2 = _interopRequireDefault(_reduxDevtoolsDockMonitor);
 	
@@ -1060,7 +1060,7 @@
 	
 	var _reactRouter = __webpack_require__(2);
 	
-	var _Grid = __webpack_require__(10);
+	var _Grid = __webpack_require__(8);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
@@ -1068,7 +1068,7 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _EventMap = __webpack_require__(18);
+	var _EventMap = __webpack_require__(19);
 	
 	var _EventMap2 = _interopRequireDefault(_EventMap);
 	
@@ -1112,11 +1112,11 @@
 	var facebook = false;
 	var isLocated = false;
 	
-	var _ref2 = _jsx('h1', {}, void 0, 'Les \xE9v\xE9nements');
+	var _ref2 = _jsx('h1', {}, void 0, 'Ev\xE8nements recherch\xE9s');
 	
 	var _ref3 = _jsx(_Progress.CircularProgress, {});
 	
-	var _ref4 = _jsx('h1', {}, void 0, 'Les \xE9v\xE9nements');
+	var _ref4 = _jsx('h1', {}, void 0, 'Ev\xE8nements recherch\xE9s :');
 	
 	var Event = function (_Component) {
 	  _inherits(Event, _Component);
@@ -1126,7 +1126,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).call(this, props));
 	
-	    _this.handleClickClack = function (value) {
+	    _this.handleClickClack = function (value, distance) {
 	      _this.setState({
 	        isLoading: true
 	      });
@@ -1134,7 +1134,7 @@
 	      var app = _this;
 	      if (isLocated) {
 	        if (value) {
-	          _this.props.dispatch((0, _EventActions.fetchResearch)(value)).then(function (res) {
+	          _this.props.dispatch((0, _EventActions.fetchResearch)(value, 1000000, _this.state.long, _this.state.lat)).then(function (res) {
 	            app.setState({
 	              isLoading: false,
 	              centerLat: _this.state.lat,
@@ -1142,7 +1142,7 @@
 	            });
 	          });
 	        } else {
-	          _this.props.dispatch((0, _EventActions.fetchEvents)()).then(function (res) {
+	          _this.props.dispatch((0, _EventActions.fetchEvents)(1000000, _this.state.long, _this.state.lat)).then(function (res) {
 	            app.setState({
 	              isLoading: false,
 	              centerLat: _this.state.lat,
@@ -1207,7 +1207,7 @@
 	      Promise.all([canLocated()]).then(function (res) {
 	        if (res[0] === 'prompt' || res[0] === 'granted') {
 	          navigator.geolocation.getCurrentPosition(function (position) {
-	            _this2.props.dispatch((0, _EventActions.fetchEvents)());
+	            _this2.props.dispatch((0, _EventActions.fetchEvents)(1000000, _this2.state.long, _this2.state.lat));
 	            isLocated = true;
 	            _this2.setState({
 	              lat: position.coords.latitude,
@@ -1401,7 +1401,7 @@
 	
 	var _reactIntl = __webpack_require__(3);
 	
-	var _EventMap = __webpack_require__(18);
+	var _EventMap = __webpack_require__(19);
 	
 	var _EventMap2 = _interopRequireDefault(_EventMap);
 	
@@ -1411,7 +1411,7 @@
 	
 	var _reactRouter = __webpack_require__(2);
 	
-	var _Grid = __webpack_require__(10);
+	var _Grid = __webpack_require__(8);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
@@ -1554,7 +1554,7 @@
 	
 	var _reactIntl = __webpack_require__(3);
 	
-	var _EventMap = __webpack_require__(18);
+	var _EventMap = __webpack_require__(19);
 	
 	var _EventMap2 = _interopRequireDefault(_EventMap);
 	
@@ -1564,7 +1564,7 @@
 	
 	var _reactRouter = __webpack_require__(2);
 	
-	var _Grid = __webpack_require__(10);
+	var _Grid = __webpack_require__(8);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
@@ -1772,9 +1772,9 @@
 	
 	var _PostListItem2 = _interopRequireDefault(_PostListItem);
 	
-	var _PostActions = __webpack_require__(19);
+	var _PostActions = __webpack_require__(20);
 	
-	var _PostReducer = __webpack_require__(20);
+	var _PostReducer = __webpack_require__(21);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1839,13 +1839,13 @@
 	
 	var _PostCreateWidget2 = _interopRequireDefault(_PostCreateWidget);
 	
-	var _PostActions = __webpack_require__(19);
+	var _PostActions = __webpack_require__(20);
 	
-	var _AppActions = __webpack_require__(16);
+	var _AppActions = __webpack_require__(17);
 	
 	var _AppReducer = __webpack_require__(29);
 	
-	var _PostReducer = __webpack_require__(20);
+	var _PostReducer = __webpack_require__(21);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1942,7 +1942,7 @@
 	  value: true
 	});
 	
-	var _mongoose = __webpack_require__(8);
+	var _mongoose = __webpack_require__(9);
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
@@ -1981,7 +1981,7 @@
 	  value: true
 	});
 	
-	var _mongoose = __webpack_require__(8);
+	var _mongoose = __webpack_require__(9);
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
@@ -2143,7 +2143,7 @@
 	  path: 'create',
 	  getComponent: function getComponent(nextState, cb) {
 	    __webpack_require__.e/* nsure */(2).catch(function(err) { __webpack_require__.oe(err); }).then((function (require) {
-	      cb(null, __webpack_require__(119).default);
+	      cb(null, __webpack_require__(120).default);
 	    }).bind(null, __webpack_require__));
 	  }
 	}), _jsx(_reactRouter.Route, {
@@ -2164,7 +2164,7 @@
 	  path: '*',
 	  getComponent: function getComponent(nextState, cb) {
 	    __webpack_require__.e/* nsure */(1).catch(function(err) { __webpack_require__.oe(err); }).then((function (require) {
-	      cb(null, __webpack_require__(120).default);
+	      cb(null, __webpack_require__(121).default);
 	    }).bind(null, __webpack_require__));
 	  }
 	}));
@@ -2183,7 +2183,7 @@
 	
 	var _redux = __webpack_require__(13);
 	
-	var _reduxThunk = __webpack_require__(117);
+	var _reduxThunk = __webpack_require__(118);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -2348,7 +2348,7 @@
 	var router = new _express.Router();
 	
 	// Get all events
-	router.route('/events').get(EventController.getEvents);
+	router.route('/events/:distance&:long&:lat').get(EventController.getEvents);
 	
 	// Get a event from Facebook 
 	router.route('/events/facebook/:id').get(EventController.getEventFromFacebookById);
@@ -2357,7 +2357,7 @@
 	router.route('/events/:slug').get(EventController.getEvent);
 	
 	// Get events from our DB
-	router.route('/research/:event').get(EventController.getResearch);
+	router.route('/research/:event&:distance&:long&:lat').get(EventController.getResearch);
 	
 	// Get events from Facebook
 	router.route('/eventsFromFacebook/:value&:distance&:sort&:long&:lat&:category').get(EventController.getEventsFromFacebook);
@@ -2474,10 +2474,10 @@
 	"use strict";
 	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
 	
-	var webpack = __webpack_require__(26);
-	var cssnext = __webpack_require__(108);
-	var postcssFocus = __webpack_require__(109);
-	var postcssReporter = __webpack_require__(110);
+	var webpack = __webpack_require__(27);
+	var cssnext = __webpack_require__(109);
+	var postcssFocus = __webpack_require__(110);
+	var postcssReporter = __webpack_require__(111);
 	
 	module.exports = {
 	  devtool: 'cheap-module-eval-source-map',
@@ -2701,7 +2701,7 @@
 	
 	var _Footer2 = _interopRequireDefault(_Footer);
 	
-	var _AppActions = __webpack_require__(16);
+	var _AppActions = __webpack_require__(17);
 	
 	var _IntlActions = __webpack_require__(34);
 	
@@ -2810,7 +2810,7 @@
 	
 	var _reactIntl = __webpack_require__(3);
 	
-	var _Grid = __webpack_require__(10);
+	var _Grid = __webpack_require__(8);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
@@ -2900,7 +2900,7 @@
 	
 	var _AppBar2 = _interopRequireDefault(_AppBar);
 	
-	var _Toolbar = __webpack_require__(102);
+	var _Toolbar = __webpack_require__(103);
 	
 	var _Toolbar2 = _interopRequireDefault(_Toolbar);
 	
@@ -2908,7 +2908,7 @@
 	
 	var _Typography2 = _interopRequireDefault(_Typography);
 	
-	var _Button = __webpack_require__(9);
+	var _Button = __webpack_require__(10);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -2928,7 +2928,7 @@
 	
 	var _SignUpContainer2 = _interopRequireDefault(_SignUpContainer);
 	
-	var _Tooltip = __webpack_require__(103);
+	var _Tooltip = __webpack_require__(104);
 	
 	var _Tooltip2 = _interopRequireDefault(_Tooltip);
 	
@@ -3138,11 +3138,11 @@
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
-	var _TextField = __webpack_require__(27);
+	var _TextField = __webpack_require__(16);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
-	var _Button = __webpack_require__(9);
+	var _Button = __webpack_require__(10);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -3220,13 +3220,13 @@
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
-	var _AuthentificationActions = __webpack_require__(17);
+	var _AuthentificationActions = __webpack_require__(18);
 	
 	var _AuthentificationReducer = __webpack_require__(11);
 	
 	var _reactRedux = __webpack_require__(1);
 	
-	var _os = __webpack_require__(105);
+	var _os = __webpack_require__(106);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3382,11 +3382,11 @@
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
-	var _TextField = __webpack_require__(27);
+	var _TextField = __webpack_require__(16);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
-	var _Button = __webpack_require__(9);
+	var _Button = __webpack_require__(10);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -3488,7 +3488,7 @@
 	
 	var _SignUp2 = _interopRequireDefault(_SignUp);
 	
-	var _AuthentificationActions = __webpack_require__(17);
+	var _AuthentificationActions = __webpack_require__(18);
 	
 	var _AuthentificationReducer = __webpack_require__(11);
 	
@@ -3677,11 +3677,23 @@
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _Button = __webpack_require__(9);
+	var _Button = __webpack_require__(10);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
+	var _Switch = __webpack_require__(102);
+	
+	var _Switch2 = _interopRequireDefault(_Switch);
+	
 	var _Menu = __webpack_require__(60);
+	
+	var _TextField = __webpack_require__(16);
+	
+	var _TextField2 = _interopRequireDefault(_TextField);
+	
+	var _Grid = __webpack_require__(8);
+	
+	var _Grid2 = _interopRequireDefault(_Grid);
 	
 	var _reactPlacesAutocomplete = __webpack_require__(42);
 	
@@ -3706,34 +3718,51 @@
 	var options = void 0;
 	
 	var _ref = _jsx(_Input.InputLabel, {
-	  htmlFor: 'research'
-	}, void 0, 'Recherche : ');
+	  htmlFor: 'distance'
+	}, void 0, 'Distance');
 	
-	var _ref2 = _jsx(_Form.FormControlLabel, {
+	var _ref2 = _jsx(_Input2.default, {
+	  id: 'distance',
+	  name: 'distance'
+	});
+	
+	var _ref3 = _jsx(_Menu.MenuItem, {
+	  value: '1'
+	}, void 0, '1 Km');
+	
+	var _ref4 = _jsx(_Menu.MenuItem, {
+	  value: '5'
+	}, void 0, '5 Km');
+	
+	var _ref5 = _jsx(_Menu.MenuItem, {
+	  value: '10'
+	}, void 0, '10 Km');
+	
+	var _ref6 = _jsx(_Form.FormControlLabel, {
 	  value: 'ourDB',
 	  control: _jsx(_Radio2.default, {}),
 	  label: 'Night Out'
 	});
 	
-	var _ref3 = _jsx(_Form.FormControlLabel, {
+	var _ref7 = _jsx(_Form.FormControlLabel, {
 	  value: 'facebookDB',
 	  control: _jsx(_Radio2.default, {}),
 	  label: 'Facebook'
 	});
 	
-	var _ref4 = _jsx(_Input2.default, {
+	var _ref8 = _jsx(_Input2.default, {
 	  id: 'sort'
 	});
 	
-	var _ref5 = _jsx(_Menu.MenuItem, {
+	var _ref9 = _jsx(_Menu.MenuItem, {
 	  value: 'time'
 	}, void 0, 'Temps');
 	
-	var _ref6 = _jsx(_Menu.MenuItem, {
+	var _ref10 = _jsx(_Menu.MenuItem, {
 	  value: 'popularity'
 	}, void 0, 'Popularit\xE9');
 	
-	var _ref7 = _jsx(_Menu.MenuItem, {
+	var _ref11 = _jsx(_Menu.MenuItem, {
 	  value: 'distance'
 	}, void 0, 'Distance');
 	
@@ -3753,7 +3782,7 @@
 	      var sort = _this.state.sort;
 	      if (_this.state.selectedOption == "ourDB") {
 	        console.log("Tu as choisi notre DB");
-	        _this.props.research(input);
+	        _this.props.research(input, distance);
 	      } else if (_this.state.selectedOption == "facebookDB") {
 	        console.log("Test vers Facebook");
 	        _this.props.researchViaFacebook(input, distance, sort);
@@ -3763,11 +3792,12 @@
 	    };
 	
 	    _this.state = {
-	      sort: '',
+	      sort: 'time',
 	      adress: '',
 	      inputResearch: '',
 	      selectedOption: 'ourDB',
-	      distance: 10
+	      distance: "5",
+	      localisationChecked: true
 	    };
 	    _this.handleOptionChange = _this.handleOptionChange.bind(_this);
 	    _this.ClickClack = _this.ClickClack.bind(_this);
@@ -3808,13 +3838,10 @@
 	  }, {
 	    key: 'handleTrackBar',
 	    value: function handleTrackBar(bar) {
-	      var target = bar.target;
-	      var value = target.value;
-	      var name = target.name;
 	      this.setState({
-	        distance: value
+	        distance: bar.target.value
 	      });
-	      console.log(value);
+	      console.log(this.state);
 	    }
 	  }, {
 	    key: 'handleResearchChange',
@@ -3834,6 +3861,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+	
 	      var inputProps = {
 	        type: "text",
 	        value: this.state.adress,
@@ -3845,7 +3874,8 @@
 	      var defaultStyles = {
 	        root: {
 	          position: 'relative',
-	          paddingBottom: '0px'
+	          paddingBottom: '0px',
+	          marginTop: '10px'
 	        },
 	        input: {
 	          display: 'inline-block',
@@ -3856,7 +3886,8 @@
 	          top: '100%',
 	          backgroundColor: 'white',
 	          border: '1px solid #555555',
-	          width: '100%'
+	          width: '100%',
+	          zIndex: 5
 	        },
 	        autocompleteItem: {
 	          backgroundColor: '#ffffff',
@@ -3878,35 +3909,64 @@
 	      };
 	
 	      return _jsx('div', {
+	        style: { background: 'rgb(236, 240, 241)' }
+	      }, void 0, _jsx('div', {
 	        className: _App2.default.container
-	      }, void 0, _jsx('form', {}, void 0, _jsx(_Form.FormControl, {}, void 0, _ref, _react2.default.createElement(_Input2.default, { type: 'text', name: 'inputResearch', id: 'research', ref: 'research', onChange: this.handleInputChange })), _jsx(_Form.FormControl, {}, void 0, _jsx(_Radio.RadioGroup, {
-	        'aria-label': 'gender',
-	        name: 'gender2',
-	        value: this.state.selectedOption,
-	        onChange: this.handleOptionChange
-	      }, void 0, _ref2, _ref3)), _jsx(_Form.FormControl, {}, void 0, _jsx('input', {
-	        type: 'range',
-	        id: 'distanceKM',
-	        min: '0',
-	        step: '5',
-	        max: '10',
-	        onChange: this.handleTrackBar
-	      }), _jsx('span', {
-	        htmlFor: 'distanceKM',
-	        id: 'range'
-	      }, void 0, this.state.distance, ' KM')), _jsx(_Form.FormControl, {}, void 0, _jsx(_Button2.default, {
-	        raised: true,
-	        color: 'primary',
-	        onClick: this.ClickClack
-	      }, void 0, 'Envoyer')), _jsx(_Select2.default, {
-	        value: this.state.sort,
-	        onChange: this.handleChangeInputSort,
-	        input: _ref4
-	      }, void 0, _ref5, _ref6, _ref7), _jsx(_reactPlacesAutocomplete2.default, {
+	      }, void 0, _jsx('form', {}, void 0, _jsx(_Grid2.default, {
+	        container: true,
+	        spacing: 24,
+	        style: { width: '100%' }
+	      }, void 0, _jsx(_Grid2.default, {
+	        item: true,
+	        md: 6
+	      }, void 0, _jsx(_TextField2.default, {
+	        id: 'inputResearch',
+	        label: 'Recherche',
+	        value: this.state.inputResearch,
+	        onChange: this.handleInputChange,
+	        margin: 'normal',
+	        style: { marginTop: '0' },
+	        fullWidth: true
+	      }), _jsx(_Form.FormControl, {}, void 0, _ref, _jsx(_Select2.default, {
+	        value: this.state.distance,
+	        onChange: this.handleTrackBar,
+	        input: _ref2,
+	        style: { width: '150px' }
+	      }, void 0, _ref3, _ref4, _ref5)), _jsx(_Form.FormControlLabel, {
+	        control: _jsx(_Switch2.default, {
+	          checked: this.state.localisationChecked,
+	          onChange: function onChange(event, checked) {
+	            return _this2.setState({ localisationChecked: checked });
+	          }
+	        }),
+	        label: 'Localisation',
+	        style: { marginLeft: '10px' }
+	      }), !this.state.localisationChecked && _jsx(_reactPlacesAutocomplete2.default, {
 	        onSelect: this.handleSelect,
 	        styles: defaultStyles,
 	        inputProps: inputProps
-	      })));
+	      })), _jsx(_Grid2.default, {
+	        item: true,
+	        md: 6
+	      }, void 0, _jsx(_Form.FormControl, {}, void 0, _jsx(_Radio.RadioGroup, {
+	        'aria-label': 'db',
+	        name: 'selectedOption',
+	        value: this.state.selectedOption,
+	        onChange: this.handleOptionChange,
+	        style: { display: 'inline', marginTop: '20px' }
+	      }, void 0, _ref6, _ref7)), this.state.selectedOption === 'facebookDB' && _jsx(_Select2.default, {
+	        value: this.state.sort,
+	        onChange: this.handleChangeInputSort,
+	        input: _ref8,
+	        style: { display: 'block', maxWidth: '200px' }
+	      }, void 0, _ref9, _ref10, _ref11)), _jsx(_Grid2.default, {
+	        item: true,
+	        md: 12
+	      }, void 0, _jsx(_Button2.default, {
+	        raised: true,
+	        color: 'primary',
+	        onClick: this.ClickClack
+	      }, void 0, 'Rechercher'))))));
 	    }
 	  }]);
 	
@@ -4191,7 +4251,7 @@
 	
 	var _AppReducer2 = _interopRequireDefault(_AppReducer);
 	
-	var _PostReducer = __webpack_require__(20);
+	var _PostReducer = __webpack_require__(21);
 	
 	var _PostReducer2 = _interopRequireDefault(_PostReducer);
 	
@@ -4244,7 +4304,7 @@
 	
 	var _auth2 = _interopRequireDefault(_auth);
 	
-	var _user = __webpack_require__(22);
+	var _user = __webpack_require__(23);
 	
 	var _user2 = _interopRequireDefault(_user);
 	
@@ -4317,11 +4377,11 @@
 	
 	var _facebookEventsByLocationCore2 = _interopRequireDefault(_facebookEventsByLocationCore);
 	
-	var _cuid = __webpack_require__(23);
+	var _cuid = __webpack_require__(24);
 	
 	var _cuid2 = _interopRequireDefault(_cuid);
 	
-	var _limax = __webpack_require__(24);
+	var _limax = __webpack_require__(25);
 	
 	var _limax2 = _interopRequireDefault(_limax);
 	
@@ -4360,12 +4420,41 @@
 	 * @param res
 	 */
 	function getEvents(req, res) {
-	  _event2.default.find().exec(function (err, event) {
+	  var lat1 = req.params.lat;
+	  var lng1 = req.params.long;
+	  var m = req.params.distance;
+	  _event2.default.find().find().exec(function (err, event) {
 	    if (err) {
 	      return res.status(500).send(err);
 	    }
-	    return res.json({ event: event });
+	    forEachEvent(event, lat1, lng1, m).then(function (event) {
+	      console.log(event);return res.json({ event: event });
+	    });
 	  });
+	}
+	
+	function forEachEvent(event, lat1, lng1, m) {
+	  var new_events = [];
+	  return new Promise(function (res, rej) {
+	    for (var e in event) {
+	      if (calcul(lat1, lng1, event[e].location.latitude, event[e].location.longitude, m)) new_events.push(event[e]);
+	    }
+	    res(new_events);
+	  });
+	}
+	
+	function calcul(lat1, lng1, dbLat, dbLng, m) {
+	  var earth_radius = 6378137;
+	  // Terre = sphère de 6378km de rayon 
+	  var ourLng = deg2rad(lng1);
+	  var ourLat = deg2rad(lat1);
+	  var mongoLng = deg2rad(dbLng);
+	  var mongoLat = deg2rad(dbLat);
+	  var distanceLng = (mongoLng - ourLng) / 2;
+	  var distanceLat = (mongoLat - ourLat) / 2;
+	  var a = Math.sin(distanceLat) * Math.sin(distanceLat) + Math.cos(ourLat) * Math.cos(mongoLat) * (Math.sin(distanceLng) * Math.sin(distanceLng));
+	  var d = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	  return earth_radius * d <= m;
 	}
 	
 	/**
@@ -4375,6 +4464,9 @@
 	 */
 	function getResearch(req, res) {
 	  var search_query = req.params.event;
+	  var distance = req.params.distance;
+	  var lat = req.params.lat;
+	  var lng = req.params.long;
 	  var elastic_response = void 0;
 	  var mongo_response = void 0;
 	  client.search({
@@ -4384,9 +4476,8 @@
 	    q: search_query
 	  }).then(function (body) {
 	    elastic_response = body.hits.hits;
-	
 	    retrieveId(elastic_response).then(function (table_id) {
-	      return getEventsByidFromMongo(table_id);
+	      return getEventsByidFromMongo(table_id, distance, lat, lng);
 	    }).then(function (elastic_mongo_response) {
 	      console.log(elastic_mongo_response);return res.json({ elastic_mongo_response: elastic_mongo_response });
 	    });
@@ -4399,14 +4490,47 @@
 	 * Get events by id from mongo db
 	 * @param events
 	 */
-	function getEventsByidFromMongo(e) {
-	  console.log(e);
+	function getEventsByidFromMongo(e, distance, lat, lng) {
+	  var m = distance;
+	  var posLocallat = lng;
+	  var posLocalLng = lat;
 	  return new Promise(function (res, rej) {
 	    _event2.default.find({ '_id': { $in: e } }).exec(function (err, event) {
-	      console.log("ffhjfjghfhjfjghf" + event);
-	      res(event);
+	      forEachEvent(e, posLocallat, posLocalLng, m).then(function (event) {
+	        res(event);
+	      });
 	    });
 	  });
+	}
+	/*
+	 * Compare distance between 2 location
+	 * @param lat1 , lng1 , lat2 , lng2
+	 */
+	function get_distance_m(lat1, lng1, lat2, lng2) {
+	  console.log("Our lat : " + lat1);
+	  console.log("Our long : " + lng1);
+	
+	  console.log("DB lat : " + lat2);
+	  console.log("DB long : " + lng2);
+	  var earth_radius = 6378137;
+	  // Terre = sphère de 6378km de rayon 
+	  // CONVERSION 
+	  var ourLng = deg2rad(lng1);
+	  var ourLat = deg2rad(lat1);
+	  var mongoLng = deg2rad(lng2);
+	  var mongoLat = deg2rad(lat2);
+	  var distanceLng = (mongoLng - ourLng) / 2;
+	  var distanceLat = (mongoLat - ourLat) / 2;
+	  var a = Math.sin(distanceLat) * Math.sin(distanceLat) + Math.cos(ourLat) * Math.cos(mongoLat) * (Math.sin(distanceLng) * Math.sin(distanceLng));
+	  var d = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	  return earth_radius * d;
+	}
+	
+	/*
+	 * @param x
+	 */
+	function deg2rad(x) {
+	  return Math.PI * x / 180;
 	}
 	
 	/**
@@ -4622,15 +4746,15 @@
 	
 	var _post2 = _interopRequireDefault(_post);
 	
-	var _cuid = __webpack_require__(23);
+	var _cuid = __webpack_require__(24);
 	
 	var _cuid2 = _interopRequireDefault(_cuid);
 	
-	var _limax = __webpack_require__(24);
+	var _limax = __webpack_require__(25);
 	
 	var _limax2 = _interopRequireDefault(_limax);
 	
-	var _sanitizeHtml = __webpack_require__(118);
+	var _sanitizeHtml = __webpack_require__(119);
 	
 	var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 	
@@ -4725,19 +4849,19 @@
 	exports.signUp = signUp;
 	exports.changePassword = changePassword;
 	
-	var _user = __webpack_require__(22);
+	var _user = __webpack_require__(23);
 	
 	var _user2 = _interopRequireDefault(_user);
 	
-	var _cuid = __webpack_require__(23);
+	var _cuid = __webpack_require__(24);
 	
 	var _cuid2 = _interopRequireDefault(_cuid);
 	
-	var _limax = __webpack_require__(24);
+	var _limax = __webpack_require__(25);
 	
 	var _limax2 = _interopRequireDefault(_limax);
 	
-	var _nodemailer = __webpack_require__(104);
+	var _nodemailer = __webpack_require__(105);
 	
 	var _nodemailer2 = _interopRequireDefault(_nodemailer);
 	
@@ -4855,7 +4979,7 @@
 	
 	var _compression2 = _interopRequireDefault(_compression);
 	
-	var _mongoose = __webpack_require__(8);
+	var _mongoose = __webpack_require__(9);
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
@@ -4875,7 +4999,7 @@
 	
 	var _IntlWrapper2 = _interopRequireDefault(_IntlWrapper);
 	
-	var _webpack = __webpack_require__(26);
+	var _webpack = __webpack_require__(27);
 	
 	var _webpack2 = _interopRequireDefault(_webpack);
 	
@@ -4933,7 +5057,7 @@
 	
 	var _dummyData2 = _interopRequireDefault(_dummyData);
 	
-	var _config = __webpack_require__(25);
+	var _config = __webpack_require__(26);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
@@ -5191,108 +5315,114 @@
 /* 102 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/Toolbar");
+	module.exports = require("material-ui/Switch");
 
 /***/ },
 /* 103 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/Tooltip");
+	module.exports = require("material-ui/Toolbar");
 
 /***/ },
 /* 104 */
 /***/ function(module, exports) {
 
-	module.exports = require("nodemailer");
+	module.exports = require("material-ui/Tooltip");
 
 /***/ },
 /* 105 */
 /***/ function(module, exports) {
 
-	module.exports = require("os");
+	module.exports = require("nodemailer");
 
 /***/ },
 /* 106 */
 /***/ function(module, exports) {
 
-	module.exports = require("passport");
+	module.exports = require("os");
 
 /***/ },
 /* 107 */
 /***/ function(module, exports) {
 
-	module.exports = require("passport-jwt");
+	module.exports = require("passport");
 
 /***/ },
 /* 108 */
 /***/ function(module, exports) {
 
-	module.exports = require("postcss-cssnext");
+	module.exports = require("passport-jwt");
 
 /***/ },
 /* 109 */
 /***/ function(module, exports) {
 
-	module.exports = require("postcss-focus");
+	module.exports = require("postcss-cssnext");
 
 /***/ },
 /* 110 */
 /***/ function(module, exports) {
 
-	module.exports = require("postcss-reporter");
+	module.exports = require("postcss-focus");
 
 /***/ },
 /* 111 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-google-maps");
+	module.exports = require("postcss-reporter");
 
 /***/ },
 /* 112 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-intl/locale-data/en");
+	module.exports = require("react-google-maps");
 
 /***/ },
 /* 113 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-intl/locale-data/fr");
+	module.exports = require("react-intl/locale-data/en");
 
 /***/ },
 /* 114 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-devtools");
+	module.exports = require("react-intl/locale-data/fr");
 
 /***/ },
 /* 115 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-devtools-dock-monitor");
+	module.exports = require("redux-devtools");
 
 /***/ },
 /* 116 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-devtools-log-monitor");
+	module.exports = require("redux-devtools-dock-monitor");
 
 /***/ },
 /* 117 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-thunk");
+	module.exports = require("redux-devtools-log-monitor");
 
 /***/ },
 /* 118 */
 /***/ function(module, exports) {
 
+	module.exports = require("redux-thunk");
+
+/***/ },
+/* 119 */
+/***/ function(module, exports) {
+
 	module.exports = require("sanitize-html");
 
 /***/ },
-/* 119 */,
 /* 120 */,
-/* 121 */
+/* 121 */,
+/* 122 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui-icons/Send");

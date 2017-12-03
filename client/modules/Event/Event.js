@@ -141,7 +141,7 @@ class Event extends Component {
         <div>
           <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook}  geocodeByAdress={this.handleGoogle}/>
           <div className={appStyles.container}>
-            <h1>Les événements</h1>
+            <h1>Evènements recherchés</h1>
             <div className={styles['event-div']}>
               <Grid container spacing={24} style={{ width: '100%' }}>
                 <Grid item md={12}>
@@ -195,9 +195,9 @@ class Event extends Component {
     }
     return (
       <div>
-       <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook}  geocodeByAdress={this.handleGoogle}/>
+        <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook}  geocodeByAdress={this.handleGoogle}/>
         <div className={appStyles.container}>
-          <h1>Les événements</h1>
+          <h1>Evènements recherchés :</h1>
           <div className={styles['event-div']}>
             <Grid container spacing={24} style={{ width: '100%' }}>
               <Grid item md={6}>
