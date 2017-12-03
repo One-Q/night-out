@@ -40,7 +40,7 @@ class Event extends Component {
     Promise.all([canLocated()]).then((res) => {
       if (res[0] === 'prompt' || res[0] === 'granted') {
         navigator.geolocation.getCurrentPosition((position) =>{
-          this.props.dispatch(fetchEvents());
+          this.props.dispatch(fetchEvents(1000000,this.state.long,this.state.lat));
           isLocated = true;
           this.setState({
             lat: position.coords.latitude,
@@ -54,7 +54,7 @@ class Event extends Component {
     console.log(isLocated);
   }
 
-  handleClickClack = (value) => {
+  handleClickClack = (value,distance) => {
     this.setState({
       isLoading: true,
     });
@@ -62,7 +62,7 @@ class Event extends Component {
     const app = this;
     if (isLocated) {
       if (value) {
-        this.props.dispatch(fetchResearch(value)).then((res) => {
+        this.props.dispatch(fetchResearch(value,1000000,this.state.long,this.state.lat)).then((res) => {
           app.setState({
             isLoading: false,
             centerLat: this.state.lat,
@@ -70,7 +70,7 @@ class Event extends Component {
           });
         });
       } else {
-        this.props.dispatch(fetchEvents()).then((res) => {
+        this.props.dispatch(fetchEvents(1000000,this.state.long,this.state.lat)).then((res) => {
           app.setState({
             isLoading: false,
             centerLat: this.state.lat,

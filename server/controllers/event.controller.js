@@ -38,12 +38,43 @@ export function getEvent(req, res) {
  * @param res
  */
 export function getEvents(req, res) {
-  Event.find().exec((err, event) => {
+  let lat1 = req.params.lat;
+  let lng1 = req.params.long;
+  let m = req.params.distance;
+  Event.find()
+  .find()
+  .exec((err, event) => {
     if (err) {
       return res.status(500).send(err);
     }
-    return res.json({ event });
+    forEachEvent(event,lat1,lng1,m).then(event => {console.log(event); return res.json({ event })})
+      
   });
+}
+
+function forEachEvent(event,lat1,lng1,m){
+  let new_events = [];
+  return new Promise((res,rej) => {
+    for(var e in event){
+      if(calcul(lat1,lng1,event[e].location.latitude,event[e].location.longitude,m))
+        new_events.push(event[e]);
+    }
+    res(new_events);
+  })
+}
+
+function calcul (lat1,lng1,dbLat,dbLng,m){
+  let earth_radius = 6378137;
+ // Terre = sphère de 6378km de rayon 
+  let ourLng = deg2rad(lng1);
+  let ourLat = deg2rad(lat1);
+  let mongoLng = deg2rad(dbLng);
+  let mongoLat = deg2rad(dbLat); 
+  let distanceLng = (mongoLng - ourLng) / 2;
+  let distanceLat = (mongoLat - ourLat) / 2; 
+  let a = (Math.sin(distanceLat) * Math.sin(distanceLat)) + Math.cos(ourLat) * Math.cos(mongoLat) * (Math.sin(distanceLng) * Math.sin(distanceLng));
+  let d = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return (earth_radius * d) <= m; 
 }
 
 /**
@@ -68,9 +99,10 @@ export function getResearch(req, res) {
     .then(
     function (body) {
       elastic_response = body.hits.hits;
-
-      retrieveId(elastic_response).then(table_id => getEventsByidFromMongo(table_id,distance,lat,lng)).then(elastic_mongo_response => { console.log(elastic_mongo_response); return res.json({ elastic_mongo_response }) });
-    },
+      retrieveId(elastic_response)
+      .then(table_id => getEventsByidFromMongo(table_id,distance,lat,lng))
+      .then(elastic_mongo_response => { console.log(elastic_mongo_response); return res.json({ elastic_mongo_response }) });
+      },
     function (error) {
       return res.status(500).send(error);
     }
@@ -86,11 +118,8 @@ function getEventsByidFromMongo(e,distance,lat,lng) {
   let posLocallat = lng;
   let posLocalLng = lat;
   return new Promise((res, rej) => {
-    Event.find({ $and:[{ '_id': { $in: e } } , { active: true , $where : function(){
-      return get_distance_m(posLocallat, posLocalLng, this.location.latitude, this.location.longitude) <= m; 
-    }}]  }).exec((err, event) => {
-      console.log("ffhjfjghfhjfjghf"+event)
-      res(event)
+    Event.find({ '_id': { $in: e }}).exec((err, event) => {
+      forEachEvent(e,posLocallat,posLocalLng,m).then(event => {res(event)});
     });
   }
   )
@@ -100,20 +129,24 @@ function getEventsByidFromMongo(e,distance,lat,lng) {
  * @param lat1 , lng1 , lat2 , lng2
  */
 function get_distance_m(lat1, lng1, lat2, lng2) {
+  console.log("Our lat : "+lat1);
+  console.log("Our long : "+lng1);
+
+  console.log("DB lat : "+ lat2);
+  console.log("DB long : "+lng2);
   let earth_radius = 6378137;
- // Terre = sphère de 6378km de rayon 
-  // CONVERSION 
+  // Terre = sphère de 6378km de rayon 
+    // CONVERSION 
   let ourLng = deg2rad(lng1);
   let ourLat = deg2rad(lat1);
   let mongoLng = deg2rad(lng2);
   let mongoLat = deg2rad(lat2); 
-  let distanceLng = ($mongoLng - $ourLng) / 2;
-  let distanceLat = ($mongoLat - $ourLat) / 2; 
-  let a = (Math.sin($distanceLat) * Math.sin($distanceLat)) + Math.cos($ourLat) * Math.cos($mongoLat) * (Math.sin($distanceLng) * Math.sin($distanceLng));
+  let distanceLng = (mongoLng - ourLng) / 2;
+  let distanceLat = (mongoLat - ourLat) / 2; 
+  let a = (Math.sin(distanceLat) * Math.sin(distanceLat)) + Math.cos(ourLat) * Math.cos(mongoLat) * (Math.sin(distanceLng) * Math.sin(distanceLng));
   let d = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return (earth_radius * d); 
+  return earth_radius * d; 
 } 
-     
 
 /*
  * @param x

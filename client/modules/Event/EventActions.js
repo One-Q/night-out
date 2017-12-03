@@ -37,9 +37,9 @@ export function displayEventFacebook(eventFacebook){
   }
 }
 
-export function fetchEvents() {
+export function fetchEvents(distance,long,lat) {
   return (dispatch) => {
-    return callApi('events').then(res => {
+    return callApi(`events/${distance}&${long}&${lat}`).then(res => {
       dispatch(addEvents(res.event));
       return res;
     });
