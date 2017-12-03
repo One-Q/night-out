@@ -8,7 +8,10 @@ import { FormLabel, FormControl, FormControlLabel, FormHelperText } from 'materi
 import Radio, { RadioGroup } from 'material-ui/Radio';
 import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
-import { MenuItem } from 'material-ui/Menu'
+import Switch from 'material-ui/Switch';
+import { MenuItem } from 'material-ui/Menu';
+import TextField from 'material-ui/TextField';
+import Grid from 'material-ui/Grid';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import appStyles from '../../App/App.css';
 
@@ -21,11 +24,12 @@ export class EventResearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sort: '',
+      sort: 'time',
       adress :'',
       inputResearch: '',
       selectedOption:'ourDB',
-      distance:10,
+      distance: "5",
+      localisationChecked: true,
     };
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.ClickClack = this.ClickClack.bind(this);
@@ -78,14 +82,11 @@ export class EventResearch extends Component {
     }
     
   }
-  handleTrackBar(bar){
-    const target = bar.target;
-    const value = target.value;
-    const name = target.name;
+  handleTrackBar(bar) {
     this.setState({
-      distance:value,
+      distance: bar.target.value,
     });
-    console.log(value);
+    console.log(this.state);
   }
 
   handleResearchChange(adress) {
@@ -114,6 +115,7 @@ export class EventResearch extends Component {
         root: {
           position: 'relative',
           paddingBottom: '0px',
+          marginTop: '10px',
         },
         input: {
           display: 'inline-block',
@@ -125,6 +127,7 @@ export class EventResearch extends Component {
           backgroundColor: 'white',
           border: '1px solid #555555',
           width: '100%',
+          zIndex: 5,
         },
         autocompleteItem: {
           backgroundColor: '#ffffff',
@@ -146,49 +149,85 @@ export class EventResearch extends Component {
       }
 
     return (
-      <div className={appStyles.container}>
-        <form >
-          <FormControl>
-            <InputLabel htmlFor="research">Recherche : </InputLabel>
-            <Input type="text" name="inputResearch" id="research" ref="research" onChange={this.handleInputChange}/>
-          </FormControl>
-          <FormControl>
-            <RadioGroup
-              aria-label="gender"
-              name="gender2"
-              value={this.state.selectedOption}
-              onChange={this.handleOptionChange}
-            >
-              <FormControlLabel value="ourDB" control={<Radio />} label="Night Out" />
-              <FormControlLabel value="facebookDB" control={<Radio />} label="Facebook" />
-            </RadioGroup>
-          </FormControl>
-          <FormControl>
-            <input type="range" id="distanceKM" min="0" step="5" max="10" onChange={this.handleTrackBar}/>
-            <span htmlFor="distanceKM" id="range">{this.state.distance} KM</span>
-          </FormControl>
-          <FormControl>
-            <Button raised color="primary" onClick={this.ClickClack}>
-              Envoyer
-            </Button>
-          </FormControl>
-
-          <Select
-            value={this.state.sort}
-            onChange={this.handleChangeInputSort}
-            input={<Input id="sort" />}
-          >
-            <MenuItem value="time">Temps</MenuItem>
-            <MenuItem value="popularity">Popularité</MenuItem>
-            <MenuItem value="distance">Distance</MenuItem>
-          </Select>
-
-          <PlacesAutocomplete
-            onSelect={this.handleSelect}
-            styles={defaultStyles}
-            inputProps={inputProps}
-          />
-        </form>
+      <div style={{ background: 'rgb(236, 240, 241)' }}>
+        <div className={appStyles.container}>
+          <form >
+            <Grid container spacing={24} style={{ width: '100%' }}>
+              <Grid item md={6}>
+                <TextField
+                  id="inputResearch"
+                  label="Recherche"
+                  value={this.state.inputResearch}
+                  onChange={this.handleInputChange}
+                  margin="normal"
+                  style={{ marginTop: '0' }}
+                  fullWidth
+                />
+                <FormControl>
+                  <InputLabel htmlFor="distance">Distance</InputLabel>
+                  <Select
+                    value={this.state.distance}
+                    onChange={this.handleTrackBar}
+                    input={<Input id="distance" name="distance" />}
+                    style={{width: '150px'}}
+                  >
+                    <MenuItem value="1">1 Km</MenuItem>
+                    <MenuItem value="5">5 Km</MenuItem>
+                    <MenuItem value="10">10 Km</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={this.state.localisationChecked}
+                      onChange={(event, checked) => this.setState({ localisationChecked: checked })}
+                    />
+                  }
+                  label="Localisation"
+                  style={{ marginLeft: '10px' }}
+                />
+                {
+                  !this.state.localisationChecked && <PlacesAutocomplete
+                    onSelect={this.handleSelect}
+                    styles={defaultStyles}
+                    inputProps={inputProps}
+                  />
+                }
+              </Grid>
+              <Grid item md={6}>
+                <FormControl>
+                  <RadioGroup
+                    aria-label="db"
+                    name="selectedOption"
+                    value={this.state.selectedOption}
+                    onChange={this.handleOptionChange}
+                    style={{ display: 'inline', marginTop: '20px' }}
+                  >
+                    <FormControlLabel value="ourDB" control={<Radio />} label="Night Out" />
+                    <FormControlLabel value="facebookDB" control={<Radio />} label="Facebook" />
+                  </RadioGroup>
+                </FormControl>
+                {
+                  this.state.selectedOption === 'facebookDB' && <Select
+                    value={this.state.sort}
+                    onChange={this.handleChangeInputSort}
+                    input={<Input id="sort" />}
+                    style={{ display: 'block', maxWidth: '200px' }}
+                  >
+                    <MenuItem value="time">Temps</MenuItem>
+                    <MenuItem value="popularity">Popularité</MenuItem>
+                    <MenuItem value="distance">Distance</MenuItem>
+                  </Select>
+                }
+              </Grid>
+              <Grid item md={12}>
+                <Button raised color="primary" onClick={this.ClickClack}>
+                  Rechercher
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
       </div>
     );
   }
