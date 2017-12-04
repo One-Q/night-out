@@ -47,7 +47,7 @@ export function getEvents(req, res) {
     if (err) {
       return res.status(500).send(err);
     }
-    forEachEvent(event,lat1,lng1,m).then(event => {console.log(event); return res.json({ event })})
+    forEachEvent(event,lat1,lng1,m).then(event => {return res.json({ event })})
       
   });
 }
@@ -101,7 +101,7 @@ export function getResearch(req, res) {
       elastic_response = body.hits.hits;
       retrieveId(elastic_response)
       .then(table_id => getEventsByidFromMongo(table_id,distance,lat,lng))
-      .then(elastic_mongo_response => { console.log(elastic_mongo_response); return res.json({ elastic_mongo_response }) });
+      .then(elastic_mongo_response => { return res.json({ elastic_mongo_response }) });
       },
     function (error) {
       return res.status(500).send(error);

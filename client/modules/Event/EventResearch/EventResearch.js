@@ -78,7 +78,7 @@ export class EventResearch extends Component {
       console.log("Test vers Facebook");
       this.props.researchViaFacebook(input,distance,sort);
     }else{
-      console.log("C'est une putain d'erreur pour arriver la!");
+      console.log("ERROR!");
     }
     
   }
