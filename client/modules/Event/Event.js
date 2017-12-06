@@ -55,6 +55,7 @@ class Event extends Component {
   }
 
   handleClickClack = (value,distance) => {
+    console.log('distance', distance);
     this.setState({
       isLoading: true,
     });
@@ -62,7 +63,7 @@ class Event extends Component {
     const app = this;
     if (isLocated) {
       if (value) {
-        this.props.dispatch(fetchResearch(value,1000000,this.state.long,this.state.lat)).then((res) => {
+        this.props.dispatch(fetchResearch(value,distance,this.state.long,this.state.lat)).then((res) => {
           app.setState({
             isLoading: false,
             centerLat: this.state.lat,
@@ -70,7 +71,7 @@ class Event extends Component {
           });
         });
       } else {
-        this.props.dispatch(fetchEvents(1000000,this.state.long,this.state.lat)).then((res) => {
+        this.props.dispatch(fetchEvents(distance,this.state.long,this.state.lat)).then((res) => {
           app.setState({
             isLoading: false,
             centerLat: this.state.lat,
