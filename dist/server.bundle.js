@@ -529,7 +529,8 @@
 	    defaultZoom: 16,
 	    defaultCenter: props.location,
 	    center: props.location
-	  }, void 0, console.log('center', props.location), props.markers.map(function (marker) {
+	  }, void 0, props.markers.map(function (marker) {
+	    console.log('marker', marker);
 	    return _jsx(_reactGoogleMaps.Marker, {
 	      position: marker.location
 	    });
@@ -1252,10 +1253,6 @@
 	// Import CSS
 	
 	
-	var _ref = _jsx(_reactIntl.FormattedMessage, {
-	  id: 'Location'
-	});
-	
 	var EventDetails = function (_Component) {
 	  _inherits(EventDetails, _Component);
 	
@@ -1268,6 +1265,7 @@
 	  _createClass(EventDetails, [{
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props.event.location.latitude);
 	      if (this.props.event === '') {
 	        return _jsx('div', {}, void 0, _jsx('h3', {
 	          className: _Event2.default['event-title']
@@ -1286,7 +1284,7 @@
 	        className: _Event2.default['event-title']
 	      }, void 0, this.props.event.name), _jsx('p', {
 	        className: _Event2.default['location']
-	      }, void 0, _ref, ' : ', this.props.event.location.city, ', ', this.props.event.location.street), _jsx('p', {
+	      }, void 0, 'Location : ', this.props.event.location.city, ', ', this.props.event.location.street), _jsx('p', {
 	        className: _Event2.default['event-desc']
 	      }, void 0, this.props.event.description)), _jsx(_Grid2.default, {
 	        item: true,
@@ -1306,7 +1304,12 @@
 	        mapElement: _jsx('div', {
 	          style: { height: '100%' }
 	        }),
-	        markers: [{ lat: this.props.event.location.latitude, lng: this.props.event.location.longitude }]
+	        markers: [{
+	          location: {
+	            lat: this.props.event.location.latitude,
+	            lng: this.props.event.location.longitude
+	          }
+	        }]
 	      }))))));
 	    }
 	  }]);
@@ -1405,10 +1408,6 @@
 	// Import CSS
 	
 	
-	var _ref = _jsx(_reactIntl.FormattedMessage, {
-	  id: 'Location'
-	});
-	
 	var EventDetailsFacebook = function (_Component) {
 	  _inherits(EventDetailsFacebook, _Component);
 	
@@ -1447,7 +1446,7 @@
 	        style: { width: '100%', height: 600 }
 	      }, void 0, _jsx('p', {
 	        className: _Event2.default['location']
-	      }, void 0, _ref, ' : ', this.props.event.place.location.city, ', ', this.props.event.place.location.street), _jsx(_EventMap2.default, {
+	      }, void 0, 'Location : ', this.props.event.place.location.city, ', ', this.props.event.place.location.street), _jsx(_EventMap2.default, {
 	        location: { lat: this.props.event.place.location.latitude, lng: this.props.event.place.location.longitude },
 	        isMarkerShown: true,
 	        googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places',
@@ -1460,7 +1459,12 @@
 	        mapElement: _jsx('div', {
 	          style: { height: '100%' }
 	        }),
-	        markers: [{ lat: this.props.event.place.location.latitude, lng: this.props.event.place.location.longitude }]
+	        markers: [{
+	          location: {
+	            lat: this.props.event.place.location.latitude,
+	            lng: this.props.event.place.location.longitude
+	          }
+	        }]
 	      }))))));
 	    }
 	  }]);
