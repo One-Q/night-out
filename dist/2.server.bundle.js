@@ -1,7 +1,7 @@
 exports.ids = [2];
 exports.modules = {
 
-/***/ 116:
+/***/ 117:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -41,17 +41,17 @@ exports.modules = {
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _Button = __webpack_require__(10);
+	var _Button = __webpack_require__(8);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
-	var _Send = __webpack_require__(118);
+	var _Send = __webpack_require__(119);
 	
 	var _Send2 = _interopRequireDefault(_Send);
 	
 	var _Menu = __webpack_require__(56);
 	
-	var _Snackbar = __webpack_require__(119);
+	var _Snackbar = __webpack_require__(120);
 	
 	var _Snackbar2 = _interopRequireDefault(_Snackbar);
 	
