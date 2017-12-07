@@ -1,7 +1,7 @@
 exports.ids = [2];
 exports.modules = {
 
-/***/ 120:
+/***/ 116:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23,7 +23,7 @@ exports.modules = {
 	
 	var _EventActions = __webpack_require__(7);
 	
-	var _Grid = __webpack_require__(8);
+	var _Grid = __webpack_require__(3);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
@@ -33,11 +33,11 @@ exports.modules = {
 	
 	var _Form = __webpack_require__(15);
 	
-	var _Input = __webpack_require__(59);
+	var _Input = __webpack_require__(55);
 	
 	var _Input2 = _interopRequireDefault(_Input);
 	
-	var _Select = __webpack_require__(61);
+	var _Select = __webpack_require__(57);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
@@ -45,11 +45,15 @@ exports.modules = {
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
-	var _Send = __webpack_require__(122);
+	var _Send = __webpack_require__(118);
 	
 	var _Send2 = _interopRequireDefault(_Send);
 	
-	var _Menu = __webpack_require__(60);
+	var _Menu = __webpack_require__(56);
+	
+	var _Snackbar = __webpack_require__(119);
+	
+	var _Snackbar2 = _interopRequireDefault(_Snackbar);
 	
 	var _App = {
 	  "container": "_4uEyKcd5WHob5qPzotT7",
@@ -83,7 +87,7 @@ exports.modules = {
 	  value: 'DANCE'
 	}];
 	
-	var _ref = _jsx('h2', {}, void 0, 'Ajouter un \xE9v\xE9nement');
+	var _ref = _jsx('h2', {}, void 0, 'Ajouter un \xE9v\xE8nement');
 	
 	var _ref2 = _jsx(_Input.InputLabel, {
 	  htmlFor: 'category'
@@ -93,6 +97,10 @@ exports.modules = {
 	  id: 'category',
 	  name: 'category'
 	});
+	
+	var _ref4 = _jsx('span', {
+	  id: 'message-id'
+	}, void 0, 'Ev\xE8nement cr\xE9\xE9');
 	
 	var EventAdd = function (_Component) {
 	  _inherits(EventAdd, _Component);
@@ -117,7 +125,8 @@ exports.modules = {
 	      date: '',
 	      city: '',
 	      street: '',
-	      error: {}
+	      error: {},
+	      success: false
 	    };
 	    _this.handleChange = _this.handleChange.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
@@ -130,6 +139,9 @@ exports.modules = {
 	      var _this2 = this;
 	
 	      event.preventDefault();
+	      this.setState({
+	        success: false
+	      });
 	      var adresse = this.state.street.replace(/ /g, '-') + '+' + this.state.city.replace(/ /g, '-');
 	      var lat = void 0;
 	      var lng = void 0;
@@ -140,7 +152,19 @@ exports.modules = {
 	        if (res.status === 'OK') {
 	          lat = res.results[0].geometry.location.lat;
 	          lng = res.results[0].geometry.location.lng;
-	          _this2.props.dispatch((0, _EventActions.createEvent)(_this2.state.name, _this2.state.description, _this2.state.category, _this2.state.city, _this2.state.street, lat, lng, _this2.state.date));
+	          _this2.props.dispatch((0, _EventActions.createEvent)(_this2.state.name, _this2.state.description, _this2.state.category, _this2.state.city, _this2.state.street, lat, lng, _this2.state.date)).then(function (result) {
+	            if (result.success) {
+	              _this2.setState({
+	                name: '',
+	                description: '',
+	                date: '',
+	                city: '',
+	                street: '',
+	                success: true
+	              });
+	            }
+	            console.log(result);
+	          });
 	        } else {
 	          console.log(res);
 	        }
@@ -149,6 +173,8 @@ exports.modules = {
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
 	      return _jsx('div', {
 	        style: { marginTop: '20px' }
 	      }, void 0, _jsx('div', {
@@ -229,9 +255,20 @@ exports.modules = {
 	        color: 'primary',
 	        style: { marginTop: '20px' },
 	        type: 'submit'
-	      }, void 0, 'Send', _jsx(_Send2.default, {
+	      }, void 0, 'Envoyer', _jsx(_Send2.default, {
 	        style: { marginLeft: '20px' }
-	      })))))));
+	      }))), _jsx(_Snackbar2.default, {
+	        anchorOrigin: { vertical: 'top', horizontal: 'right' },
+	        open: this.state.success,
+	        onRequestClose: function onRequestClose() {
+	          _this3.setState({ success: false });
+	        },
+	        autoHideDuration: 3000,
+	        SnackbarContentProps: {
+	          'aria-describedby': 'message-id'
+	        },
+	        message: _ref4
+	      })))));
 	    }
 	  }]);
 	
