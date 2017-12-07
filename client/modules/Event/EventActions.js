@@ -39,7 +39,7 @@ export function displayEventFacebook(eventFacebook){
 
 export function fetchEvents(distance,long,lat) {
   return (dispatch) => {
-    return callApi(`events/${distance}&${long}&${lat}`).then(res => {
+    return callApi(`events/${distance*1000}&${long}&${lat}`).then(res => {
       dispatch(addEvents(res.event));
       return res;
     });
@@ -63,7 +63,7 @@ export function fetchEventFromFacebook(id) {
 
 export function fetchResearch(event,distance,long,lat) {
   return (dispatch) => {
-    return callApi(`research/${event}&${distance}&${long}&${lat}`).then(res =>dispatch(researchEvents(res.elastic_mongo_response)));
+    return callApi(`research/${event}&${distance*1000}&${long}&${lat}`).then(res =>dispatch(researchEvents(res.elastic_mongo_response)));
   };
 }
 

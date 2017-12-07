@@ -41,6 +41,7 @@ export function getEvents(req, res) {
   let lat1 = req.params.lat;
   let lng1 = req.params.long;
   let m = req.params.distance;
+  console.log(m);
   Event.find()
   .find()
   .exec((err, event) => {
@@ -54,6 +55,7 @@ export function getEvents(req, res) {
 
 function forEachEvent(event,lat1,lng1,m){
   let new_events = [];
+  console.log(event);
   return new Promise((res,rej) => {
     for(var e in event){
       if(calcul(lat1,lng1,event[e].location.latitude,event[e].location.longitude,m))
@@ -115,11 +117,11 @@ export function getResearch(req, res) {
  */
 function getEventsByidFromMongo(e,distance,lat,lng) { 
   var m = distance;
-  let posLocallat = lng;
-  let posLocalLng = lat;
+  let posLocallat = lat;
+  let posLocalLng = lng;
   return new Promise((res, rej) => {
     Event.find({ '_id': { $in: e }}).exec((err, event) => {
-      forEachEvent(e,posLocallat,posLocalLng,m).then(event => {res(event)});
+      forEachEvent(event,posLocallat,posLocalLng,m).then(event => {res(event)});
     });
   }
   )
