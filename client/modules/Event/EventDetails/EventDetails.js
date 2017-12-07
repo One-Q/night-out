@@ -17,6 +17,7 @@ import appStyles from '../../App/App.css';
 class EventDetails extends Component {
 
   render() {
+    console.log(this.props.event.location.latitude);
     if (this.props.event === '') {
       return (
         <div>
@@ -30,7 +31,7 @@ class EventDetails extends Component {
           <Grid container spacing={24} style={{ width: '100%' }}>
             <Grid item md={6}>
               <h3 className={styles['event-title']}>{this.props.event.name}</h3>
-              <p className={styles['location']}><FormattedMessage id="Location" /> : {this.props.event.location.city}, {this.props.event.location.street}</p>
+              <p className={styles['location']}>Location : {this.props.event.location.city}, {this.props.event.location.street}</p>
               <p className={styles['event-desc']}>{this.props.event.description}</p>
             </Grid>
             <Grid item md={6}>
@@ -42,7 +43,14 @@ class EventDetails extends Component {
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={<div style={{ height: `400px` }} />}
                   mapElement={<div style={{ height: `100%` }} />}
-                  markers={[{lat:this.props.event.location.latitude, lng: this.props.event.location.longitude}]}
+                  markers={[
+                    {
+                      location: {
+                        lat: this.props.event.location.latitude,
+                        lng: this.props.event.location.longitude,
+                      },
+                    },
+                  ]}
                 />
               </div>
             </Grid>

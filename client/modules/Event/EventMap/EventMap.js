@@ -7,10 +7,10 @@ const EventMap = withScriptjs(withGoogleMap((props) =>
     defaultCenter={props.location}
     center={props.location}
   >
-    {console.log('center', props.location)}
-    {props.markers.map(marker => (
-      <Marker position={marker.location} />
-    ))}
+    {props.markers.map(marker => {
+      console.log('marker', marker);
+      return <Marker position={marker.location} />
+    })}
   </GoogleMap>
 ));
 

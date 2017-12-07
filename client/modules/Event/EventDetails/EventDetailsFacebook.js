@@ -36,7 +36,7 @@ class EventDetailsFacebook extends Component {
             <Grid item md={6}>
               <div style={{width: '100%', height: 600}}>
                 <p className={styles['location']}>
-                  <FormattedMessage id="Location" /> : {this.props.event.place.location.city}, {this.props.event.place.location.street}
+                  Location : {this.props.event.place.location.city}, {this.props.event.place.location.street}
                 </p>
              
 
@@ -47,7 +47,14 @@ class EventDetailsFacebook extends Component {
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={<div style={{ height: `400px` }} />}
                   mapElement={<div style={{ height: `100%` }} />}
-                  markers={[{lat:this.props.event.place.location.latitude, lng: this.props.event.place.location.longitude}]}
+                  markers={[
+                    {
+                      location: {
+                        lat:this.props.event.place.location.latitude,
+                        lng: this.props.event.place.location.longitude
+                      },
+                    }
+                  ]}
                 />
               </div>
             </Grid>
