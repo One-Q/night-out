@@ -55,7 +55,6 @@ export function getEvents(req, res) {
 
 function forEachEvent(event,lat1,lng1,m){
   let new_events = [];
-  console.log(event);
   return new Promise((res,rej) => {
     for(var e in event){
       if(calcul(lat1,lng1,event[e].location.latitude,event[e].location.longitude,m))

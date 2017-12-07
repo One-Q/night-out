@@ -10,6 +10,14 @@ import throttle from 'lodash.throttle';
 import Eventmap from './EventMap/EventMap';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { CircularProgress } from 'material-ui/Progress';
+import Button from 'material-ui/Button';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
+import Slide from 'material-ui/transitions/Slide';
 
 
 // Import Style
@@ -24,9 +32,10 @@ class Event extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      openDialog: false,
       isLoading: false,
-      long: 4.2,
-      lat: 50.8,
+      long: 0,
+      lat: 0,
       centerLong: 4.2,
       centerLat: 50.8,
     };
@@ -34,34 +43,19 @@ class Event extends Component {
     this.handleClickClack = this.handleClickClack.bind(this);
     this.handleClickClackFacebook = this.handleClickClackFacebook.bind(this);
     this.handleGoogle = this.handleGoogle.bind(this);
-  }
-
-  componentDidMount() {
-    Promise.all([canLocated()]).then((res) => {
-      if (res[0] === 'prompt' || res[0] === 'granted') {
-        navigator.geolocation.getCurrentPosition((position) =>{
-          this.props.dispatch(fetchEvents(1000000,this.state.long,this.state.lat));
-          isLocated = true;
-          this.setState({
-            lat: position.coords.latitude,
-            long: position.coords.longitude,
-          });
-        });
-      }
-    }, () => {
-      isLocated = false;
-    });
-    console.log(isLocated);
+    this.handleOwnLocalisation = this.handleOwnLocalisation.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
   }
 
   handleClickClack = (value,distance) => {
     console.log('distance', distance);
-    this.setState({
-      isLoading: true,
-    });
+   
     facebook = false;
     const app = this;
-    if (isLocated) {
+    if (this.state.lat != 0 && this.state.long != 0) {
+      this.setState({
+        isLoading: true,
+      });
       if (value) {
         this.props.dispatch(fetchResearch(value,distance,this.state.long,this.state.lat)).then((res) => {
           app.setState({
@@ -80,18 +74,20 @@ class Event extends Component {
         });
       }
     } else {
-      alert('Tu peux pas!');
+      this.setState({
+        openDialog: true,
+      })
     }
   }
 
   handleClickClackFacebook = (value, distance, sort) => {
-    this.setState({
-      isLoading: true,
-    });
     console.log(this.state);
     facebook = true;
     const app = this;
-    if (isLocated) {
+    if(this.state.lat != 0 && this.state.long !=0){
+      this.setState({
+        isLoading: true,
+      });
       if (value) {
         this.props.dispatch(fetchEventsFromFacebook(value, distance, sort, this.state.long, this.state.lat, null)).then((res) => {
           app.setState({
@@ -109,9 +105,12 @@ class Event extends Component {
           });
         });
       }
-    } else {
-      alert('Oh non fdp , tu peux pas!');
+    }else{
+      this.setState({
+        openDialog: true,
+      })
     }
+      
   }
 
   handleCenter(latitude, longitude) {
@@ -133,6 +132,19 @@ class Event extends Component {
     })
   }
 
+  handleOwnLocalisation(latitude,longitude,located){
+    this.setState({
+      lat: latitude,
+      long: longitude,
+    })
+  }
+
+  handleDialogClose(){
+    this.setState({
+      openDialog: false,
+    })
+  }
+
   render() {
     console.log(this.props.events);
     let events;
@@ -140,7 +152,11 @@ class Event extends Component {
     if (this.state.isLoading) {
       return (
         <div>
-          <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook}  geocodeByAdress={this.handleGoogle}/>
+          <EventResearch 
+          ownLocalisation={this.handleOwnLocalisation} 
+          research={this.handleClickClack} 
+          researchViaFacebook={this.handleClickClackFacebook}  
+          geocodeByAdress={this.handleGoogle}/>
           <div className={appStyles.container}>
             <h1>Evènements recherchés</h1>
             <div className={styles['event-div']}>
@@ -160,6 +176,7 @@ class Event extends Component {
       events = this.props.events.map((event) => {
         if (facebook) {
           markers.push({
+            title : event.name,
             location : {
               lat : event.venue.location.latitude,
               lng : event.venue.location.longitude,
@@ -168,6 +185,7 @@ class Event extends Component {
           });
         } else {
           markers.push({
+            title : event.name,
             location: {
               lat: event.location.latitude,
               lng: event.location.longitude,
@@ -195,8 +213,13 @@ class Event extends Component {
       });
     }
     return (
+      
       <div>
-        <EventResearch research={this.handleClickClack} researchViaFacebook={this.handleClickClackFacebook}  geocodeByAdress={this.handleGoogle}/>
+        <EventResearch
+        ownLocalisation={this.handleOwnLocalisation}  
+        research={this.handleClickClack} 
+        researchViaFacebook={this.handleClickClackFacebook}  
+        geocodeByAdress={this.handleGoogle}/>
         <div className={appStyles.container}>
           <h1>Evènements recherchés :</h1>
           <div className={styles['event-div']}>
@@ -205,13 +228,13 @@ class Event extends Component {
                 {events}
               </Grid>
               <Grid item md={6}>
-                <div style={{width: '100%', height: 600}}>
+                <div style={{width: '100%', height: 600 , position: 'sticky', top: '10%'}}>
                   {markers.length > 0 && <Eventmap
                     location={{ lat: this.state.centerLat, lng: this.state.centerLong }}
                     isMarkerShown
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `400px` }} />}
+                    containerElement={<div style={{ height: `100%` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
                     markers={markers}
                   />}
@@ -220,29 +243,28 @@ class Event extends Component {
             </Grid>
           </div>
         </div>
+        <div>
+            <Dialog
+              open={this.state.openDialog}
+              keepMounted
+              onRequestClose={this.handleDialogClose}
+            >
+              <DialogTitle>{"Oups?!"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Veuillez accepter votre localisation ou rentrez une localisation correct
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleDialogClose} color="primary">
+                  J'ai compris
+                </Button>
+              </DialogActions>
+            </Dialog>
+        </div>
       </div>
     );
   }
-}
-
-function canLocated() {
-  return new Promise((res, rej) => {
-    navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
-    console.log(result.state);
-      if (result.state === 'granted') {
-          // granted
-        isLocated = true;
-        res('granted');
-      } else if (result.state === 'denied') {
-          // denied
-        isLocated = false;
-        rej('denied');
-      } else {
-          // prompt
-        res('prompt');
-      }
-    });
-  });
 }
 
 

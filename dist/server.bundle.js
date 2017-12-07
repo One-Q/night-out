@@ -218,7 +218,7 @@
 	
 	function fetchEvents(distance, long, lat) {
 	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('events/' + distance + '&' + long + '&' + lat).then(function (res) {
+	    return (0, _apiCaller2.default)('events/' + distance * 1000 + '&' + long + '&' + lat).then(function (res) {
 	      dispatch(addEvents(res.event));
 	      return res;
 	    });
@@ -244,7 +244,7 @@
 	
 	function fetchResearch(event, distance, long, lat) {
 	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('research/' + event + '&' + distance + '&' + long + '&' + lat).then(function (res) {
+	    return (0, _apiCaller2.default)('research/' + event + '&' + distance * 1000 + '&' + long + '&' + lat).then(function (res) {
 	      return dispatch(researchEvents(res.elastic_mongo_response));
 	    });
 	  };
@@ -662,7 +662,7 @@
 	  value: true
 	});
 	var config = {
-	  mongoURL: process.env.MONGO_URL || /*'mongodb://heroku_q73bd7nd:ifkof4c5qtc4ls2rblt1ac8mu8@ds117965.mlab.com:17965/heroku_q73bd7nd',*/'mongodb://localhost:27017/mern-starter',
+	  mongoURL: process.env.MONGO_URL || 'mongodb://heroku_q73bd7nd:ifkof4c5qtc4ls2rblt1ac8mu8@ds117965.mlab.com:17965/heroku_q73bd7nd', /*'mongodb://localhost:27017/mern-starter',*/
 	  port: process.env.PORT || 8000
 	};
 	
@@ -882,21 +882,21 @@
 	var _Progress = __webpack_require__(96);
 	
 	var _Event = {
-	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
-	  "single-event": "_2Ucm-nXTucrLpyqmK0mwTG",
-	  "event-title": "_30rZWoSelktXziNHZ4AzL2",
-	  "location": "_1HqoozAZAb5aV33rF3QoLs",
-	  "event-desc": "gwBvdLZTvuaxj0oPJULOD",
-	  "eevnt-detail": "_3rhf2hynhbItVf-i1861_E",
-	  "event-detail": "XPAFlXEDc4knjbIR_hMeQ"
+	  "event-div": "_1bsciJyhVFuLam1kjvDFnO",
+	  "single-event": "_3JBZgC0ed2h9y2WFzKlGM0",
+	  "event-title": "_65jErK1rcXdpCOGzYVGKK",
+	  "location": "_3jSMkUOX_4JFP9zMRZjoic",
+	  "event-desc": "_1e2qla6Si7eA8kaWJXIIsD",
+	  "eevnt-detail": "_3-8RyBjXKvuyqqn1i2DkTO",
+	  "event-detail": "_3MhQ_-bBzfu4nygtz_iNQ7"
 	};
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -1220,21 +1220,21 @@
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
 	var _Event = {
-	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
-	  "single-event": "_2Ucm-nXTucrLpyqmK0mwTG",
-	  "event-title": "_30rZWoSelktXziNHZ4AzL2",
-	  "location": "_1HqoozAZAb5aV33rF3QoLs",
-	  "event-desc": "gwBvdLZTvuaxj0oPJULOD",
-	  "eevnt-detail": "_3rhf2hynhbItVf-i1861_E",
-	  "event-detail": "XPAFlXEDc4knjbIR_hMeQ"
+	  "event-div": "_1bsciJyhVFuLam1kjvDFnO",
+	  "single-event": "_3JBZgC0ed2h9y2WFzKlGM0",
+	  "event-title": "_65jErK1rcXdpCOGzYVGKK",
+	  "location": "_3jSMkUOX_4JFP9zMRZjoic",
+	  "event-desc": "_1e2qla6Si7eA8kaWJXIIsD",
+	  "eevnt-detail": "_3-8RyBjXKvuyqqn1i2DkTO",
+	  "event-detail": "_3MhQ_-bBzfu4nygtz_iNQ7"
 	};
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -1375,21 +1375,21 @@
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
 	var _Event = {
-	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
-	  "single-event": "_2Ucm-nXTucrLpyqmK0mwTG",
-	  "event-title": "_30rZWoSelktXziNHZ4AzL2",
-	  "location": "_1HqoozAZAb5aV33rF3QoLs",
-	  "event-desc": "gwBvdLZTvuaxj0oPJULOD",
-	  "eevnt-detail": "_3rhf2hynhbItVf-i1861_E",
-	  "event-detail": "XPAFlXEDc4knjbIR_hMeQ"
+	  "event-div": "_1bsciJyhVFuLam1kjvDFnO",
+	  "single-event": "_3JBZgC0ed2h9y2WFzKlGM0",
+	  "event-title": "_65jErK1rcXdpCOGzYVGKK",
+	  "location": "_3jSMkUOX_4JFP9zMRZjoic",
+	  "event-desc": "_1e2qla6Si7eA8kaWJXIIsD",
+	  "eevnt-detail": "_3-8RyBjXKvuyqqn1i2DkTO",
+	  "event-detail": "_3MhQ_-bBzfu4nygtz_iNQ7"
 	};
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -1528,15 +1528,15 @@
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
 	
 	var _Home = {
-	  "img": "_1iC0jUHk_t1c1bVLzG8wyP"
+	  "img": "_3xnD1Js6nSUoyI81XB1mxJ"
 	};
 	
 	var _Home2 = _interopRequireDefault(_Home);
@@ -2383,9 +2383,9 @@
 	var _reactRedux = __webpack_require__(1);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -2577,15 +2577,15 @@
 	var _List2 = _interopRequireDefault(_List);
 	
 	var _Footer = {
-	  "footer": "_3vPEi87A1wyh1iLR3bsBGf"
+	  "footer": "_1oiRVDtQ6fOWkhBVWcRyE_"
 	};
 	
 	var _Footer2 = _interopRequireDefault(_Footer);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -2683,20 +2683,20 @@
 	var _Tooltip2 = _interopRequireDefault(_Tooltip);
 	
 	var _Header = {
-	  "header": "_2sEZYfHlvDy9uXqVIXG1aM",
-	  "content": "_1eavAvnySzoZc5rld6Q4pa",
-	  "site-title": "UfFn6muOcOBjkVI5_yltp",
-	  "add-post-button": "CkTz6a2gQTJjwXIEAlTSk",
-	  "language-switcher": "_3bviQya5ZWCvWr6lGdfO9h",
-	  "selected": "_3IRlmCpgSZBcTGVIGHvgaI"
+	  "header": "_3EGjKVGKCGTGQn_m_YASdF",
+	  "content": "_391cv5n_RFU0K9SBOjXDEt",
+	  "site-title": "_11V45Tl3_Hdy_ARI53CW9g",
+	  "add-post-button": "XrNjmGRHH_vMEgGeC3S75",
+	  "language-switcher": "X6vAu1vEuRDWiN2kDvA_z",
+	  "selected": "_3ecuVjN6tTUWkR7u3Co3s"
 	};
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -3454,9 +3454,9 @@
 	var _reactPlacesAutocomplete2 = _interopRequireDefault(_reactPlacesAutocomplete);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -4121,6 +4121,7 @@
 	  var lat1 = req.params.lat;
 	  var lng1 = req.params.long;
 	  var m = req.params.distance;
+	  console.log(m);
 	  _event2.default.find().find().exec(function (err, event) {
 	    if (err) {
 	      return res.status(500).send(err);
@@ -4133,6 +4134,7 @@
 	
 	function forEachEvent(event, lat1, lng1, m) {
 	  var new_events = [];
+	  console.log(event);
 	  return new Promise(function (res, rej) {
 	    for (var e in event) {
 	      if (calcul(lat1, lng1, event[e].location.latitude, event[e].location.longitude, m)) new_events.push(event[e]);
@@ -4190,11 +4192,11 @@
 	 */
 	function getEventsByidFromMongo(e, distance, lat, lng) {
 	  var m = distance;
-	  var posLocallat = lng;
-	  var posLocalLng = lat;
+	  var posLocallat = lat;
+	  var posLocalLng = lng;
 	  return new Promise(function (res, rej) {
 	    _event2.default.find({ '_id': { $in: e } }).exec(function (err, event) {
-	      forEachEvent(e, posLocallat, posLocalLng, m).then(function (event) {
+	      forEachEvent(event, posLocallat, posLocalLng, m).then(function (event) {
 	        res(event);
 	      });
 	    });

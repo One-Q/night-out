@@ -1,6 +1,10 @@
 import React from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
 
+function info(){
+  console.log('oui');
+}
+
 const EventMap = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
     defaultZoom={16}
@@ -8,8 +12,7 @@ const EventMap = withScriptjs(withGoogleMap((props) =>
     center={props.location}
   >
     {props.markers.map(marker => {
-      console.log('marker', marker);
-      return <Marker position={marker.location} />
+      return <Marker position={marker.location} title={marker.title}/>
     })}
   </GoogleMap>
 ));

@@ -29,7 +29,7 @@ export class EventResearch extends Component {
       inputResearch: '',
       selectedOption:'ourDB',
       distance: "5",
-      localisationChecked: true,
+      localisationChecked: false,
     };
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.ClickClack = this.ClickClack.bind(this);
@@ -38,6 +38,7 @@ export class EventResearch extends Component {
     this.handleResearchChange = this.handleResearchChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleChangeInputSort = this.handleChangeInputSort.bind(this);
+    this.handleOwnLocalisation = this.handleOwnLocalisation.bind(this);
   }
 
 
@@ -101,6 +102,22 @@ export class EventResearch extends Component {
       sort : select.target.value,
     });
   };
+
+  handleOwnLocalisation(event,checked){
+    this.setState({ 
+      localisationChecked: checked
+     }); 
+    if(checked){
+      console.log("oooii");
+      navigator.geolocation.getCurrentPosition((position) =>{
+        console.log("dqsf");
+        this.props.ownLocalisation(position.coords.latitude,position.coords.longitude,true);
+      });
+    }else{
+        this.props.ownLocalisation(0,0,false);
+    }
+    
+  }
 
   render() {
     const inputProps = {
@@ -180,7 +197,8 @@ export class EventResearch extends Component {
                   control={
                     <Switch
                       checked={this.state.localisationChecked}
-                      onChange={(event, checked) => this.setState({ localisationChecked: checked })}
+                      onChange={(event, checked) => {
+                        this.handleOwnLocalisation(event,checked);}}
                     />
                   }
                   label="Localisation"
