@@ -17,7 +17,7 @@ class Home extends Component {
           <div style={{ color: 'white', textAlign: 'center' }}>
             <h1>Nous sommes Night Out</h1>
             <br/>
-            <p>Site de recherche d'évènements de facebook ou de notre base de données</p>
+            <p>Site de recherche d'évènements en provenance de Facebook ou de notre base de données</p>
           </div>
         </div>
         <div className={appStyles.container}>
@@ -25,8 +25,8 @@ class Home extends Component {
             <Grid item md={6}>
               <h2>But</h2>
               <br/>
-              <p>Vous voulez trouvez des évènements près de chez vous ou près d'un endroit précis ?</p>
-              <p>Voilà notre but, trouver ces évènements</p>
+              <p>Vous voulez trouver des évènements près de chez vous ou près d'un endroit précis ?</p>
+              <p>Notre but est de vous aider à trouver ces évènements</p>
               <p>Vous pouvez faire une recherche par rapport à Facebook ou par rapport à notre base de données qui est tenue à jour par nos utilisateurs</p>
             </Grid>
             <Grid item md={6}>
