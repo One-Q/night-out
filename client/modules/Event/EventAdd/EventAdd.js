@@ -10,7 +10,6 @@ import Button from 'material-ui/Button';
 import Send from 'material-ui-icons/Send';
 import { MenuItem } from 'material-ui/Menu';
 import Snackbar from 'material-ui/Snackbar';
-import { verifyToken } from '../../Authentification/AuthentificationActions';
 
 import appStyles from '../../App/App.css';
 import thisStyles from './EventAdd.css';
@@ -53,7 +52,7 @@ class EventAdd extends Component {
   }
 
   componentDidMount() {
-    if (this.props.dispatch(verifyToken(localStorage.getItem('token')))) {
+    if (!localStorage.getItem('token')) {
       this.props.history.push('/');
     }
   }

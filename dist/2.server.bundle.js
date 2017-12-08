@@ -21,7 +21,7 @@ exports.modules = {
 	
 	var _reactRedux = __webpack_require__(1);
 	
-	var _EventActions = __webpack_require__(8);
+	var _EventActions = __webpack_require__(7);
 	
 	var _Grid = __webpack_require__(3);
 	
@@ -41,7 +41,7 @@ exports.modules = {
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _Button = __webpack_require__(9);
+	var _Button = __webpack_require__(8);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -54,8 +54,6 @@ exports.modules = {
 	var _Snackbar = __webpack_require__(120);
 	
 	var _Snackbar2 = _interopRequireDefault(_Snackbar);
-	
-	var _AuthentificationActions = __webpack_require__(7);
 	
 	var _App = {
 	  "container": "_4uEyKcd5WHob5qPzotT7",
@@ -138,7 +136,7 @@ exports.modules = {
 	  _createClass(EventAdd, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      if (this.props.dispatch((0, _AuthentificationActions.verifyToken)(localStorage.getItem('token')))) {
+	      if (!localStorage.getItem('token')) {
 	        this.props.history.push('/');
 	      }
 	    }

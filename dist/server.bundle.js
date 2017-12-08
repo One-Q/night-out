@@ -160,98 +160,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.SET_USER = undefined;
-	exports.setUser = setUser;
-	exports.login = login;
-	exports.signUp = signUp;
-	exports.verifyToken = verifyToken;
-	exports.signOutAction = signOutAction;
-	
-	var _apiCaller = __webpack_require__(19);
-	
-	var _apiCaller2 = _interopRequireDefault(_apiCaller);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var SET_USER = exports.SET_USER = 'SET_USER';
-	
-	function setUser(user) {
-	  return {
-	    type: SET_USER,
-	    user: user
-	  };
-	}
-	
-	function login(user) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('login', 'post', {
-	      username: user.username,
-	      password: user.password
-	    }).then(function (res) {
-	      if (res.token) {
-	        var userReceive = {
-	          username: user.username,
-	          token: res.token
-	        };
-	        localStorage.setItem('token', res.token);
-	        dispatch(setUser(userReceive));
-	      } else {
-	        return res;
-	      }
-	    });
-	  };
-	}
-	
-	function signUp(user) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('signup', 'post', {
-	      username: user.username,
-	      email: user.email,
-	      password: user.password
-	    }).then(function (res) {
-	      if (res.token) {
-	        var userReceive = {
-	          username: user.username,
-	          token: res.token
-	        };
-	        localStorage.setItem('token', res.token);
-	        dispatch(setUser(userReceive));
-	      }
-	      return res;
-	    });
-	  };
-	}
-	
-	function verifyToken(token) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('amilogged', 'post', {}, token).then(function (res) {
-	      if (!res.user) {
-	        dispatch(signOutAction());
-	      }
-	      return res;
-	    });
-	  };
-	}
-	
-	function signOutAction() {
-	  return function (dispatch) {
-	    if (localStorage.getItem('token')) {
-	      localStorage.removeItem('token');
-	      dispatch(setUser({}));
-	    }
-	  };
-	}
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	exports.FACEBOOK_EVENT = exports.RESEARCHED_ADRESS = exports.RESEARCH_EVENTS = exports.DELETE_EVENT = exports.ADD_EVENTS = exports.ADD_EVENT = undefined;
 	exports.addEvent = addEvent;
 	exports.addEvents = addEvents;
@@ -378,10 +286,102 @@
 	}
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui/Button");
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.SET_USER = undefined;
+	exports.setUser = setUser;
+	exports.login = login;
+	exports.signUp = signUp;
+	exports.verifyToken = verifyToken;
+	exports.signOutAction = signOutAction;
+	
+	var _apiCaller = __webpack_require__(19);
+	
+	var _apiCaller2 = _interopRequireDefault(_apiCaller);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var SET_USER = exports.SET_USER = 'SET_USER';
+	
+	function setUser(user) {
+	  return {
+	    type: SET_USER,
+	    user: user
+	  };
+	}
+	
+	function login(user) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('login', 'post', {
+	      username: user.username,
+	      password: user.password
+	    }).then(function (res) {
+	      if (res.token) {
+	        var userReceive = {
+	          username: user.username,
+	          token: res.token
+	        };
+	        localStorage.setItem('token', res.token);
+	        dispatch(setUser(userReceive));
+	      } else {
+	        return res;
+	      }
+	    });
+	  };
+	}
+	
+	function signUp(user) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('signup', 'post', {
+	      username: user.username,
+	      email: user.email,
+	      password: user.password
+	    }).then(function (res) {
+	      if (res.token) {
+	        var userReceive = {
+	          username: user.username,
+	          token: res.token
+	        };
+	        localStorage.setItem('token', res.token);
+	        dispatch(setUser(userReceive));
+	      }
+	      return res;
+	    });
+	  };
+	}
+	
+	function verifyToken(token) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('amilogged', 'post', {}, token).then(function (res) {
+	      if (!res.user) {
+	        dispatch(signOutAction());
+	      }
+	      return res;
+	    });
+	  };
+	}
+	
+	function signOutAction() {
+	  return function (dispatch) {
+	    if (localStorage.getItem('token')) {
+	      localStorage.removeItem('token');
+	      dispatch(setUser({}));
+	    }
+	  };
+	}
 
 /***/ },
 /* 10 */
@@ -395,7 +395,7 @@
 	});
 	exports.getUser = undefined;
 	
-	var _AuthentificationActions = __webpack_require__(7);
+	var _AuthentificationActions = __webpack_require__(9);
 	
 	var initialState = { user: {} };
 	
@@ -448,7 +448,7 @@
 	});
 	exports.getEvent = exports.getEventFacebook = exports.getEvents = undefined;
 	
-	var _EventActions = __webpack_require__(8);
+	var _EventActions = __webpack_require__(7);
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } // Import Actions
 	
@@ -883,7 +883,7 @@
 	
 	var _redux = __webpack_require__(14);
 	
-	var _EventActions = __webpack_require__(8);
+	var _EventActions = __webpack_require__(7);
 	
 	var _EventResearch = __webpack_require__(68);
 	
@@ -909,7 +909,7 @@
 	
 	var _Progress = __webpack_require__(96);
 	
-	var _Button = __webpack_require__(9);
+	var _Button = __webpack_require__(8);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -1273,7 +1273,7 @@
 	
 	var _EventMap2 = _interopRequireDefault(_EventMap);
 	
-	var _EventActions = __webpack_require__(8);
+	var _EventActions = __webpack_require__(7);
 	
 	var _EventReducer = __webpack_require__(13);
 	
@@ -1428,7 +1428,7 @@
 	
 	var _EventMap2 = _interopRequireDefault(_EventMap);
 	
-	var _EventActions = __webpack_require__(8);
+	var _EventActions = __webpack_require__(7);
 	
 	var _EventReducer = __webpack_require__(13);
 	
@@ -2470,7 +2470,7 @@
 	
 	var _AuthentificationReducer = __webpack_require__(10);
 	
-	var _AuthentificationActions = __webpack_require__(7);
+	var _AuthentificationActions = __webpack_require__(9);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2720,7 +2720,7 @@
 	
 	var _Typography2 = _interopRequireDefault(_Typography);
 	
-	var _Button = __webpack_require__(9);
+	var _Button = __webpack_require__(8);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -2744,7 +2744,7 @@
 	
 	var _Tooltip2 = _interopRequireDefault(_Tooltip);
 	
-	var _AuthentificationActions = __webpack_require__(7);
+	var _AuthentificationActions = __webpack_require__(9);
 	
 	var _AuthentificationReducer = __webpack_require__(10);
 	
@@ -2963,7 +2963,7 @@
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
-	var _Button = __webpack_require__(9);
+	var _Button = __webpack_require__(8);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -3043,7 +3043,7 @@
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
-	var _AuthentificationActions = __webpack_require__(7);
+	var _AuthentificationActions = __webpack_require__(9);
 	
 	var _AuthentificationReducer = __webpack_require__(10);
 	
@@ -3210,7 +3210,7 @@
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
-	var _Button = __webpack_require__(9);
+	var _Button = __webpack_require__(8);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -3314,7 +3314,7 @@
 	
 	var _SignUp2 = _interopRequireDefault(_SignUp);
 	
-	var _AuthentificationActions = __webpack_require__(7);
+	var _AuthentificationActions = __webpack_require__(9);
 	
 	var _AuthentificationReducer = __webpack_require__(10);
 	
@@ -3487,7 +3487,7 @@
 	
 	var _redux = __webpack_require__(14);
 	
-	var _EventActions = __webpack_require__(8);
+	var _EventActions = __webpack_require__(7);
 	
 	var _Input = __webpack_require__(55);
 	
@@ -3503,7 +3503,7 @@
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _Button = __webpack_require__(9);
+	var _Button = __webpack_require__(8);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
