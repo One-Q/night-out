@@ -53,6 +53,7 @@ class EventAdd extends Component {
 
   componentDidMount() {
     if (!localStorage.getItem('token')) {
+      console.log('ok')
       this.props.history.push('/');
     }
   }
