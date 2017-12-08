@@ -206,7 +206,7 @@ class Event extends Component {
                 {event.name}
               </Link>
             </h2>
-            <p>{event.description}</p>
+            <p>{reduceDescription(event.description)}</p><br />
             <p>{facebook ? event.venue.location.city: event.location.city} , {facebook ? event.venue.location.street: event.location.street} </p>
           </div>
         );
@@ -249,10 +249,10 @@ class Event extends Component {
               keepMounted
               onRequestClose={this.handleDialogClose}
             >
-              <DialogTitle>{"Oups?!"}</DialogTitle>
+              <DialogTitle>{"Impossible de vous localiser"}</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  Veuillez accepter votre localisation ou rentrez une localisation correct
+                  Veuillez accepter votre localisation ou rentrer une localisation correcte.
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -273,6 +273,12 @@ function mapStateToProps(state) {
   return {
     events: getEvents(state),
   };
+}
+
+function reduceDescription(description){
+  if (description.length < 300)
+      return description;
+  return description.substring(0, 299)+"...";
 }
 
 Event.propTypes = {
