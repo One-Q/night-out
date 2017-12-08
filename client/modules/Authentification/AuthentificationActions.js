@@ -69,3 +69,12 @@ export function signOutAction(){
     }
   }
 }
+
+export function changePassword(newPassword,token){
+  return (dispatch) => {
+    return callApi('changepassword', 'post', {newPassword}, token)
+    .then((res) => {
+      return res;
+    })
+  }
+}

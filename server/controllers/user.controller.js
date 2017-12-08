@@ -52,9 +52,7 @@ export function signUp(req, res) {
 
 export function changePassword(req, res) {
     let cuid = req.user.id;
-    let oldPassword = req.body.oldPassword;
     let newPassword = req.body.newPassword;
-    req.checkBody('oldPassword', 'Veuillez entrer votre ancien mot de passe.').matches(regex.regPassword);     // //mdp 8-64 carac sans espaces
     req.checkBody('newPassword', 'Veuillez entrer un nouveau mot de passe valide.').matches(regex.regPassword);     // //mdp 8-64 carac sans espaces
     let errors = req.validationErrors();
     if (errors) {
@@ -63,8 +61,6 @@ export function changePassword(req, res) {
     User.findOne({ cuid }).then((user) => {
         if (!user) // Pas sensé arriver
             return res.status(500).json({ error: 'Erreur interne.' });
-        if (!user.validatePassword(oldPassword))
-            return res.status(400).json({ error: 'Ancien mot de passe incorrect.' });
         user.password = user.generateHash(newPassword);
         user.save((err) => {
             if (err)
