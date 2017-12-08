@@ -51,8 +51,6 @@ class EventAdd extends Component {
     console.log(this.state);
   }
 
-<<<<<<< HEAD
-=======
   componentDidMount() {
     if (!localStorage.getItem('token')) {
       console.log('ok')
@@ -60,7 +58,6 @@ class EventAdd extends Component {
     }
   }
 
->>>>>>> bdb5c527459ca08513367d07bdd6c06a24fe0eee
   handleSubmit(event) {
     event.preventDefault();
     this.setState({
