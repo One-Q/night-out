@@ -207,7 +207,9 @@ class Event extends Component {
               </Link>
             </h2>
             <p>{reduceDescription(event.description)}</p><br />
-            <p>{facebook ? event.venue.location.city: event.location.city} , {facebook ? event.venue.location.street: event.location.street} </p>
+            <p><b>Adresse : </b>{facebook ? event.venue.location.city: event.location.city} , {facebook ? event.venue.location.street: event.location.street} </p>
+            <p><b>Date de début : </b>{formatDate(new Date(event.startTime))}</p>
+            {facebook && <p><b>Date de fin : </b>{formatDate(new Date(event.endTime))}</p>}
           </div>
         );
       });
@@ -279,6 +281,23 @@ function reduceDescription(description){
   if (description.length < 300)
       return description;
   return description.substring(0, 299)+"...";
+}
+
+function formatDate(date) {
+  var monthNames = [
+    "Janvier", "Février", "Mars",
+    "Avril", "Mai", "Juin", "Juillet",
+    "Août", "Septembre", "Octobre",
+    "Novembre", "Décembre"
+  ];
+
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+  var hour = date.getHours();
+  var minutes = date.getMinutes() === 0 ? "" : date.getMinutes();
+
+  return day + ' ' + monthNames[monthIndex] + ' ' + year+", "+hour+"h"+minutes;
 }
 
 Event.propTypes = {
