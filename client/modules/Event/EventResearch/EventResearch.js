@@ -68,15 +68,12 @@ export class EventResearch extends Component {
 
   ClickClack = (e) => {
     e.preventDefault();
-    console.log(JSON.stringify(this.state));
     const input = this.state.inputResearch;
     const distance = this.state.distance;
     const sort = this.state.sort;
     if(this.state.selectedOption == "ourDB"){
-      console.log("Tu as choisi notre DB");
       this.props.research(input,distance);      
     }else if(this.state.selectedOption == "facebookDB"){
-      console.log("Test vers Facebook");
       this.props.researchViaFacebook(input,distance,sort);
     }else{
       console.log("ERROR!");
@@ -87,11 +84,9 @@ export class EventResearch extends Component {
     this.setState({
       distance: bar.target.value,
     });
-    console.log(this.state);
   }
 
   handleResearchChange(adress) {
-    console.log("change: " , adress);
     this.setState({
       adress,
     })
@@ -108,9 +103,7 @@ export class EventResearch extends Component {
       localisationChecked: checked
      }); 
     if(checked){
-      console.log("oooii");
       navigator.geolocation.getCurrentPosition((position) =>{
-        console.log("dqsf");
         this.props.ownLocalisation(position.coords.latitude,position.coords.longitude,true);
       });
     }else{

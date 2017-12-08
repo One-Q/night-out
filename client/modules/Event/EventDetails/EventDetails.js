@@ -17,7 +17,6 @@ import appStyles from '../../App/App.css';
 class EventDetails extends Component {
 
   render() {
-    console.log(this.props.event.location.latitude);
     if (this.props.event === '') {
       return (
         <div>

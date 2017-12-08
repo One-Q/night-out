@@ -20,6 +20,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Event/EventDetails/EventDetails');
   require('./modules/Event/EventDetails/EventDetailsFacebook');
   require('./modules/Event/Event');
+  require('./modules/Event/EventAdd/EventAdd');
 }
 
 // react-router setup with code-splitting
@@ -30,6 +31,23 @@ export default (
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Home/Home').default);
+        });
+      }}
+    />
+    <Route
+      path="/events/facebook/:id"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Event/EventDetails/EventDetailsFacebook').default);
+        });
+      }}
+    />
+     
+    <Route
+      path="/events/:slug"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Event/EventDetails/EventDetails').default);
         });
       }}
     />
@@ -49,22 +67,7 @@ export default (
         });
       }}
     />
-    <Route
-      path="/events/facebook/:id"
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Event/EventDetails/EventDetailsFacebook').default);
-        });
-      }}
-    />
-    <Route
-      path="/events/:slug"
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Event/EventDetails/EventDetails').default);
-        });
-      }}
-    />
+   
     <Route
       path="*"
       getComponent={(nextState, cb) => {

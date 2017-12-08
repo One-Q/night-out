@@ -44,16 +44,13 @@ class EventAdd extends Component {
   }
 
   handleChange = name => event => {
-    console.log(name, event);
     this.setState({
       [name]: event.target.value,
     });
-    console.log(this.state);
   }
 
   componentDidMount() {
     if (!localStorage.getItem('token')) {
-      console.log('ok')
       this.props.history.push('/');
     }
   }
@@ -85,10 +82,9 @@ class EventAdd extends Component {
               success: true,
             });
           }
-          console.log(result);
         });
       } else {
-        console.log(res);
+          //TODO catch exception
       }
     });
   }

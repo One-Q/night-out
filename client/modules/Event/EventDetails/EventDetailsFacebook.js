@@ -18,6 +18,7 @@ class EventDetailsFacebook extends Component {
 
   render() {
     console.log(this.props.event);
+    //<div style={{backgroundImage : `url($(this.props.event.cover.source))` }}>
     if (this.props.event === '') {
       return (
         <div>
@@ -35,11 +36,10 @@ class EventDetailsFacebook extends Component {
             </Grid>
             <Grid item md={6}>
               <div style={{width: '100%', height: 600}}>
-                <p className={styles['location']}>
-                  Location : {this.props.event.place.location.city}, {this.props.event.place.location.street}
-                </p>
+                <p><b>Adresse : </b>{this.props.event.place.location.city+","+this.props.event.place.location.street}</p>
+                <p><b>Date de début : </b>{formatDate(new Date(this.props.event.start_time))}</p>
+                <p><b>Date de fin : </b>{formatDate(new Date(this.props.event.end_time))}</p>
              
-
                 <Eventmap
                   location={{lat: this.props.event.place.location.latitude, lng: this.props.event.place.location.longitude}}
                   isMarkerShown
@@ -51,7 +51,7 @@ class EventDetailsFacebook extends Component {
                     {
                       location: {
                         lat:this.props.event.place.location.latitude,
-                        lng: this.props.event.place.location.longitude
+                        lng:this.props.event.place.location.longitude
                       },
                     }
                   ]}
@@ -65,34 +65,35 @@ class EventDetailsFacebook extends Component {
   }
 }
 
+function formatDate(date) {
+  var monthNames = [
+    "Janvier", "Février", "Mars",
+    "Avril", "Mai", "Juin", "Juillet",
+    "Août", "Septembre", "Octobre",
+    "Novembre", "Décembre"
+  ];
+
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+  var hour = date.getHours();
+  var minutes = date.getMinutes() === 0 ? "" : date.getMinutes();
+
+  return day + ' ' + monthNames[monthIndex] + ' ' + year+", "+hour+"h"+minutes;
+}
+
 // Actions required to provide data for this component to render in sever side.
 EventDetailsFacebook.need = [params => {
+  console.log("oui");
   return fetchEventFromFacebook(params.id);
 }];
 
 // Retrieve data from store as props
 function mapStateToProps(state, props) {
+  console.log("non");
   return {
     event: getEventFacebook(state, props.params.id),
   };
 }
-
-
-/*
-
-<p className={styles['location']}><FormattedMessage id="Location" /> : {this.props.event.place.location.city}, {this.props.event.veplacenue.location.street}</p>
-             
-
-<Eventmap
-                  location={{lat: this.props.event.place.location.latitude, lng: this.props.event.place.location.longitude}}
-                  isMarkerShown
-                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC2e4a98PMQ3zw4PGUNTsUr8K9iolhlA8&v=3.exp&libraries=geometry,drawing,places"
-                  loadingElement={<div style={{ height: `100%` }} />}
-                  containerElement={<div style={{ height: `400px` }} />}
-                  mapElement={<div style={{ height: `100%` }} />}
-                  markers={[{lat:this.props.event.venue.location.latitude, lng: this.props.event.venue.location.longitude}]}
-                />
-                */
-
 
 export default connect(mapStateToProps)(EventDetailsFacebook);

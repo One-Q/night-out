@@ -6,7 +6,6 @@ export const ADD_EVENTS = 'ADD_EVENTS';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const RESEARCH_EVENTS = 'RESEARCH_EVENTS';
 export const RESEARCHED_ADRESS = 'RESEARCHED_ADRESS';
-export const FACEBOOK_EVENT = 'FACEBOOK_EVENT';
 
 // Export Actions
 export function addEvent(event) {
@@ -30,13 +29,6 @@ export function researchEvents(events) {
   };
 }
 
-export function displayEventFacebook(eventFacebook){
-  return {
-    type : FACEBOOK_EVENT,
-    eventFacebook
-  }
-}
-
 export function fetchEvents(distance,long,lat) {
   return (dispatch) => {
     return callApi(`events/${distance*1000}&${long}&${lat}`).then(res => {
@@ -55,8 +47,7 @@ export function fetchEvent(slug) {
 export function fetchEventFromFacebook(id) {
   return (dispatch) => {
     return callApi(`events/facebook/${id}`).then(res => {
-      console.log("Action : "+ res.event); 
-      dispatch(displayEventFacebook(res.event));
+      dispatch(addEvent(res.event));
     });
   };
 }

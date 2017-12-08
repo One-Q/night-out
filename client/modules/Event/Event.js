@@ -48,7 +48,6 @@ class Event extends Component {
   }
 
   handleClickClack = (value,distance) => {
-    console.log('distance', distance);
    
     facebook = false;
     const app = this;
@@ -81,7 +80,6 @@ class Event extends Component {
   }
 
   handleClickClackFacebook = (value, distance, sort) => {
-    console.log(this.state);
     facebook = true;
     const app = this;
     if(this.state.lat != 0 && this.state.long !=0){
@@ -128,7 +126,6 @@ class Event extends Component {
         lat: lat,
         long: lng,
       })
-      console.log('Je suis la', { lat, lng });
     })
   }
 
@@ -146,7 +143,6 @@ class Event extends Component {
   }
 
   render() {
-    console.log(this.props.events);
     let events;
     let markers = [];
     if (this.state.isLoading) {
@@ -280,9 +276,12 @@ function mapStateToProps(state) {
 }
 
 function reduceDescription(description){
-  if (description.length < 300)
+  if(description){
+    if (description.length < 300)
       return description;
   return description.substring(0, 299)+"...";
+  }
+  
 }
 
 function formatDate(date) {
