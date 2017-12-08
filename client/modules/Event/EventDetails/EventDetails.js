@@ -62,11 +62,13 @@ class EventDetails extends Component {
 
 // Actions required to provide data for this component to render in sever side.
 EventDetails.need = [params => {
+  console.log("details");
   return fetchEvent(params.slug);
 }];
 
 // Retrieve data from store as props
 function mapStateToProps(state, props) {
+  console.log("details2");
   return {
     event: getEvent(state, props.params.slug),
   };

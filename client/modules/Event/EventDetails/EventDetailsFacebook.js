@@ -15,9 +15,12 @@ import styles from '../Event.css';
 import appStyles from '../../App/App.css';
 
 class EventDetailsFacebook extends Component {
+  
+ 
+
+  
 
   render() {
-    console.log(this.props.event);
     //<div style={{backgroundImage : `url($(this.props.event.cover.source))` }}>
     if (this.props.event === '') {
       return (
@@ -35,9 +38,12 @@ class EventDetailsFacebook extends Component {
                <p className={styles['event-desc']}>{this.props.event.description}</p>
             </Grid>
             <Grid item md={6}>
+            {console.log(this.props.event)}
               <div style={{width: '100%', height: 600}}>
                 <p><b>Adresse : </b>{this.props.event.place.location.city+","+this.props.event.place.location.street}</p>
                 <p><b>Date de début : </b>{formatDate(new Date(this.props.event.start_time))}</p>
+                {console.log(this.props.event.start_time)}
+                {console.log(this.props.event.end_time)}
                 <p><b>Date de fin : </b>{formatDate(new Date(this.props.event.end_time))}</p>
              
                 <Eventmap
@@ -66,6 +72,7 @@ class EventDetailsFacebook extends Component {
 }
 
 function formatDate(date) {
+  console.log("qfkqnsdfnqsjdbn",date);
   var monthNames = [
     "Janvier", "Février", "Mars",
     "Avril", "Mai", "Juin", "Juillet",
@@ -81,6 +88,8 @@ function formatDate(date) {
 
   return day + ' ' + monthNames[monthIndex] + ' ' + year+", "+hour+"h"+minutes;
 }
+
+
 
 // Actions required to provide data for this component to render in sever side.
 EventDetailsFacebook.need = [params => {
