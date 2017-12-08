@@ -2506,7 +2506,6 @@
 	    };
 	
 	    _this.state = { isMounted: false };
-	    _this.props.dispatch((0, _AuthentificationActions.verifyToken)(localStorage.getItem('token')));
 	    return _this;
 	  }
 	
