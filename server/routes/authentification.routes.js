@@ -8,6 +8,6 @@ const router = new Router();
 router.route('/login').post(AuthentificationController.login);
 
 // Check if a user is logged
-router.route('/amilogged').post(auth.authenticate(), AuthentificationController.amILogged);
+router.route('/amilogged').get(auth.authenticate(), AuthentificationController.amILogged);
 
 export default router;

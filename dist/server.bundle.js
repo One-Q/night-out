@@ -293,98 +293,18 @@
 
 /***/ },
 /* 9 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	"use strict";
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.SET_USER = undefined;
-	exports.setUser = setUser;
-	exports.login = login;
-	exports.signUp = signUp;
-	exports.verifyToken = verifyToken;
-	exports.signOutAction = signOutAction;
-	
-	var _apiCaller = __webpack_require__(19);
-	
-	var _apiCaller2 = _interopRequireDefault(_apiCaller);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var SET_USER = exports.SET_USER = 'SET_USER';
-	
-	function setUser(user) {
-	  return {
-	    type: SET_USER,
-	    user: user
-	  };
-	}
-	
-	function login(user) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('login', 'post', {
-	      username: user.username,
-	      password: user.password
-	    }).then(function (res) {
-	      if (res.token) {
-	        var userReceive = {
-	          username: user.username,
-	          token: res.token
-	        };
-	        localStorage.setItem('token', res.token);
-	        dispatch(setUser(userReceive));
-	      } else {
-	        return res;
-	      }
-	    });
-	  };
-	}
-	
-	function signUp(user) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('signup', 'post', {
-	      username: user.username,
-	      email: user.email,
-	      password: user.password
-	    }).then(function (res) {
-	      if (res.token) {
-	        var userReceive = {
-	          username: user.username,
-	          token: res.token
-	        };
-	        localStorage.setItem('token', res.token);
-	        dispatch(setUser(userReceive));
-	      }
-	      return res;
-	    });
-	  };
-	}
-	
-	function verifyToken(token) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('amilogged', 'post', {}, token).then(function (res) {
-	      if (!res.user) {
-	        dispatch(signOutAction());
-	      }
-	      return res;
-	    });
-	  };
-	}
-	
-	function signOutAction() {
-	  return function (dispatch) {
-	    if (localStorage.getItem('token')) {
-	      localStorage.removeItem('token');
-	      dispatch(setUser({}));
-	    }
-	  };
-	}
+	module.exports = require("mongoose");
 
 /***/ },
 /* 10 */
+/***/ function(module, exports) {
+
+	module.exports = require("react-helmet");
+
+/***/ },
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -395,7 +315,7 @@
 	});
 	exports.getUser = undefined;
 	
-	var _AuthentificationActions = __webpack_require__(9);
+	var _AuthentificationActions = __webpack_require__(17);
 	
 	var initialState = { user: {} };
 	
@@ -425,19 +345,7 @@
 	exports.default = AuthentificationReducer;
 
 /***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	module.exports = require("mongoose");
-
-/***/ },
 /* 12 */
-/***/ function(module, exports) {
-
-	module.exports = require("react-helmet");
-
-/***/ },
-/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -502,28 +410,98 @@
 	exports.default = EventReducer;
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux");
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = require("express-validator");
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui/Form");
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui/TextField");
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.SET_USER = undefined;
+	exports.setUser = setUser;
+	exports.login = login;
+	exports.signUp = signUp;
+	
+	var _apiCaller = __webpack_require__(19);
+	
+	var _apiCaller2 = _interopRequireDefault(_apiCaller);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var SET_USER = exports.SET_USER = 'SET_USER';
+	
+	function setUser(user) {
+	  return {
+	    type: SET_USER,
+	    user: user
+	  };
+	}
+	
+	function login(user) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('login', 'post', {
+	      username: user.username,
+	      password: user.password
+	    }).then(function (res) {
+	      if (res.token) {
+	        var userReceive = {
+	          username: user.username,
+	          token: res.token
+	        };
+	        localStorage.setItem('token', res.token);
+	        dispatch(setUser(userReceive));
+	      } else {
+	        return res;
+	      }
+	    });
+	  };
+	}
+	
+	function signUp(user) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('signup', 'post', {
+	      username: user.username,
+	      email: user.email,
+	      password: user.password
+	    }).then(function (res) {
+	      if (res.token) {
+	        var userReceive = {
+	          username: user.username,
+	          token: res.token
+	        };
+	        localStorage.setItem('token', res.token);
+	        dispatch(setUser(userReceive));
+	      }
+	      return res;
+	    });
+	  };
+	}
 
 /***/ },
 /* 18 */
@@ -630,7 +608,7 @@
 	  value: true
 	});
 	
-	var _mongoose = __webpack_require__(11);
+	var _mongoose = __webpack_require__(9);
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
@@ -881,13 +859,13 @@
 	
 	var _reactRedux = __webpack_require__(1);
 	
-	var _redux = __webpack_require__(14);
+	var _redux = __webpack_require__(13);
 	
 	var _EventActions = __webpack_require__(7);
 	
 	var _EventResearch = __webpack_require__(68);
 	
-	var _EventReducer = __webpack_require__(13);
+	var _EventReducer = __webpack_require__(12);
 	
 	var _reactRouter = __webpack_require__(2);
 	
@@ -922,21 +900,21 @@
 	var _Slide2 = _interopRequireDefault(_Slide);
 	
 	var _Event = {
-	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
-	  "single-event": "_2Ucm-nXTucrLpyqmK0mwTG",
-	  "event-title": "_30rZWoSelktXziNHZ4AzL2",
-	  "location": "_1HqoozAZAb5aV33rF3QoLs",
-	  "event-desc": "gwBvdLZTvuaxj0oPJULOD",
-	  "eevnt-detail": "_3rhf2hynhbItVf-i1861_E",
-	  "event-detail": "XPAFlXEDc4knjbIR_hMeQ"
+	  "event-div": "_1bsciJyhVFuLam1kjvDFnO",
+	  "single-event": "_3JBZgC0ed2h9y2WFzKlGM0",
+	  "event-title": "_65jErK1rcXdpCOGzYVGKK",
+	  "location": "_3jSMkUOX_4JFP9zMRZjoic",
+	  "event-desc": "_1e2qla6Si7eA8kaWJXIIsD",
+	  "eevnt-detail": "_3-8RyBjXKvuyqqn1i2DkTO",
+	  "event-detail": "_3MhQ_-bBzfu4nygtz_iNQ7"
 	};
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -1263,7 +1241,7 @@
 	
 	var _reactRedux = __webpack_require__(1);
 	
-	var _reactHelmet = __webpack_require__(12);
+	var _reactHelmet = __webpack_require__(10);
 	
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 	
@@ -1275,7 +1253,7 @@
 	
 	var _EventActions = __webpack_require__(7);
 	
-	var _EventReducer = __webpack_require__(13);
+	var _EventReducer = __webpack_require__(12);
 	
 	var _reactRouter = __webpack_require__(2);
 	
@@ -1284,21 +1262,21 @@
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
 	var _Event = {
-	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
-	  "single-event": "_2Ucm-nXTucrLpyqmK0mwTG",
-	  "event-title": "_30rZWoSelktXziNHZ4AzL2",
-	  "location": "_1HqoozAZAb5aV33rF3QoLs",
-	  "event-desc": "gwBvdLZTvuaxj0oPJULOD",
-	  "eevnt-detail": "_3rhf2hynhbItVf-i1861_E",
-	  "event-detail": "XPAFlXEDc4knjbIR_hMeQ"
+	  "event-div": "_1bsciJyhVFuLam1kjvDFnO",
+	  "single-event": "_3JBZgC0ed2h9y2WFzKlGM0",
+	  "event-title": "_65jErK1rcXdpCOGzYVGKK",
+	  "location": "_3jSMkUOX_4JFP9zMRZjoic",
+	  "event-desc": "_1e2qla6Si7eA8kaWJXIIsD",
+	  "eevnt-detail": "_3-8RyBjXKvuyqqn1i2DkTO",
+	  "event-detail": "_3MhQ_-bBzfu4nygtz_iNQ7"
 	};
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -1418,7 +1396,7 @@
 	
 	var _reactRedux = __webpack_require__(1);
 	
-	var _reactHelmet = __webpack_require__(12);
+	var _reactHelmet = __webpack_require__(10);
 	
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 	
@@ -1430,7 +1408,7 @@
 	
 	var _EventActions = __webpack_require__(7);
 	
-	var _EventReducer = __webpack_require__(13);
+	var _EventReducer = __webpack_require__(12);
 	
 	var _reactRouter = __webpack_require__(2);
 	
@@ -1439,21 +1417,21 @@
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
 	var _Event = {
-	  "event-div": "_3fl747I65Xpc6c63zqiz4Z",
-	  "single-event": "_2Ucm-nXTucrLpyqmK0mwTG",
-	  "event-title": "_30rZWoSelktXziNHZ4AzL2",
-	  "location": "_1HqoozAZAb5aV33rF3QoLs",
-	  "event-desc": "gwBvdLZTvuaxj0oPJULOD",
-	  "eevnt-detail": "_3rhf2hynhbItVf-i1861_E",
-	  "event-detail": "XPAFlXEDc4knjbIR_hMeQ"
+	  "event-div": "_1bsciJyhVFuLam1kjvDFnO",
+	  "single-event": "_3JBZgC0ed2h9y2WFzKlGM0",
+	  "event-title": "_65jErK1rcXdpCOGzYVGKK",
+	  "location": "_3jSMkUOX_4JFP9zMRZjoic",
+	  "event-desc": "_1e2qla6Si7eA8kaWJXIIsD",
+	  "eevnt-detail": "_3-8RyBjXKvuyqqn1i2DkTO",
+	  "event-detail": "_3MhQ_-bBzfu4nygtz_iNQ7"
 	};
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -1592,15 +1570,15 @@
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
 	
 	var _Home = {
-	  "img": "_1iC0jUHk_t1c1bVLzG8wyP"
+	  "img": "_3xnD1Js6nSUoyI81XB1mxJ"
 	};
 	
 	var _Home2 = _interopRequireDefault(_Home);
@@ -1719,7 +1697,7 @@
 	  value: true
 	});
 	
-	var _mongoose = __webpack_require__(11);
+	var _mongoose = __webpack_require__(9);
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
@@ -1758,7 +1736,7 @@
 	  value: true
 	});
 	
-	var _mongoose = __webpack_require__(11);
+	var _mongoose = __webpack_require__(9);
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
@@ -1944,7 +1922,7 @@
 	});
 	exports.configureStore = configureStore;
 	
-	var _redux = __webpack_require__(14);
+	var _redux = __webpack_require__(13);
 	
 	var _reduxThunk = __webpack_require__(115);
 	
@@ -2079,7 +2057,7 @@
 	router.route('/login').post(AuthentificationController.login);
 	
 	// Check if a user is logged
-	router.route('/amilogged').post(_auth2.default.authenticate(), AuthentificationController.amILogged);
+	router.route('/amilogged').get(_auth2.default.authenticate(), AuthentificationController.amILogged);
 	
 	exports.default = router;
 
@@ -2441,14 +2419,14 @@
 	var _reactRedux = __webpack_require__(1);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _reactHelmet = __webpack_require__(12);
+	var _reactHelmet = __webpack_require__(10);
 	
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 	
@@ -2468,9 +2446,7 @@
 	
 	var _IntlActions = __webpack_require__(33);
 	
-	var _AuthentificationReducer = __webpack_require__(10);
-	
-	var _AuthentificationActions = __webpack_require__(9);
+	var _AuthentificationReducer = __webpack_require__(11);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2637,15 +2613,15 @@
 	var _List2 = _interopRequireDefault(_List);
 	
 	var _Footer = {
-	  "footer": "_3vPEi87A1wyh1iLR3bsBGf"
+	  "footer": "_1oiRVDtQ6fOWkhBVWcRyE_"
 	};
 	
 	var _Footer2 = _interopRequireDefault(_Footer);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -2704,8 +2680,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRedux = __webpack_require__(1);
-	
 	var _reactRouter = __webpack_require__(2);
 	
 	var _AppBar = __webpack_require__(92);
@@ -2744,25 +2718,21 @@
 	
 	var _Tooltip2 = _interopRequireDefault(_Tooltip);
 	
-	var _AuthentificationActions = __webpack_require__(9);
-	
-	var _AuthentificationReducer = __webpack_require__(10);
-	
 	var _Header = {
-	  "header": "_2sEZYfHlvDy9uXqVIXG1aM",
-	  "content": "_1eavAvnySzoZc5rld6Q4pa",
-	  "site-title": "UfFn6muOcOBjkVI5_yltp",
-	  "add-post-button": "CkTz6a2gQTJjwXIEAlTSk",
-	  "language-switcher": "_3bviQya5ZWCvWr6lGdfO9h",
-	  "selected": "_3IRlmCpgSZBcTGVIGHvgaI"
+	  "header": "_3EGjKVGKCGTGQn_m_YASdF",
+	  "content": "_391cv5n_RFU0K9SBOjXDEt",
+	  "site-title": "_11V45Tl3_Hdy_ARI53CW9g",
+	  "add-post-button": "XrNjmGRHH_vMEgGeC3S75",
+	  "language-switcher": "X6vAu1vEuRDWiN2kDvA_z",
+	  "selected": "_3ecuVjN6tTUWkR7u3Co3s"
 	};
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -2801,7 +2771,7 @@
 	    _this.state = {
 	      loginOpen: false,
 	      signUpOpen: false,
-	      hasToken: false
+	      hasToken: true
 	    };
 	    _this.handleLoginOpen = _this.handleLoginOpen.bind(_this);
 	    _this.handleLoginClose = _this.handleLoginClose.bind(_this);
@@ -2856,16 +2826,16 @@
 	  }, {
 	    key: 'signOut',
 	    value: function signOut() {
-	      this.props.dispatch((0, _AuthentificationActions.signOutAction)());
+	      localStorage.removeItem('token');
 	      this.setState({
 	        hasToken: false
 	      });
-	      this.props.history.push('/');
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var screen = void 0;
+	
 	      if (this.state.hasToken) {
 	        screen = _jsx('div', {}, void 0, _jsx(_Button2.default, {
 	          color: 'contrast',
@@ -2876,7 +2846,6 @@
 	          color: 'contrast',
 	          onClick: this.handleLoginOpen
 	        }, void 0, 'Connexion'), _jsx(_LoginContainer2.default, {
-	          history: this.props.history,
 	          isOpen: this.state.loginOpen,
 	          handleClose: this.handleLoginClose
 	        }), _jsx(_Button2.default, {
@@ -2926,15 +2895,11 @@
 	  return Header;
 	}(_react.Component);
 	
-	function mapStateToProps(state) {
-	  return {};
-	}
-	
 	Header.contextTypes = {
 	  router: _react2.default.PropTypes.object.isRequired
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Header);
+	exports.default = Header;
 
 /***/ },
 /* 64 */
@@ -2959,7 +2924,7 @@
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
-	var _TextField = __webpack_require__(17);
+	var _TextField = __webpack_require__(16);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
@@ -2967,7 +2932,7 @@
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
-	var _Form = __webpack_require__(16);
+	var _Form = __webpack_require__(15);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3043,9 +3008,9 @@
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
-	var _AuthentificationActions = __webpack_require__(9);
+	var _AuthentificationActions = __webpack_require__(17);
 	
-	var _AuthentificationReducer = __webpack_require__(10);
+	var _AuthentificationReducer = __webpack_require__(11);
 	
 	var _reactRedux = __webpack_require__(1);
 	
@@ -3073,7 +3038,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (LoginContainer.__proto__ || Object.getPrototypeOf(LoginContainer)).call(this, props));
 	
-	    console.log('Props login', props);
+	    console.log(props);
 	
 	    // set the initial component state
 	    _this.state = {
@@ -3130,7 +3095,6 @@
 	          });
 	        } else {
 	          _this2.props.handleClose();
-	          _this2.props.history.push('/events');
 	        }
 	      });
 	    }
@@ -3206,7 +3170,7 @@
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
-	var _TextField = __webpack_require__(17);
+	var _TextField = __webpack_require__(16);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
@@ -3214,7 +3178,7 @@
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
-	var _Form = __webpack_require__(16);
+	var _Form = __webpack_require__(15);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3314,9 +3278,9 @@
 	
 	var _SignUp2 = _interopRequireDefault(_SignUp);
 	
-	var _AuthentificationActions = __webpack_require__(9);
+	var _AuthentificationActions = __webpack_require__(17);
 	
-	var _AuthentificationReducer = __webpack_require__(10);
+	var _AuthentificationReducer = __webpack_require__(11);
 	
 	var _reactRedux = __webpack_require__(1);
 	
@@ -3485,7 +3449,7 @@
 	
 	var _reactRedux = __webpack_require__(1);
 	
-	var _redux = __webpack_require__(14);
+	var _redux = __webpack_require__(13);
 	
 	var _EventActions = __webpack_require__(7);
 	
@@ -3493,7 +3457,7 @@
 	
 	var _Input2 = _interopRequireDefault(_Input);
 	
-	var _Form = __webpack_require__(16);
+	var _Form = __webpack_require__(15);
 	
 	var _Radio = __webpack_require__(97);
 	
@@ -3513,7 +3477,7 @@
 	
 	var _Menu = __webpack_require__(56);
 	
-	var _TextField = __webpack_require__(17);
+	var _TextField = __webpack_require__(16);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
@@ -3526,9 +3490,9 @@
 	var _reactPlacesAutocomplete2 = _interopRequireDefault(_reactPlacesAutocomplete);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -4034,7 +3998,7 @@
 	  value: true
 	});
 	
-	var _redux = __webpack_require__(14);
+	var _redux = __webpack_require__(13);
 	
 	var _AppReducer = __webpack_require__(61);
 	
@@ -4048,11 +4012,11 @@
 	
 	var _IntlReducer2 = _interopRequireDefault(_IntlReducer);
 	
-	var _EventReducer = __webpack_require__(13);
+	var _EventReducer = __webpack_require__(12);
 	
 	var _EventReducer2 = _interopRequireDefault(_EventReducer);
 	
-	var _AuthentificationReducer = __webpack_require__(10);
+	var _AuthentificationReducer = __webpack_require__(11);
 	
 	var _AuthentificationReducer2 = _interopRequireDefault(_AuthentificationReducer);
 	
@@ -4097,7 +4061,7 @@
 	
 	var _user2 = _interopRequireDefault(_user);
 	
-	var _expressValidator = __webpack_require__(15);
+	var _expressValidator = __webpack_require__(14);
 	
 	var _expressValidator2 = _interopRequireDefault(_expressValidator);
 	
@@ -4659,7 +4623,7 @@
 	
 	var _regex2 = _interopRequireDefault(_regex);
 	
-	var _expressValidator = __webpack_require__(15);
+	var _expressValidator = __webpack_require__(14);
 	
 	var _expressValidator2 = _interopRequireDefault(_expressValidator);
 	
@@ -4769,7 +4733,7 @@
 	
 	var _compression2 = _interopRequireDefault(_compression);
 	
-	var _mongoose = __webpack_require__(11);
+	var _mongoose = __webpack_require__(9);
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
@@ -4777,7 +4741,7 @@
 	
 	var _bodyParser2 = _interopRequireDefault(_bodyParser);
 	
-	var _expressValidator = __webpack_require__(15);
+	var _expressValidator = __webpack_require__(14);
 	
 	var _expressValidator2 = _interopRequireDefault(_expressValidator);
 	
@@ -4817,7 +4781,7 @@
 	
 	var _reactRouter = __webpack_require__(2);
 	
-	var _reactHelmet = __webpack_require__(12);
+	var _reactHelmet = __webpack_require__(10);
 	
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 	

@@ -14,7 +14,6 @@ import Footer from './components/Footer/Footer';
 import { toggleAddPost } from './AppActions';
 import { switchLanguage } from '../../modules/Intl/IntlActions';
 import { getUser } from '../../modules/Authentification/AuthentificationReducer';
-import { verifyToken } from '../../modules/Authentification/AuthentificationActions';
 
 export class App extends Component {
   constructor(props) {

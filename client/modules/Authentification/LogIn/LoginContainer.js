@@ -15,7 +15,7 @@ class LoginContainer extends React.Component {
    */
   constructor(props) {
     super(props);
-    console.log('Props login',props);
+    console.log(props);
 
     // set the initial component state
     this.state = {
@@ -65,7 +65,6 @@ class LoginContainer extends React.Component {
         });
       } else {
         this.props.handleClose();
-        this.props.history.push('/events');
       }
     });
   }

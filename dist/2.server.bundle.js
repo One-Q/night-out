@@ -27,11 +27,11 @@ exports.modules = {
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
-	var _TextField = __webpack_require__(17);
+	var _TextField = __webpack_require__(16);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
-	var _Form = __webpack_require__(16);
+	var _Form = __webpack_require__(15);
 	
 	var _Input = __webpack_require__(55);
 	
@@ -56,15 +56,15 @@ exports.modules = {
 	var _Snackbar2 = _interopRequireDefault(_Snackbar);
 	
 	var _App = {
-	  "container": "_4uEyKcd5WHob5qPzotT7",
-	  "div-grid": "urzBuF0xs36Cke5HaO92a",
-	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
+	  "container": "_15uqt7TaQcflNYjiD0-re1",
+	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
+	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
 	
 	var _EventAdd = {
-	  "textField": "_1Jyucy9GGrI6KrQsHD9JpP"
+	  "textField": "_2gw8JnDpFpR0blCVYnu5Lo"
 	};
 	
 	var _EventAdd2 = _interopRequireDefault(_EventAdd);
@@ -134,13 +134,6 @@ exports.modules = {
 	  }
 	
 	  _createClass(EventAdd, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      if (!localStorage.getItem('token')) {
-	        this.props.history.push('/');
-	      }
-	    }
-	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(event) {
 	      var _this2 = this;
