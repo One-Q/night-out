@@ -221,13 +221,12 @@ exports.modules = {
 	      }))), _jsx(_TextField2.default, {
 	        required: true,
 	        id: 'date',
-	        label: 'Date',
+	        label: 'Date(jj/mm/aaaa)',
 	        name: 'date',
 	        fullWidth: true,
 	        style: { marginBottom: '20px' },
 	        className: _EventAdd2.default.textField,
 	        type: 'date',
-	        placeholder: 'jj/mm/aaaa',
 	        value: this.state.date,
 	        onChange: this.handleChange('date')
 	      }), _jsx(_TextField2.default, {

@@ -508,7 +508,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -524,10 +524,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function info() {
-	  console.log('oui');
-	}
-	
 	var EventMap = (0, _reactGoogleMaps.withScriptjs)((0, _reactGoogleMaps.withGoogleMap)(function (props) {
 	  return _jsx(_reactGoogleMaps.GoogleMap, {
 	    defaultZoom: 16,
@@ -537,7 +533,7 @@
 	    return _jsx(_reactGoogleMaps.Marker, {
 	      position: marker.location,
 	      title: marker.title
-	    });
+	    }, void 0);
 	  }));
 	}));
 	
@@ -672,7 +668,7 @@
 	  value: true
 	});
 	var config = {
-	  mongoURL: process.env.MONGO_URL || 'mongodb://heroku_q73bd7nd:ifkof4c5qtc4ls2rblt1ac8mu8@ds117965.mlab.com:17965/heroku_q73bd7nd', /*'mongodb://localhost:27017/mern-starter',*/
+	  mongoURL: process.env.MONGO_URL || /*'mongodb://heroku_q73bd7nd:ifkof4c5qtc4ls2rblt1ac8mu8@ds117965.mlab.com:17965/heroku_q73bd7nd',*/'mongodb://localhost:27017/mern-starter',
 	  port: process.env.PORT || 8000
 	};
 	
@@ -941,11 +937,19 @@
 	
 	var _ref3 = _jsx(_Progress.CircularProgress, {});
 	
-	var _ref4 = _jsx('h1', {}, void 0, 'Ev\xE8nements recherch\xE9s :');
+	var _ref4 = _jsx('br', {});
 	
-	var _ref5 = _jsx(_Dialog.DialogTitle, {}, void 0, "Oups?!");
+	var _ref5 = _jsx('b', {}, void 0, 'Adresse : ');
 	
-	var _ref6 = _jsx(_Dialog.DialogContent, {}, void 0, _jsx(_Dialog.DialogContentText, {}, void 0, 'Veuillez accepter votre localisation ou rentrez une localisation correct'));
+	var _ref6 = _jsx('b', {}, void 0, 'Date de d\xE9but : ');
+	
+	var _ref7 = _jsx('b', {}, void 0, 'Date de fin : ');
+	
+	var _ref8 = _jsx('h1', {}, void 0, 'Ev\xE8nements recherch\xE9s :');
+	
+	var _ref9 = _jsx(_Dialog.DialogTitle, {}, void 0, "Impossible de vous localiser");
+	
+	var _ref10 = _jsx(_Dialog.DialogContent, {}, void 0, _jsx(_Dialog.DialogContentText, {}, void 0, 'Veuillez accepter votre localisation ou rentrer une localisation correcte.'));
 	
 	var Event = function (_Component) {
 	  _inherits(Event, _Component);
@@ -1111,6 +1115,7 @@
 	        events = this.props.events.map(function (event) {
 	          if (facebook) {
 	            markers.push({
+	              description: event.description,
 	              title: event.name,
 	              location: {
 	                lat: event.venue.location.latitude,
@@ -1120,6 +1125,7 @@
 	            });
 	          } else {
 	            markers.push({
+	              description: event.description,
 	              title: event.name,
 	              location: {
 	                lat: event.location.latitude,
@@ -1137,7 +1143,7 @@
 	            className: _Event2.default['event-title']
 	          }, void 0, _jsx(_reactRouter.Link, {
 	            to: facebook ? '/events/facebook/' + event.id : '/events/' + event.slug
-	          }, void 0, event.name)), _jsx('p', {}, void 0, event.description), _jsx('p', {}, void 0, facebook ? event.venue.location.city : event.location.city, ' , ', facebook ? event.venue.location.street : event.location.street, ' '));
+	          }, void 0, event.name)), _jsx('p', {}, void 0, reduceDescription(event.description)), _ref4, _jsx('p', {}, void 0, _ref5, facebook ? event.venue.location.city : event.location.city, ' , ', facebook ? event.venue.location.street : event.location.street, ' '), _jsx('p', {}, void 0, _ref6, formatDate(new Date(event.startTime))), facebook && _jsx('p', {}, void 0, _ref7, formatDate(new Date(event.endTime))));
 	        });
 	      }
 	      return _jsx('div', {}, void 0, _jsx(_EventResearch.EventResearch, {
@@ -1147,7 +1153,7 @@
 	        geocodeByAdress: this.handleGoogle
 	      }), _jsx('div', {
 	        className: _App2.default.container
-	      }, void 0, _ref4, _jsx('div', {
+	      }, void 0, _ref8, _jsx('div', {
 	        className: _Event2.default['event-div']
 	      }, void 0, _jsx(_Grid2.default, {
 	        container: true,
@@ -1179,7 +1185,7 @@
 	        open: this.state.openDialog,
 	        keepMounted: true,
 	        onRequestClose: this.handleDialogClose
-	      }, void 0, _ref5, _ref6, _jsx(_Dialog.DialogActions, {}, void 0, _jsx(_Button2.default, {
+	      }, void 0, _ref9, _ref10, _jsx(_Dialog.DialogActions, {}, void 0, _jsx(_Button2.default, {
 	        onClick: this.handleDialogClose,
 	        color: 'primary'
 	      }, void 0, 'J\'ai compris')))));
@@ -1193,6 +1199,23 @@
 	  return {
 	    events: (0, _EventReducer.getEvents)(state)
 	  };
+	}
+	
+	function reduceDescription(description) {
+	  if (description.length < 300) return description;
+	  return description.substring(0, 299) + "...";
+	}
+	
+	function formatDate(date) {
+	  var monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+	
+	  var day = date.getDate();
+	  var monthIndex = date.getMonth();
+	  var year = date.getFullYear();
+	  var hour = date.getHours();
+	  var minutes = date.getMinutes() === 0 ? "" : date.getMinutes();
+	
+	  return day + ' ' + monthNames[monthIndex] + ' ' + year + ", " + hour + "h" + minutes;
 	}
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Event);
@@ -1584,12 +1607,12 @@
 	
 	var _ref2 = _jsx('br', {});
 	
-	var _ref3 = _jsx('p', {}, void 0, 'Site de recherche d\'\xE9v\xE8nements de facebook ou de notre base de donn\xE9es');
+	var _ref3 = _jsx('p', {}, void 0, 'Site de recherche d\'\xE9v\xE8nements en provenance de Facebook ou de notre base de donn\xE9es');
 	
 	var _ref4 = _jsx(_Grid2.default, {
 	  item: true,
 	  md: 6
-	}, void 0, _jsx('h2', {}, void 0, 'But'), _jsx('br', {}), _jsx('p', {}, void 0, 'Vous voulez trouvez des \xE9v\xE8nements pr\xE8s de chez vous ou pr\xE8s d\'un endroit pr\xE9cis ?'), _jsx('p', {}, void 0, 'Voil\xE0 notre but, trouver ces \xE9v\xE8nements'), _jsx('p', {}, void 0, 'Vous pouvez faire une recherche par rapport \xE0 Facebook ou par rapport \xE0 notre base de donn\xE9es qui est tenue \xE0 jour par nos utilisateurs'));
+	}, void 0, _jsx('h2', {}, void 0, 'But'), _jsx('br', {}), _jsx('p', {}, void 0, 'Vous voulez trouver des \xE9v\xE8nements pr\xE8s de chez vous ou pr\xE8s d\'un endroit pr\xE9cis ?'), _jsx('p', {}, void 0, 'Notre but est de vous aider \xE0 trouver ces \xE9v\xE8nements'), _jsx('p', {}, void 0, 'Vous pouvez faire une recherche par rapport \xE0 Facebook ou par rapport \xE0 notre base de donn\xE9es qui est tenue \xE0 jour par nos utilisateurs'));
 	
 	var _ref5 = _jsx('img', {
 	  src: _fb2.default,
