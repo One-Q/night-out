@@ -21,17 +21,17 @@ exports.modules = {
 	
 	var _reactRedux = __webpack_require__(1);
 	
-	var _EventActions = __webpack_require__(7);
+	var _EventActions = __webpack_require__(8);
 	
 	var _Grid = __webpack_require__(3);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
-	var _TextField = __webpack_require__(16);
+	var _TextField = __webpack_require__(17);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
-	var _Form = __webpack_require__(15);
+	var _Form = __webpack_require__(16);
 	
 	var _Input = __webpack_require__(55);
 	
@@ -41,7 +41,7 @@ exports.modules = {
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _Button = __webpack_require__(8);
+	var _Button = __webpack_require__(9);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -55,16 +55,18 @@ exports.modules = {
 	
 	var _Snackbar2 = _interopRequireDefault(_Snackbar);
 	
+	var _AuthentificationActions = __webpack_require__(7);
+	
 	var _App = {
-	  "container": "_15uqt7TaQcflNYjiD0-re1",
-	  "div-grid": "_2qc6ahzDISq_SGC1ADiqof",
-	  "container-grid": "_9GSnCDvDpnITuEmfVrs-c"
+	  "container": "_4uEyKcd5WHob5qPzotT7",
+	  "div-grid": "urzBuF0xs36Cke5HaO92a",
+	  "container-grid": "SVHoARiEkb2pLgRURsTQw"
 	};
 	
 	var _App2 = _interopRequireDefault(_App);
 	
 	var _EventAdd = {
-	  "textField": "_2gw8JnDpFpR0blCVYnu5Lo"
+	  "textField": "_1Jyucy9GGrI6KrQsHD9JpP"
 	};
 	
 	var _EventAdd2 = _interopRequireDefault(_EventAdd);
@@ -134,6 +136,13 @@ exports.modules = {
 	  }
 	
 	  _createClass(EventAdd, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (this.props.dispatch((0, _AuthentificationActions.verifyToken)(localStorage.getItem('token')))) {
+	        this.props.history.push('/');
+	      }
+	    }
+	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(event) {
 	      var _this2 = this;
@@ -221,13 +230,12 @@ exports.modules = {
 	      }))), _jsx(_TextField2.default, {
 	        required: true,
 	        id: 'date',
-	        label: 'Date',
+	        label: 'Date(jj/mm/aaaa)',
 	        name: 'date',
 	        fullWidth: true,
 	        style: { marginBottom: '20px' },
 	        className: _EventAdd2.default.textField,
 	        type: 'date',
-	        placeholder: 'jj/mm/aaaa',
 	        value: this.state.date,
 	        onChange: this.handleChange('date')
 	      }), _jsx(_TextField2.default, {

@@ -48,3 +48,24 @@ export function signUp(user) {
     });
   }
 }
+
+export function verifyToken(token) {
+  return (dispatch) => {
+    return callApi('amilogged', 'post', {}, token)
+    .then((res) => {
+      if(!res.user) {
+        dispatch(signOutAction());
+      } 
+      return res;
+    });
+  }
+}
+
+export function signOutAction(){
+  return (dispatch) => {
+    if (localStorage.getItem('token')) {
+      localStorage.removeItem('token');
+      dispatch(setUser({}));
+    }
+  }
+}

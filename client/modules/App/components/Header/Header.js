@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
 import { Link, Router } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -9,6 +10,8 @@ import Add from 'material-ui-icons/Add';
 import LoginContainer from '../../../Authentification/LogIn/LoginContainer';
 import SignUpContainer from '../../../Authentification/SignUp/SignUpContainer';
 import Tooltip from 'material-ui/Tooltip';
+import { signOutAction } from '../../../Authentification/AuthentificationActions';
+import { getUser } from '../../../Authentification/AuthentificationReducer';
 
 // Import Style
 import styles from './Header.css';
@@ -22,7 +25,7 @@ class Header extends Component {
     this.state = {
       loginOpen: false,
       signUpOpen: false,
-      hasToken: true,
+      hasToken: false,
     };
     this.handleLoginOpen = this.handleLoginOpen.bind(this);
     this.handleLoginClose = this.handleLoginClose.bind(this);
@@ -68,15 +71,15 @@ class Header extends Component {
   }
 
   signOut() {
-    localStorage.removeItem('token');
+    this.props.dispatch(signOutAction());
     this.setState({
       hasToken: false,
     });
+    this.props.history.push('/');
   }
 
   render() {
     let screen;
-
     if (this.state.hasToken) {
       screen = (<div>
         <Button color="contrast" onClick={this.signOut}>Déconnexion</Button>
@@ -84,7 +87,7 @@ class Header extends Component {
     } else {
       screen = (<div>
         <Button color="contrast" onClick={this.handleLoginOpen}>Connexion</Button>
-        <LoginContainer isOpen={this.state.loginOpen} handleClose={this.handleLoginClose} />
+        <LoginContainer history={this.props.history} isOpen={this.state.loginOpen} handleClose={this.handleLoginClose} />
         <Button color="contrast" onClick={this.handleSignUpOpen}>Inscription</Button>
         <SignUpContainer isOpen={this.state.signUpOpen} handleClose={this.handleSignUpClose} />
       </div>);
@@ -132,6 +135,12 @@ class Header extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    
+  };
+}
+
 Header.contextTypes = {
   router: React.PropTypes.object.isRequired,
 };
@@ -139,4 +148,4 @@ Header.contextTypes = {
 Header.propTypes = {
 };
 
-export default Header;
+export default connect(mapStateToProps)(Header);
