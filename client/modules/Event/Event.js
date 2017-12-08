@@ -176,6 +176,8 @@ class Event extends Component {
       events = this.props.events.map((event) => {
         if (facebook) {
           markers.push({
+            isOpen : false,
+            description : event.description,
             title : event.name,
             location : {
               lat : event.venue.location.latitude,
@@ -185,6 +187,8 @@ class Event extends Component {
           });
         } else {
           markers.push({
+            isOpen : false,
+            description : event.description,
             title : event.name,
             location: {
               lat: event.location.latitude,
