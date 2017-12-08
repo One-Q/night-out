@@ -5,9 +5,11 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Search from 'material-ui-icons/Search';
+import Key from 'material-ui-icons/Lock'
 import Add from 'material-ui-icons/Add';
 import LoginContainer from '../../../Authentification/LogIn/LoginContainer';
 import SignUpContainer from '../../../Authentification/SignUp/SignUpContainer';
+import PasswordContainer from '../../../Authentification/Password/PasswordContainer';
 import Tooltip from 'material-ui/Tooltip';
 
 // Import Style
@@ -22,12 +24,15 @@ class Header extends Component {
     this.state = {
       loginOpen: false,
       signUpOpen: false,
-      hasToken: true,
+      passwordOpen: false,
+      hasToken: false,
     };
     this.handleLoginOpen = this.handleLoginOpen.bind(this);
     this.handleLoginClose = this.handleLoginClose.bind(this);
     this.handleSignUpOpen = this.handleSignUpOpen.bind(this);
     this.handleSignUpClose = this.handleSignUpClose.bind(this);
+    this.handlePasswordOpen = this.handlePasswordOpen.bind(this);
+    this.handlePasswordClose = this.handlePasswordClose.bind(this);
     this.signOut = this.signOut.bind(this);
   }
 
@@ -64,6 +69,18 @@ class Header extends Component {
   handleSignUpClose() {
     this.setState({
       signUpOpen: false,
+    });
+  }
+
+  handlePasswordOpen() {
+    this.setState({
+      passwordOpen: true,
+    });
+  }
+
+  handlePasswordClose() {
+    this.setState({
+      passwordOpen: false,
     });
   }
 
@@ -123,6 +140,13 @@ class Header extends Component {
                   </Link>
                 </Tooltip>
               }
+              {this.state.hasToken &&
+              <Tooltip title="Changer de mot de passe" placement="bottom">
+                <IconButton color="contrast" onClick={this.handlePasswordOpen}><Key /></IconButton>
+                
+              </Tooltip>
+              }
+              <PasswordContainer isOpen={this.state.passwordOpen} handleClose={this.handlePasswordClose} />
               {screen}
             </Toolbar>
           </div>
