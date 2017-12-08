@@ -130,13 +130,12 @@ class EventAdd extends Component {
                 <TextField
                   required
                   id="date"
-                  label="Date"
+                  label="Date(jj/mm/aaaa)"
                   name="date"
                   fullWidth
                   style={{ marginBottom: '20px' }}
                   className={thisStyles.textField}
                   type="date"
-                  placeholder="jj/mm/aaaa"
                   value={this.state.date}
                   onChange={this.handleChange('date')}
                 />
