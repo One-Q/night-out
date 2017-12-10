@@ -41,10 +41,8 @@ class EventDetailsFacebook extends Component {
             {console.log(this.props.event)}
               <div style={{width: '100%', height: 600}}>
                 <p><b>Adresse : </b>{this.props.event.place.location.city+","+this.props.event.place.location.street}</p>
-                <p><b>Date de début : </b>{formatDate(new Date(this.props.event.start_time))}</p>
-                {console.log(this.props.event.start_time)}
-                {console.log(this.props.event.end_time)}
-                <p><b>Date de fin : </b>{formatDate(new Date(this.props.event.end_time))}</p>
+                <p><b>Date de début : </b>{formatDate(new Date(this.props.event.startTime))}</p>
+                <p><b>Date de fin : </b>{formatDate(new Date(this.props.event.endTime))}</p>
              
                 <Eventmap
                   location={{lat: this.props.event.place.location.latitude, lng: this.props.event.place.location.longitude}}
