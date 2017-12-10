@@ -118,7 +118,7 @@ export class EventResearch extends Component {
       value: this.state.adress,
       onChange: this.handleResearchChange,
       autoFocus: true,
-      placeholder: "Search ...",
+      placeholder: "Entrez une adresse ...",
     }
 
     const defaultStyles = {
