@@ -89,6 +89,7 @@ class Header extends Component {
     this.setState({
       hasToken: false,
     });
+    this.props.history.push('/');
   }
 
   render() {
@@ -101,7 +102,7 @@ class Header extends Component {
     } else {
       screen = (<div>
         <Button color="contrast" onClick={this.handleLoginOpen}>Connexion</Button>
-        <LoginContainer isOpen={this.state.loginOpen} handleClose={this.handleLoginClose} />
+        <LoginContainer isOpen={this.state.loginOpen} history={this.props.history} handleClose={this.handleLoginClose} />
         <Button color="contrast" onClick={this.handleSignUpOpen}>Inscription</Button>
         <SignUpContainer isOpen={this.state.signUpOpen} handleClose={this.handleSignUpClose} />
       </div>);

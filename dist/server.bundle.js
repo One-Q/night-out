@@ -3158,6 +3158,7 @@
 	      this.setState({
 	        hasToken: false
 	      });
+	      this.props.history.push('/');
 	    }
 	  }, {
 	    key: 'render',
@@ -3175,6 +3176,7 @@
 	          onClick: this.handleLoginOpen
 	        }, void 0, 'Connexion'), _jsx(_LoginContainer2.default, {
 	          isOpen: this.state.loginOpen,
+	          history: this.props.history,
 	          handleClose: this.handleLoginClose
 	        }), _jsx(_Button2.default, {
 	          color: 'contrast',
@@ -3432,6 +3434,7 @@
 	          });
 	        } else {
 	          _this2.props.handleClose();
+	          _this2.props.history.push('/events');
 	        }
 	      });
 	    }

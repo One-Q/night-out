@@ -65,6 +65,7 @@ class LoginContainer extends React.Component {
         });
       } else {
         this.props.handleClose();
+        this.props.history.push('/events');
       }
     });
   }
